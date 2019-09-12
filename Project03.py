@@ -63,8 +63,9 @@ class GedcomParse():
                                         self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag] = "NA"
                                                      
                                 else:
-                                    if level == "2":
-                                        self.repository[self.current_entry["root"]][self.current_entry["root_id"]][self.current_entry["level_one_tag"]] = args
+                                    if level == "2" and tag == 'DATE':
+                                        date = datetime.datetime.strptime(args, "%d %b %Y")
+                                        self.repository[self.current_entry["root"]][self.current_entry["root_id"]][self.current_entry["level_one_tag"]] = date
                                     else:
                                         if tag in ["FAMC", "FAMS"]:
                                             if tag not in self.repository[self.current_entry["root"]][self.current_entry["root_id"]]:
@@ -91,15 +92,18 @@ class GedcomParse():
         for id in sorted_repository:
             individual = self.repository["INDI"][id]
             name = individual['NAME'] if 'NAME' in individual else 'NA'
-            gender = individual['SEX'] if 'SEX' in individual else 'NA'
-            birthday = individual['BIRT'] if 'BIRT' in individual else 'NA'
+            gender = individual['SEX'] if 'SEX' in individual else 'NA'            
+            birthday_datetime = individual['BIRT'] if 'BIRT' in individual else 'NA'
+            if birthday_datetime is not 'NA':
+                birthday = datetime.datetime.strftime(birthday_datetime, "%Y-%m-%d")
+            age = datetime.date.today().year - birthday_datetime.year if birthday is not 'NA' else 'NA'
             alive = True if 'DEAT' not in individual else False
-            death = individual['DEAT'] if 'DEAT' in individual else 'NA'
+            death_datetime = individual['DEAT'] if 'DEAT' in individual else 'NA'
+            death = datetime.datetime.strftime(death_datetime, "%Y-%m-%d") if death_datetime is not 'NA' else 'NA'
             child = individual['FAMC'] if 'FAMC' in individual else 'NA'
             spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
-            dt_birth = datetime.datetime.strptime(birthday, "%d %b %Y")
-            dt_today = datetime.date.today()
-            age = dt_today.year - dt_birth.year
+            
+            
             pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
         print(pt_individuals)
 
@@ -107,7 +111,8 @@ class GedcomParse():
         sorted_repository = sorted(self.repository['FAM'])
         for id in sorted_repository:
             family = self.repository['FAM'][id]
-            married = family['MARR'] if 'MARR' in family else 'NA'
+            married_datetime = family['MARR'] if 'MARR' in family else 'NA'
+            married = datetime.datetime.strftime(married_datetime, "%Y-%m-%d") if married_datetime is not 'NA' else 'NA'
             divorced = family['DIV'] if 'DIV' in family else 'NA'
             husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
             husband_name = self.repository['INDI'][husband_id]['NAME'] if husband_id is not 'NA' else 'NA'
