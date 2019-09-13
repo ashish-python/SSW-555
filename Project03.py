@@ -1,6 +1,6 @@
 """
-Author: 
-class GedcomParse includes methods to parse GEDCOME files
+Author: Ashish, Julia, Aaron
+class GedcomParse includes methods to parse GEDCOM files
 """
 from collections import defaultdict
 import prettytable
@@ -12,7 +12,7 @@ class GedcomParse():
      "2":{"DATE"}}
     
     repository = dict()
-    current_entry = dict()
+    current_record = dict()
 
     def parseFile(self, file_name):
         """
@@ -29,64 +29,66 @@ class GedcomParse():
             parsed_line = list()
             length = len(parsed_line)
             with fp:
+                counter = 0
                 for line in fp:
+                    counter+=1
                     parsed_line = line.rstrip("\n").split(" ", maxsplit=2)
                     #Check if the line has one of the special tags 'INDI' or 'FAM'
                     if len(parsed_line) == 3 and parsed_line[0] == '0' and parsed_line[2] in ('INDI', 'FAM'):
                         level, args, tag = parsed_line
                         valid = 'Y'
                         #INDI or FAM tag found
-                        self.current_entry["root"] = tag
-                        self.current_entry["root_id"] = args
-                        #If the tag is in the repository and tag_id not in the repository, create a dictionary for [tag][args]. Example ["INDI"]["ID01"]
+                        self.current_record["root"] = tag
+                        self.current_record["root_id"] = args
+                        #If the tag (INDI or FAM) is in the repository and tag_id not in the repository, create a dictionary for [tag][args]. Example ["INDI"]["ID01"]
                         #this will have all the information for this tag and id
                         if tag in self.repository:
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
                         else:
                             self.repository[tag] = dict()
-                            self.repository[tag][args] = dict()
+                            self.repository[tag][args] = dict() 
                     elif len(parsed_line) >= 2:
                         level, tag, args = parsed_line[0], parsed_line[1], " ".join(parsed_line[2:])
                         valid = 'Y' if level in self.tags_mapped_to_levels and tag in self.tags_mapped_to_levels[level] and tag not in ('INDI', 'FAM') else 'N'
                         if valid == "N":
                             continue
                         else: #A valid tag other than 'INDI' or 'FAM'
-                            #these tags signify the close of previous related records
+                            #these tags signify that a new record is going to start so clear the current repository.
                             if tag in ["NOTE","TRLR","HEAD"]:
-                                self.current_entry.clear()
+                                self.current_record.clear()
                                 continue
                             else:
                                 if tag in ["BIRT", "DEAT", "MARR", "DIV"]:
-                                    self.current_entry["level_one_tag"] = tag
-                                    if tag not in self.repository[self.current_entry["root"]][self.current_entry["root_id"]]:
-                                        self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag] = "NA"
+                                    self.current_record["level_one_tag"] = tag
+                                    if tag not in self.repository[self.current_record["root"]][self.current_record["root_id"]]:
+                                        self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = "NA"
                                                      
                                 else:
                                     if level == "2" and tag == 'DATE':
                                         date = datetime.datetime.strptime(args, "%d %b %Y")
-                                        self.repository[self.current_entry["root"]][self.current_entry["root_id"]][self.current_entry["level_one_tag"]] = date
+                                        self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = date
                                     else:
                                         if tag in ["FAMC", "FAMS"]:
-                                            if tag not in self.repository[self.current_entry["root"]][self.current_entry["root_id"]]:
-                                                self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag] = set()
-                                            self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag].add(args)
+                                            if tag not in self.repository[self.current_record["root"]][self.current_record["root_id"]]:
+                                                self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = set()
+                                            self.repository[self.current_record["root"]][self.current_record["root_id"]][tag].add(args)
                                         else:
                                             if tag == "CHIL":
-                                                if tag not in self.repository[self.current_entry["root"]][self.current_entry["root_id"]]:
-                                                    self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag] = set()
-                                                self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag].add(args)
+                                                if tag not in self.repository[self.current_record["root"]][self.current_record["root_id"]]:
+                                                    self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = set()
+                                                self.repository[self.current_record["root"]][self.current_record["root_id"]][tag].add(args)
                                             else:
-                                                self.repository[self.current_entry["root"]][self.current_entry["root_id"]][tag] = args
-                                          
+                                                self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = args
                     else:
-                        #We can handle invalid entries here
+                        #We can handle invalid entries here if we want
                         continue
             fp.close()
             #print parsed results
             self.printResults()
     
     def printResults(self):
+        #---------------Individuals table-------------#
         pt_individuals = prettytable.PrettyTable(field_names=['ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse'])
         sorted_repository = sorted(self.repository["INDI"])
         for id in sorted_repository:
@@ -103,7 +105,7 @@ class GedcomParse():
             child = individual['FAMC'] if 'FAMC' in individual else 'NA'
             spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
             
-            
+            #------------Families table-----------------#
             pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
         print(pt_individuals)
 
@@ -122,8 +124,6 @@ class GedcomParse():
             pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
         print(pt_families)
             
-
-
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
