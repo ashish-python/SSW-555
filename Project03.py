@@ -93,39 +93,43 @@ class GedcomParse():
     
     def printResults(self):
         #---------------Individuals table-------------#
-        pt_individuals = prettytable.PrettyTable(field_names=['ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse'])
-        sorted_repository = sorted(self.repository["INDI"])
-        print("\nIndividuals table:")
-        for id in sorted_repository:
-            individual = self.repository["INDI"][id]
-            name = individual['NAME'] if 'NAME' in individual else 'NA'
-            gender = individual['SEX'] if 'SEX' in individual else 'NA'            
-            birthday_datetime = individual['BIRT'] if 'BIRT' in individual else 'NA'
-            birthday = datetime.datetime.strftime(birthday_datetime, "%Y-%m-%d") if birthday_datetime is not 'NA' else 'NA'
-            age = datetime.date.today().year - birthday_datetime.year if birthday_datetime is not 'NA' else 'NA'
-            alive = True if 'DEAT' not in individual else False
-            death_datetime = individual['DEAT'] if 'DEAT' in individual else 'NA'
-            death = datetime.datetime.strftime(death_datetime, "%Y-%m-%d") if death_datetime is not 'NA' else 'NA'
-            child = individual['FAMC'] if 'FAMC' in individual else 'NA'
-            spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
-            pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
-        print(pt_individuals)
+        
+        if "INDI" in self.repository:
+            pt_individuals = prettytable.PrettyTable(field_names=['ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse'])
+            sorted_repository = sorted(self.repository["INDI"])
+            print("\nIndividuals table:")
+            for id in sorted_repository:
+                individual = self.repository["INDI"][id]
+                name = individual['NAME'] if 'NAME' in individual else 'NA'
+                gender = individual['SEX'] if 'SEX' in individual else 'NA'            
+                birthday_datetime = individual['BIRT'] if ('BIRT' in individual and individual['BIRT'] is not 'NA') else 'NA'
+                birthday = datetime.datetime.strftime(birthday_datetime, "%Y-%m-%d") if birthday_datetime is not 'NA' else 'NA'
+                age = datetime.date.today().year - birthday_datetime.year if birthday_datetime is not 'NA' else 'NA'
+                death_datetime = individual['DEAT'] if ('DEAT' in individual and individual['DEAT'] is not 'NA') else 'NA'
+                death = datetime.datetime.strftime(death_datetime, "%Y-%m-%d") if death_datetime is not 'NA' else 'NA'
+                alive = True if ('DEAT' not in individual or individual['DEAT'] is 'NA') else False
+                child = individual['FAMC'] if 'FAMC' in individual else 'NA'
+                spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
+                pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
+            print(pt_individuals)
         #------------Families table-----------------#
-        pt_families = prettytable.PrettyTable(field_names=['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children'])
-        sorted_repository = sorted(self.repository['FAM'])
-        print("\nFamilies table:")
-        for id in sorted_repository:
-            family = self.repository['FAM'][id]
-            married_datetime = family['MARR'] if 'MARR' in family else 'NA'
-            married = datetime.datetime.strftime(married_datetime, "%Y-%m-%d") if married_datetime is not 'NA' else 'NA'
-            divorced = family['DIV'] if 'DIV' in family else 'NA'
-            husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
-            husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
-            wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
-            wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
-            children = family['CHIL'] if 'CHIL' in family else 'NA'
-            pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
-        print(pt_families)
+        if 'FAM' in self.repository:
+            pt_families = prettytable.PrettyTable(field_names=['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children'])
+            sorted_repository = sorted(self.repository['FAM'])
+            print("\nFamilies table:")
+            for id in sorted_repository:
+                family = self.repository['FAM'][id]
+                married_datetime = family['MARR'] if ('MARR' in family and family['MARR'] is not 'NA') else 'NA'
+                married = datetime.datetime.strftime(married_datetime, "%Y-%m-%d") if married_datetime is not 'NA' else 'NA'
+                divorced_datetime = family['DIV'] if ('DIV' in family and family['DIV'] is not 'NA') else 'NA'
+                divorced = datetime.datetime.strftime(divorced_datetime, "%Y-%m-%d") if divorced_datetime is not 'NA' else 'NA'
+                husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
+                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
+                wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
+                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
+                children = family['CHIL'] if 'CHIL' in family else 'NA'
+                pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
+            print(pt_families)
             
 if __name__ == "__main__":   
     parser = GedcomParse()
