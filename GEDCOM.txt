@@ -1,0 +1,101 @@
+0 NOTE Repository URL - https://github.com/ashish-python/SSW555tmAaronAshishJulia2019Fall/
+0 NOTE define Roger Stokes
+0 I01 INDI
+1 NAME Roger /Stokes/
+1 SEX M
+1 BIRT
+2 DATE 16 SEP 1935
+1 DEAT
+2 DATE 6 JUN 2006
+1 FAMS F01
+0 NOTE define Jessica Stokes
+0 I02 INDI
+1 NAME Jessica /Stokes/
+1 SEX F
+1 BIRT
+2 DATE 4 FEB 1940
+1 DEAT
+2 DATE 16 MAY 2010
+1 FAMS F01
+0 NOTE define Ben Stokes
+0 I03 INDI
+1 NAME Ben /Stokes/
+1 SEX M
+1 BIRT
+2 DATE 9 MAY 1960
+1 FAMC F01
+1 FAMS F02
+1 FAMS F03
+0 NOTE define Jill Harris - 1st wife of Ben Stokes
+0 I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE 18 AUG 1964
+1 DEAT
+2 DATE 9 DEC 1994
+1 FAMS F02
+0 NOTE define Rita Fuller - 2nd wife of Ben Stokes
+0 I05 INDI
+1 NAME Rita /Fuller/
+1 SEX F
+1 BIRT
+2 DATE 3 JAN 1962
+1 FAMS F03
+0 NOTE define Jane Stokes - daughter of Ben Stokes and Jill Harris
+0 I06 INDI
+1 NAME Jane /Stokes/
+1 SEX F
+1 BIRT
+2 DATE 17 MAR 1989
+1 FAMC F02
+1 FAMS F04
+0 NOTE define Debbie Stokes - Second daughter of Ben Stokes and Jill Harris
+0 I09 INDI
+1 NAME Debbie /Stokes/
+1 SEX F
+1 BIRT
+2 DATE 17 MAR 1989
+1 FAMC F02
+0 NOTE define Marina Stokes - daughter of Ben Stokes and Rita Fuller
+0 I07 INDI
+1 NAME Marina /Stokes/
+1 SEX F
+1 BIRT
+2 DATE 10 NOV 1996
+1 FAMC F03
+0 NOTE define Martin Fowler - Husband of Jane Stokes
+0 I08 INDI
+1 NAME Martin /Fowler/
+1 SEX M
+1 BIRT
+2 DATE 2 JAN 1989
+1 FAMS F04
+0 NOTE -----------------Families------------------
+0 F01 FAM
+1 MARR
+2 DATE 8 AUG 1958
+1 HUSB I01
+1 WIFE I02
+1 CHIL I03
+0 F02 FAM
+1 MARR
+2 DATE 3 JAN 1988
+1 HUSB I03
+1 WIFE I04
+1 CHIL I06
+1 CHIL I09
+0 F03 FAM
+1 MARR
+2 DATE 5 JAN 1996
+1 HUSB I03
+1 WIFE I05
+1 CHIL I07
+0 F04 FAM
+1 MARR
+2 DATE 9 AUG 2019
+1 HUSB I08
+1 WIFE I06
+1 DIV
+2 DATE 10 SEP 2019
+0 NOTE This is the end
