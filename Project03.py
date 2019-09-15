@@ -82,9 +82,11 @@ class GedcomParse():
                                                 self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = args
                     else:
                         #We can handle invalid entries here if we want
+                        
                         continue
             fp.close()
             #print parsed results
+            print(self.repository)
             self.printResults()
     
     def printResults(self):
@@ -117,9 +119,9 @@ class GedcomParse():
             married = datetime.datetime.strftime(married_datetime, "%Y-%m-%d") if married_datetime is not 'NA' else 'NA'
             divorced = family['DIV'] if 'DIV' in family else 'NA'
             husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
-            husband_name = self.repository['INDI'][husband_id]['NAME'] if husband_id is not 'NA' else 'NA'
+            husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
             wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
-            wife_name = self.repository['INDI'][wife_id]['NAME'] if wife_id is not 'NA' else 'NA'
+            wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
             children = family['CHIL'] if 'CHIL' in family else 'NA'
             pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
         print(pt_families)
