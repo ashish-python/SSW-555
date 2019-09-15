@@ -66,7 +66,11 @@ class GedcomParse():
                                                      
                                 else:
                                     if level == "2" and tag == 'DATE':
-                                        date = datetime.datetime.strptime(args, "%d %b %Y")
+                                        try:
+                                            date = datetime.datetime.strptime(args, "%d %b %Y")
+                                        except ValueError:
+                                            self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = 'NA'
+                                            continue                                        
                                         self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = date
                                     else:
                                         if tag in ["FAMC", "FAMS"]:
@@ -82,36 +86,34 @@ class GedcomParse():
                                                 self.repository[self.current_record["root"]][self.current_record["root_id"]][tag] = args
                     else:
                         #We can handle invalid entries here if we want
-                        
                         continue
             fp.close()
             #print parsed results
-            print(self.repository)
             self.printResults()
     
     def printResults(self):
         #---------------Individuals table-------------#
         pt_individuals = prettytable.PrettyTable(field_names=['ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse'])
         sorted_repository = sorted(self.repository["INDI"])
+        print("\nIndividuals table:")
         for id in sorted_repository:
             individual = self.repository["INDI"][id]
             name = individual['NAME'] if 'NAME' in individual else 'NA'
             gender = individual['SEX'] if 'SEX' in individual else 'NA'            
             birthday_datetime = individual['BIRT'] if 'BIRT' in individual else 'NA'
-            if birthday_datetime is not 'NA':
-                birthday = datetime.datetime.strftime(birthday_datetime, "%Y-%m-%d")
-            age = datetime.date.today().year - birthday_datetime.year if birthday is not 'NA' else 'NA'
+            birthday = datetime.datetime.strftime(birthday_datetime, "%Y-%m-%d") if birthday_datetime is not 'NA' else 'NA'
+            age = datetime.date.today().year - birthday_datetime.year if birthday_datetime is not 'NA' else 'NA'
             alive = True if 'DEAT' not in individual else False
             death_datetime = individual['DEAT'] if 'DEAT' in individual else 'NA'
             death = datetime.datetime.strftime(death_datetime, "%Y-%m-%d") if death_datetime is not 'NA' else 'NA'
             child = individual['FAMC'] if 'FAMC' in individual else 'NA'
             spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
-            
-            #------------Families table-----------------#
             pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
-     
+        print(pt_individuals)
+        #------------Families table-----------------#
         pt_families = prettytable.PrettyTable(field_names=['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children'])
         sorted_repository = sorted(self.repository['FAM'])
+        print("\nFamilies table:")
         for id in sorted_repository:
             family = self.repository['FAM'][id]
             married_datetime = family['MARR'] if 'MARR' in family else 'NA'
