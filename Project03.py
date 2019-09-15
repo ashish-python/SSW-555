@@ -109,8 +109,7 @@ class GedcomParse():
             
             #------------Families table-----------------#
             pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
-        print(pt_individuals)
-
+     
         pt_families = prettytable.PrettyTable(field_names=['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children'])
         sorted_repository = sorted(self.repository['FAM'])
         for id in sorted_repository:
