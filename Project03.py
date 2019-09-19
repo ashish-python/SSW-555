@@ -5,14 +5,20 @@ class GedcomParse includes methods to parse GEDCOM files
 from collections import defaultdict
 import prettytable
 import datetime
+import TimeUtils
+import unittest
+import os
 
 class GedcomParse():
-    tags_mapped_to_levels = {"0":{"INDI", "FAM","NOTE", "TRLR", "HEAD"},
-     "1":{"NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "HUSB", "WIFE", "CHIL", "MARR", "DIV"}, 
-     "2":{"DATE"}}
-    
-    repository = dict()
-    current_record = dict()
+    def __init__(self):
+        self.tags_mapped_to_levels = {"0":{"INDI", "FAM","NOTE", "TRLR", "HEAD"},
+        "1":{"NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "HUSB", "WIFE", "CHIL", "MARR", "DIV"}, 
+        "2":{"DATE"}}
+        
+        self.repository = dict()
+        self.current_record = dict()
+        self.us42_errors_list = list()
+        self.us38_list = list()
 
     def parseFile(self, file_name):
         """
@@ -66,11 +72,10 @@ class GedcomParse():
                                                      
                                 else:
                                     if level == "2" and tag == 'DATE':
-                                        try:
-                                            date = datetime.datetime.strptime(args, "%d %b %Y")
-                                        except ValueError:
+                                        date = self.check_date_legitimate(args, counter, parsed_line)
+                                        if not date:
                                             self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = 'NA'
-                                            continue                                        
+                                            continue                   
                                         self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = date
                                     else:
                                         if tag in ["FAMC", "FAMS"]:
@@ -89,8 +94,7 @@ class GedcomParse():
                         continue
             fp.close()
             #print parsed results
-            self.printResults()
-    
+  
     def printResults(self):
         #---------------Individuals table-------------#
         
@@ -130,6 +134,65 @@ class GedcomParse():
                 children = family['CHIL'] if 'CHIL' in family else 'NA'
                 pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
             print(pt_families)
+    
+                          
+    
+    def check_date_legitimate(self, date_str, line_num, parsed_line):
+            if TimeUtils.legitimate_date(date_str):
+                return TimeUtils.legitimate_date(date_str)
+            else:
+                self.us42_errors_list.append([line_num, parsed_line])
+                return False
+
+
+
+    #----------Illegitimate dates------------#
+    def us_42(self):    
+        if len(self.us42_errors_list) != 0:
+            print("\n\nUS42 - Illegitimate dates: ")
+            for item in self.us42_errors_list:
+                print ("Illegitimate date on line {} : {}".format(item[0], item[1][2]))
+        else:
+            print("No illegitimate dates")
+        
+    #-------List upcoming birthdays----------#
+    def us_38(self, today = None):
+        for id in self.repository["INDI"]:
+            individual = self.repository["INDI"][id]
+            if "BIRT" in individual  and individual["BIRT"] is not 'NA':
+                birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
+                birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
+                birthday_date = birthday_current_year.date()
+                if today is None:
+                    today = datetime.date.today()
+                days_timedelta = birthday_date - today
+                if days_timedelta.days >=0 and days_timedelta.days <=30:
+                    self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
+
+class TestSuite(unittest.TestCase):
+    parser = GedcomParse()
+    #User Story - 38
+    #List upcoming birthdays
+    #The file has birthdays that are today, in exactly 30 days, within the 30 day range, after 30 days, and birthday's that have passed
+    def test_us38(self):
+        self.parser.parseFile("US_38.txt")
+        today_str = "18 SEP 2019"
+        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
+        self.parser.us_38(today)
+        print(self.parser.us38_list)
+        self.assertEqual(self.parser.us38_list,[[6, 'US38-I01', 'James /Cook/', '24 SEP'], [0, 'US38-I02', 'Jessica /Cook/', '18 SEP'], [30, 'US38-I05', 'Rita /Fuller/', '18 OCT']])
+    
+    #User Story - 42
+    #Reject illegitimate dates
+    def test_us42(self):
+        self.assertEqual(TimeUtils.legitimate_date("30 FEB 2009"), False)
+        self.assertEqual(TimeUtils.legitimate_date("0 JAN 2009"), False)
+        self.assertEqual(TimeUtils.legitimate_date("DEC 2009"), False)
+        self.assertEqual(TimeUtils.legitimate_date("MAR"), False)
+        self.assertEqual(TimeUtils.legitimate_date("2019"), False)
+        self.assertNotEqual(TimeUtils.legitimate_date("29 FEB 2020"), False) #Leap year
+        
+
             
 if __name__ == "__main__":   
     parser = GedcomParse()
@@ -138,13 +201,15 @@ if __name__ == "__main__":
         file_name = input("Please enter the name of GEDCOM file to parse: ")
         try:
             parser.parseFile(file_name)
+            parser.printResults()
+            parser.us_42()
+            parser.us_38()
+            unittest.main(verbosity=2, exit=False)
+            
         except FileNotFoundError as e:
             print(e)
         else:
             loop = False
-
-
-    
 
 
 
