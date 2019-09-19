@@ -2,7 +2,6 @@
 Author: Ashish, Julia, Aaron
 class GedcomParse includes methods to parse GEDCOM files
 """
-from collections import defaultdict
 import prettytable
 import datetime
 import TimeUtils
@@ -134,15 +133,13 @@ class GedcomParse():
                 children = family['CHIL'] if 'CHIL' in family else 'NA'
                 pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
             print(pt_families)
-    
-                          
-    
+          
     def check_date_legitimate(self, date_str, line_num, parsed_line):
-            if TimeUtils.legitimate_date(date_str):
-                return TimeUtils.legitimate_date(date_str)
-            else:
-                self.us42_errors_list.append([line_num, parsed_line])
-                return False
+        if TimeUtils.legitimate_date(date_str):
+            return TimeUtils.legitimate_date(date_str)
+        else:
+            self.us42_errors_list.append([line_num, parsed_line])
+            return False
 
     #----------US42-Illegitimate dates------------#
     def us_42(self):    
