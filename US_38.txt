@@ -1,0 +1,34 @@
+0 NOTE User Story-38 LIST UPCOMING BIRTHDAYS
+0 NOTE define James Cook - Birthday next week
+0 US38-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 24 SEP 1985
+0 NOTE define Jessica Cook - Birthday today
+0 US38-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 18 SEP 1990
+0 NOTE define Ben Stokes - Birthday passed
+0 US38-I03 INDI
+1 NAME Ben /Stokes/
+1 SEX M
+1 BIRT
+2 DATE 9 MAY 1960
+1 FAMC F01
+1 FAMS F02
+1 FAMS F03
+0 NOTE define Jill Harris - Birthday after 30 days
+0 US38-I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE 18 DEC 1964
+0 NOTE define Rita Fuller - Birthday in exactly 30 days
+0 US38-I05 INDI
+1 NAME Rita /Fuller/
+1 SEX F
+1 BIRT
+2 DATE 18 OCT 1962
+1 FAMS F03
