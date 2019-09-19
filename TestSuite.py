@@ -1,6 +1,6 @@
 import unittest
 import TimeUtils
-from Project03 import GedcomParse
+from Project import GedcomParse
 import datetime
 
 class TestSuite(unittest.TestCase):
