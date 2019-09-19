@@ -144,18 +144,16 @@ class GedcomParse():
                 self.us42_errors_list.append([line_num, parsed_line])
                 return False
 
-
-
-    #----------Illegitimate dates------------#
+    #----------US42-Illegitimate dates------------#
     def us_42(self):    
         if len(self.us42_errors_list) != 0:
             print("\n\nUS42 - Illegitimate dates: ")
             for item in self.us42_errors_list:
                 print ("Illegitimate date on line {} : {}".format(item[0], item[1][2]))
         else:
-            print("No illegitimate dates")
+            print("\n\nUS42 - No illegitimate dates")
         
-    #-------List upcoming birthdays----------#
+    #-------US38-List upcoming birthdays----------#
     def us_38(self, today = None):
         for id in self.repository["INDI"]:
             individual = self.repository["INDI"][id]
@@ -168,32 +166,7 @@ class GedcomParse():
                 days_timedelta = birthday_date - today
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
-
-class TestSuite(unittest.TestCase):
-    parser = GedcomParse()
-    #User Story - 38
-    #List upcoming birthdays
-    #The file has birthdays that are today, in exactly 30 days, within the 30 day range, after 30 days, and birthday's that have passed
-    def test_us38(self):
-        self.parser.parseFile("US_38.txt")
-        today_str = "18 SEP 2019"
-        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
-        self.parser.us_38(today)
-        print(self.parser.us38_list)
-        self.assertEqual(self.parser.us38_list,[[6, 'US38-I01', 'James /Cook/', '24 SEP'], [0, 'US38-I02', 'Jessica /Cook/', '18 SEP'], [30, 'US38-I05', 'Rita /Fuller/', '18 OCT']])
-    
-    #User Story - 42
-    #Reject illegitimate dates
-    def test_us42(self):
-        self.assertEqual(TimeUtils.legitimate_date("30 FEB 2009"), False)
-        self.assertEqual(TimeUtils.legitimate_date("0 JAN 2009"), False)
-        self.assertEqual(TimeUtils.legitimate_date("DEC 2009"), False)
-        self.assertEqual(TimeUtils.legitimate_date("MAR"), False)
-        self.assertEqual(TimeUtils.legitimate_date("2019"), False)
-        self.assertNotEqual(TimeUtils.legitimate_date("29 FEB 2020"), False) #Leap year
-        
-
-            
+           
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -201,15 +174,28 @@ if __name__ == "__main__":
         file_name = input("Please enter the name of GEDCOM file to parse: ")
         try:
             parser.parseFile(file_name)
+            #prints individual and families tables
             parser.printResults()
+
+            #------US42----------#
+            #prints illegitimate dates list with line number
             parser.us_42()
+
+            #-------US38---------#
+            #This creates a list birthdays within the next 30 days
             parser.us_38()
-            unittest.main(verbosity=2, exit=False)
-            
+            #This prints the birthday list
+            if len(parser.us38_list) != 0:
+                print("\nUS38 - Birthday's in the next 30 days")
+                for item in parser.us38_list:
+                    if item[2] == 'NA':
+                        print("id: {}, Birthday: {}".format(item[1],item[3]))
+                    else:
+                        print("Name: {}, Birthday {}".format(item[2], item[3]))
+            else:
+                print("\nUS38 - No Birthday's in the next 30 days")
         except FileNotFoundError as e:
             print(e)
         else:
             loop = False
-
-
 
