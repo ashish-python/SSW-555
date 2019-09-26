@@ -2,17 +2,22 @@
 Author: Ashish, Julia, Aaron
 class GedcomParse includes methods to parse GEDCOM files
 """
-from collections import defaultdict
 import prettytable
 import datetime
+import TimeUtils
+import unittest
+import os
 
 class GedcomParse():
-    tags_mapped_to_levels = {"0":{"INDI", "FAM","NOTE", "TRLR", "HEAD"},
-     "1":{"NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "HUSB", "WIFE", "CHIL", "MARR", "DIV"}, 
-     "2":{"DATE"}}
-    
-    repository = dict()
-    current_record = dict()
+    def __init__(self):
+        self.tags_mapped_to_levels = {"0":{"INDI", "FAM","NOTE", "TRLR", "HEAD"},
+        "1":{"NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "HUSB", "WIFE", "CHIL", "MARR", "DIV"}, 
+        "2":{"DATE"}}
+        
+        self.repository = dict()
+        self.current_record = dict()
+        self.us42_errors_list = list()
+        self.us38_list = list()
 
     def parseFile(self, file_name):
         """
@@ -45,6 +50,8 @@ class GedcomParse():
                         if tag in self.repository:
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
+                            else:
+                                self.repository[tag][args].clear()
                         else:
                             self.repository[tag] = dict()
                             self.repository[tag][args] = dict() 
@@ -66,11 +73,10 @@ class GedcomParse():
                                                      
                                 else:
                                     if level == "2" and tag == 'DATE':
-                                        try:
-                                            date = datetime.datetime.strptime(args, "%d %b %Y")
-                                        except ValueError:
+                                        date = self.check_date_legitimate(args, counter, parsed_line)
+                                        if not date:
                                             self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = 'NA'
-                                            continue                                        
+                                            continue                   
                                         self.repository[self.current_record["root"]][self.current_record["root_id"]][self.current_record["level_one_tag"]] = date
                                     else:
                                         if tag in ["FAMC", "FAMS"]:
@@ -89,8 +95,7 @@ class GedcomParse():
                         continue
             fp.close()
             #print parsed results
-            self.printResults()
-    
+  
     def printResults(self):
         #---------------Individuals table-------------#
         
@@ -124,13 +129,44 @@ class GedcomParse():
                 divorced_datetime = family['DIV'] if ('DIV' in family and family['DIV'] is not 'NA') else 'NA'
                 divorced = datetime.datetime.strftime(divorced_datetime, "%Y-%m-%d") if divorced_datetime is not 'NA' else 'NA'
                 husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
-                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
+                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and husband_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
                 wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
-                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
+                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and wife_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
                 children = family['CHIL'] if 'CHIL' in family else 'NA'
                 pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
             print(pt_families)
-            
+          
+    def check_date_legitimate(self, date_str, line_num, parsed_line):
+        if TimeUtils.legitimate_date(date_str):
+            return TimeUtils.legitimate_date(date_str)
+        else:
+            self.us42_errors_list.append([line_num, parsed_line])
+            return False
+
+    #----------US42-Illegitimate dates------------#
+    def us_42(self):    
+        if len(self.us42_errors_list) != 0:
+            print("\n\nUS42 - Illegitimate dates: ")
+            for item in self.us42_errors_list:
+                print ("Error: Illegitimate date on line {} : {}".format(item[0], item[1][2]))
+        else:
+            print("\n\nUS42 - No illegitimate dates")
+        
+    #-------US38-List upcoming birthdays----------#
+    def us_38(self, today = None):
+        for id in self.repository["INDI"]:
+            individual = self.repository["INDI"][id]
+            if "BIRT" in individual  and individual["BIRT"] is not 'NA':
+                birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
+                birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
+                birthday_date = birthday_current_year.date()
+                if today is None:
+                    today = datetime.date.today()
+                days_timedelta = birthday_date - today
+                if days_timedelta.days >=0 and days_timedelta.days <=30:
+                    self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
+
+           
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -138,13 +174,28 @@ if __name__ == "__main__":
         file_name = input("Please enter the name of GEDCOM file to parse: ")
         try:
             parser.parseFile(file_name)
+            #prints individual and families tables
+            parser.printResults()
+
+            #------US42----------#
+            #prints illegitimate dates list with line number
+            parser.us_42()
+
+            #-------US38---------#
+            #This creates a list birthdays within the next 30 days
+            parser.us_38()
+            #This prints the birthday list
+            if len(parser.us38_list) != 0:
+                print("\nUS38 - Birthday's in the next 30 days")
+                for item in parser.us38_list:
+                    if item[2] == 'NA':
+                        print("id: {}, Birthday: {}".format(item[1],item[3]))
+                    else:
+                        print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
+            else:
+                print("\nUS38 - No Birthday's in the next 30 days")
         except FileNotFoundError as e:
             print(e)
         else:
             loop = False
-
-
-    
-
-
 
