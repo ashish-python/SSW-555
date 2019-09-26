@@ -1,0 +1,149 @@
+0 NOTE User Story-01 Dates before current Dates
+0 NOTE Define Han Solo - Birthday after current Dates
+0 I01 INDI
+1 NAME Han /Solo/
+2 GIVN Han
+2 SURN Solo
+2 _MARNM Solo
+1 SEX M
+1 BIRT
+2 DATE 13 OCT 2099
+1 FAMS F01
+1 FAMC F02
+0 NOTE Definite Leia Skywalker - Everything after current Dates
+0 I02 INDI
+1 NAME Leia /Skywalker/
+2 GIVN Leia
+2 SURN Skywalker
+2 _MARNM Solo
+1 SEX F
+1 BIRT
+2 DATE 21 OCT 3140
+1 DEAT Y
+2 DATE 27 DEC 3490
+1 FAMS F01
+1 FAMC F03
+0 NOTE Define Anakin Skywalker - Normal
+0 I03 INDI
+1 NAME Anakin /Skywalker/
+2 GIVN Anakin
+2 SURN Skywalker
+2 _MARNM Skywalker
+1 SEX M
+1 BIRT
+2 DATE 19 APR 1940
+1 FAMS F03
+0 NOTE Define Padme Amidala - Death after current Dates
+0 I04 INDI
+1 NAME Padme /Amidala/
+2 GIVN Padme
+2 SURN Amidala
+2 _MARNM Skywalker
+1 SEX F
+1 BIRT
+2 DATE 4 MAR 1932
+1 DEAT Y
+2 DATE 21 OCT 2022
+1 FAMS F03
+0 I05 INDI
+1 NAME Benjamin /Solo/
+2 GIVN Benjamin
+2 SURN Solo
+2 _MARNM Solo
+1 SEX M
+1 BIRT
+2 DATE 19 NOV 1973
+1 FAMC F01
+0 I06 INDI
+1 NAME Luke /Skywalker/
+2 GIVN Luke
+2 SURN Skywalker
+2 _MARNM Skywalker
+1 SEX M
+1 BIRT
+2 DATE 21 OCT 1956
+1 FAMS F04
+1 FAMC F03
+0 I07 INDI
+1 NAME Mara /Jade/
+2 GIVN Mara
+2 SURN Jade
+2 _MARNM Skywalker
+1 SEX F
+1 BIRT
+2 DATE 4 JUN 1960
+1 FAMS F04
+0 I08 INDI
+1 NAME Jaina /Skywalker/
+2 GIVN Jaina
+2 SURN Skywalker
+2 _MARNM Skywalker
+1 SEX F
+1 BIRT
+2 DATE 6 MAY 2005
+1 FAMC F04
+0 I09 INDI
+1 NAME Jacen /Skywalker/
+2 GIVN Jacen
+2 SURN Skywalker
+2 _MARNM Skywalker
+1 SEX M
+1 BIRT
+2 DATE 4 FEB 2003
+1 FAMC F04
+0 I10 INDI
+1 NAME Jonash /Solo/
+2 GIVN Jonash
+2 SURN Solo
+2 _MARNM Solo
+1 SEX M
+1 BIRT
+2 DATE 16 DEC 1920
+1 DEAT Y
+2 DATE 28 JUL 2010
+1 FAMS F02
+0 I11 INDI
+1 NAME Martha /Oraganda/
+2 GIVN Martha
+2 SURN Oraganda
+2 _MARNM Solo
+1 SEX F
+1 BIRT
+2 DATE 27 JAN 1920
+1 DEAT Y
+2 DATE 29 AUG 2005
+1 FAMS F02
+0 NOTE This family's divorced date is past current date
+0 F01 FAM
+1 HUSB I01
+1 WIFE I02
+1 CHIL I05
+1 MARR
+2 DATE 9 MAY 2980
+1 DIV
+2 DATE 8 APR 2990
+1 _CURRENT Y
+0 F02 FAM
+1 HUSB I10
+1 WIFE I11
+1 CHIL I01
+1 MARR
+2 DATE 4 AUG 1950
+1 _CURRENT Y
+0 F03 FAM
+1 HUSB I03
+1 WIFE I04
+1 CHIL I02
+1 CHIL I06
+1 MARR
+2 DATE 4 AUG 1950
+1 _CURRENT Y
+0 F04 FAM
+1 HUSB I06
+1 WIFE I07
+1 CHIL I08
+1 CHIL I09
+1 MARR
+2 DATE 5 OCT 2001
+1 _CURRENT Y
+0 TRLR

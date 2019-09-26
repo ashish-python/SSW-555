@@ -18,6 +18,7 @@ class GedcomParse():
         self.current_record = dict()
         self.us42_errors_list = list()
         self.us38_list = list()
+        self.us01_list = list()
 
     def parseFile(self, file_name):
         """
@@ -50,6 +51,8 @@ class GedcomParse():
                         if tag in self.repository:
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
+                            else:
+                                self.repository[tag][args].clear()
                         else:
                             self.repository[tag] = dict()
                             self.repository[tag][args] = dict() 
@@ -127,9 +130,9 @@ class GedcomParse():
                 divorced_datetime = family['DIV'] if ('DIV' in family and family['DIV'] is not 'NA') else 'NA'
                 divorced = datetime.datetime.strftime(divorced_datetime, "%Y-%m-%d") if divorced_datetime is not 'NA' else 'NA'
                 husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
-                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
+                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and husband_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
                 wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
-                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
+                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and wife_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
                 children = family['CHIL'] if 'CHIL' in family else 'NA'
                 pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
             print(pt_families)
@@ -146,7 +149,7 @@ class GedcomParse():
         if len(self.us42_errors_list) != 0:
             print("\n\nUS42 - Illegitimate dates: ")
             for item in self.us42_errors_list:
-                print ("Illegitimate date on line {} : {}".format(item[0], item[1][2]))
+                print ("Error: Illegitimate date on line {} : {}".format(item[0], item[1][2]))
         else:
             print("\n\nUS42 - No illegitimate dates")
         
@@ -163,6 +166,39 @@ class GedcomParse():
                 days_timedelta = birthday_date - today
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
+
+
+    #------US01-Dates before current date------------#
+    def us_01(self):
+        today = datetime.date.today()
+        for id in self.repository['INDI']:
+            individual = self.repository["INDI"][id]
+            if "BIRT" in individual and individual['BIRT'] is not 'NA':
+                date = individual['BIRT'].date()
+                if (date > today):
+                    self.us01_list.append(["Birth",date, id, individual['NAME']])
+
+            if "DEAT" in individual and individual['DEAT'] is not 'NA':
+                date = individual['DEAT'].date()
+                if (date > today):
+                    self.us01_list.append(["Death", date, id, individual['NAME']])
+        for id in self.repository['FAM']:
+            family = self.repository["FAM"][id]
+            if "DIV" in family and family['DIV'] is not 'NA':
+                date = family['DIV'].date()
+                if (date > today):
+                    self.us01_list.append(["Divorce", date, id])
+
+            if "MARR" in family and family['MARR'] is not 'NA':
+                date = family['MARR'].date()
+                if (date > today):
+                    self.us01_list.append(["Marriage",date, id])
+
+        #----------US22-Unique IDs--------------------#             
+        def us_22(self):
+            for id in self.repository['INDI']:
+                print
+
            
 if __name__ == "__main__":   
     parser = GedcomParse()
@@ -188,9 +224,27 @@ if __name__ == "__main__":
                     if item[2] == 'NA':
                         print("id: {}, Birthday: {}".format(item[1],item[3]))
                     else:
-                        print("Name: {}, Birthday {}".format(item[2], item[3]))
+                        print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
             else:
                 print("\nUS38 - No Birthday's in the next 30 days")
+        
+            #--------US01---------------#
+            #Prints a list of birthdays, deaths, divorce, marriage dates that are after the current date
+            parser.us_01()
+            #This prints the dates after current date list
+            if len(parser.us01_list) !=0:
+                print("\nUS01 - Dates that are after the current date")
+                for yoyo in parser.us01_list:
+                    if yoyo[0] == "Birth":
+                        print("Name: {}, Birthdate: {}".format(yoyo[3], yoyo[1]))
+                    if yoyo[0] == "Death":
+                        print("Name: {}, Deathdate: {}".format(yoyo[3], yoyo[1]))
+                    if yoyo[0] == "Marriage":
+                        print("Family ID: {}, Marriage Date: {}".format(yoyo[2], yoyo[1]))
+                    if yoyo[0] == "Divorce":
+                        print("Family ID: {}, Divorce Date: {}".format(yoyo[2], yoyo[1]))
+            else: print("\nUS01 - There are no current users with dates that are after the current date")
+
         except FileNotFoundError as e:
             print(e)
         else:
