@@ -25,21 +25,23 @@ class TestSuite(unittest.TestCase):
         self.assertEqual(TimeUtils.legitimate_date("2019"), False)
         self.assertNotEqual(TimeUtils.legitimate_date("29 FEB 2020"), False) #Leap year
 
+     #User Story - 04
+     #Marriage date before divorce date
 
-    #User Story - 01 
-    #Finds any date that is after the current date
-    def test_us01(self):
-        self.parser.parseFile("US_01.txt")
-        today_str = datetime.date.today()
-        self.parser.us_01()
-        self.assertEqual(self.parser.us01_list,[ 
-        ['Birth', datetime.date(3140, 10, 21), 'I01', 'Leia /Skywalker/'], 
-        ['Death', datetime.date(3490, 12, 27), 'I01', 'Leia /Skywalker/'], 
-        ['Death', datetime.date(2022, 10, 21), 'I04', 'Padme /Amidala/'], 
-        ['Divorce', datetime.date(2990, 4, 8), 'F01'], 
-        ['Marriage', datetime.date(2980, 5, 9), 'F01']])
+    def test_us04(self):
+        self.parser.parseFile("US_04.txt")
+        self.parser.us_04()
+        self.assertEqual(self.parser.us04_list,[
+        [datetime.date(2010, 7, 8), datetime.date(2020, 7, 8), 'F06']
+        ])
 
-    #def test_us
+    #User Story - 05
+    #Marriage date before death date
+    def test_us05(self):
+        self.parser.parseFile("US_05.txt")
+        self.parser.us_05()
+        self.assertEqual(self.parser.us05_list,[
+        [datetime.date(1984, 6, 10), datetime.date(1985, 10, 10), 'US05-I10']])
 
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
