@@ -19,7 +19,7 @@ class GedcomParse():
         self.us42_errors_list = list()
         self.us38_list = list()
         self.us01_list = list()
-
+        self.us22_list = list()
     def parseFile(self, file_name):
         """
         This method parses the GEDCOM file
@@ -49,10 +49,13 @@ class GedcomParse():
                         #If the tag (INDI or FAM) is in the repository and tag_id not in the repository, create a dictionary for [tag][args]. Example ["INDI"]["ID01"]
                         #this will have all the information for this tag and id
                         if tag in self.repository:
+                            
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
                             else:
+                                self.us22_list.append([tag,args])
                                 self.repository[tag][args].clear()
+                                
                         else:
                             self.repository[tag] = dict()
                             self.repository[tag][args] = dict() 
@@ -167,8 +170,7 @@ class GedcomParse():
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
 
-
-    #------US01-Dates before current date------------#
+    #-------------US01-Dates before current Date------------------#
     def us_01(self):
         today = datetime.date.today()
         for id in self.repository['INDI']:
@@ -182,22 +184,21 @@ class GedcomParse():
                 date = individual['DEAT'].date()
                 if (date > today):
                     self.us01_list.append(["Death", date, id, individual['NAME']])
-        for id in self.repository['FAM']:
-            family = self.repository["FAM"][id]
-            if "DIV" in family and family['DIV'] is not 'NA':
-                date = family['DIV'].date()
-                if (date > today):
-                    self.us01_list.append(["Divorce", date, id])
+        if 'FAM' in self.repository:
+            for id in self.repository['FAM']:
+                family = self.repository["FAM"][id]
+                if "DIV" in family and family['DIV'] is not 'NA':
+                    date = family['DIV'].date()
+                    if (date > today):
+                        self.us01_list.append(["Divorce", date, id])
 
-            if "MARR" in family and family['MARR'] is not 'NA':
-                date = family['MARR'].date()
-                if (date > today):
-                    self.us01_list.append(["Marriage",date, id])
+                    if "MARR" in family and family['MARR'] is not 'NA':
+                        date = family['MARR'].date()
+                        if (date > today):
+                            self.us01_list.append(["Marriage",date, id])
 
-        #----------US22-Unique IDs--------------------#             
-        def us_22(self):
-            for id in self.repository['INDI']:
-                print
+
+    #------------------US22-Unique Ids-------------------------# 
 
            
 if __name__ == "__main__":   
@@ -227,10 +228,12 @@ if __name__ == "__main__":
                         print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
             else:
                 print("\nUS38 - No Birthday's in the next 30 days")
-        
+            
+
             #--------US01---------------#
             #Prints a list of birthdays, deaths, divorce, marriage dates that are after the current date
             parser.us_01()
+            
             #This prints the dates after current date list
             if len(parser.us01_list) !=0:
                 print("\nUS01 - Dates that are after the current date")
@@ -244,6 +247,19 @@ if __name__ == "__main__":
                     if yoyo[0] == "Divorce":
                         print("Family ID: {}, Divorce Date: {}".format(yoyo[2], yoyo[1]))
             else: print("\nUS01 - There are no current users with dates that are after the current date")
+            
+
+            #--------US22--------------#
+            #This prints all of the IDs that are being repeated
+            if len(parser.us22_list) !=0:
+                print("\nUS22 - WARNING: The following IDs are being repeated")
+                for i in parser.us22_list:
+                    if i[0] == 'INDI':
+                        print("Individual IDs {}".format(i[1]))
+                    elif i[0] == 'FAM':
+                        print("Family IDs {}".format(i[1]))
+            else: print ("\nUS22 - All unique IDs")
+
 
         except FileNotFoundError as e:
             print(e)
