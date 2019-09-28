@@ -4,16 +4,16 @@ from Project import GedcomParse
 import datetime
 
 class TestSuite(unittest.TestCase):
-    parser = GedcomParse()
     #User Story - 38
     #List upcoming birthdays
     #The file has birthdays that are today, in exactly 30 days, within the 30 day range, after 30 days, and birthday's that have passed
     def test_us38(self):
-        self.parser.parseFile("US_38.txt")
+        parser = GedcomParse()
+        parser.parseFile("US_38.txt")
         today_str = "18 SEP 2019"
         today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
-        self.parser.us_38(today)
-        self.assertEqual(self.parser.us38_list,[[6, 'US38-I01', 'James /Cook/', '24 SEP'], [0, 'US38-I02', 'Jessica /Cook/', '18 SEP'], [30, 'US38-I05', 'Rita /Fuller/', '18 OCT']])
+        parser.us_38(today)
+        self.assertEqual(parser.us38_list,[[6, 'US38-I01', 'James /Cook/', '24 SEP'], [0, 'US38-I02', 'Jessica /Cook/', '18 SEP'], [30, 'US38-I05', 'Rita /Fuller/', '18 OCT']])
     
     #User Story - 42
     #Reject illegitimate dates

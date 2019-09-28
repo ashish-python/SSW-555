@@ -18,7 +18,7 @@ class GedcomParse():
         self.current_record = dict()
         self.us42_errors_list = list()
         self.us38_list = list()
-
+        
     def parseFile(self, file_name):
         """
         This method parses the GEDCOM file
@@ -50,6 +50,8 @@ class GedcomParse():
                         if tag in self.repository:
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
+                            else:
+                                self.repository[tag][args].clear()
                         else:
                             self.repository[tag] = dict()
                             self.repository[tag][args] = dict() 
@@ -127,9 +129,9 @@ class GedcomParse():
                 divorced_datetime = family['DIV'] if ('DIV' in family and family['DIV'] is not 'NA') else 'NA'
                 divorced = datetime.datetime.strftime(divorced_datetime, "%Y-%m-%d") if divorced_datetime is not 'NA' else 'NA'
                 husband_id = family['HUSB'] if 'HUSB' in family else 'NA'
-                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
+                husband_name = self.repository['INDI'][husband_id]['NAME'] if (husband_id is not 'NA' and husband_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][husband_id]) else 'NA'
                 wife_id = family['WIFE'] if 'WIFE' in family else 'NA'
-                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
+                wife_name = self.repository['INDI'][wife_id]['NAME'] if (wife_id is not 'NA' and wife_id in self.repository['INDI'] and 'NAME' in self.repository['INDI'][wife_id]) else 'NA'
                 children = family['CHIL'] if 'CHIL' in family else 'NA'
                 pt_families.add_row([id, married, divorced, husband_id, husband_name, wife_id, wife_name, children])
             print(pt_families)
@@ -146,7 +148,7 @@ class GedcomParse():
         if len(self.us42_errors_list) != 0:
             print("\n\nUS42 - Illegitimate dates: ")
             for item in self.us42_errors_list:
-                print ("Illegitimate date on line {} : {}".format(item[0], item[1][2]))
+                print ("Error: Illegitimate date on line {} : {}".format(item[0], item[1][2]))
         else:
             print("\n\nUS42 - No illegitimate dates")
         
@@ -154,7 +156,7 @@ class GedcomParse():
     def us_38(self, today = None):
         for id in self.repository["INDI"]:
             individual = self.repository["INDI"][id]
-            if "BIRT" in individual  and individual["BIRT"] is not 'NA':
+            if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].year < datetime.datetime.today().year:
                 birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
                 birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
                 birthday_date = birthday_current_year.date()
@@ -163,7 +165,7 @@ class GedcomParse():
                 days_timedelta = birthday_date - today
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
-           
+    
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -181,16 +183,16 @@ if __name__ == "__main__":
             #-------US38---------#
             #This creates a list birthdays within the next 30 days
             parser.us_38()
+            print("\nUS38 - Birthday's in the next 30 days")
             #This prints the birthday list
             if len(parser.us38_list) != 0:
-                print("\nUS38 - Birthday's in the next 30 days")
                 for item in parser.us38_list:
                     if item[2] == 'NA':
                         print("id: {}, Birthday: {}".format(item[1],item[3]))
                     else:
-                        print("Name: {}, Birthday {}".format(item[2], item[3]))
+                        print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
             else:
-                print("\nUS38 - No Birthday's in the next 30 days")
+                print("No Birthday's in the next 30 days")
         except FileNotFoundError as e:
             print(e)
         else:
