@@ -18,7 +18,7 @@ class GedcomParse():
         self.current_record = dict()
         self.us42_errors_list = list()
         self.us38_list = list()
-
+        
     def parseFile(self, file_name):
         """
         This method parses the GEDCOM file
@@ -156,7 +156,7 @@ class GedcomParse():
     def us_38(self, today = None):
         for id in self.repository["INDI"]:
             individual = self.repository["INDI"][id]
-            if "BIRT" in individual  and individual["BIRT"] is not 'NA':
+            if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].year < datetime.datetime.today().year:
                 birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
                 birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
                 birthday_date = birthday_current_year.date()
@@ -165,8 +165,7 @@ class GedcomParse():
                 days_timedelta = birthday_date - today
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
-
-           
+    
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -184,16 +183,16 @@ if __name__ == "__main__":
             #-------US38---------#
             #This creates a list birthdays within the next 30 days
             parser.us_38()
+            print("\nUS38 - Birthday's in the next 30 days")
             #This prints the birthday list
             if len(parser.us38_list) != 0:
-                print("\nUS38 - Birthday's in the next 30 days")
                 for item in parser.us38_list:
                     if item[2] == 'NA':
                         print("id: {}, Birthday: {}".format(item[1],item[3]))
                     else:
                         print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
             else:
-                print("\nUS38 - No Birthday's in the next 30 days")
+                print("No Birthday's in the next 30 days")
         except FileNotFoundError as e:
             print(e)
         else:
