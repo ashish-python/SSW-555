@@ -171,8 +171,9 @@ class GedcomParse():
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
 
     #-------------US01-Dates before current Date------------------#
-    def us_01(self):
-        today = datetime.date.today()
+    def us_01(self, today = None):
+        if today is None:
+            today = datetime.date.today()
         for id in self.repository['INDI']:
             individual = self.repository["INDI"][id]
             if "BIRT" in individual and individual['BIRT'] is not 'NA':
@@ -196,10 +197,6 @@ class GedcomParse():
                         date = family['MARR'].date()
                         if (date > today):
                             self.us01_list.append(["Marriage",date, id])
-
-
-    #------------------US22-Unique Ids-------------------------# 
-
            
 if __name__ == "__main__":   
     parser = GedcomParse()
@@ -238,14 +235,15 @@ if __name__ == "__main__":
             if len(parser.us01_list) !=0:
                 print("\nUS01 - Dates that are after the current date")
                 for yoyo in parser.us01_list:
+                    date_str = datetime.datetime.strftime(yoyo[1], "%d %b %Y")
                     if yoyo[0] == "Birth":
-                        print("Name: {}, Birthdate: {}".format(yoyo[3], yoyo[1]))
+                        print("Name: {}, Birthdate: {}".format(yoyo[3], date_str))
                     if yoyo[0] == "Death":
-                        print("Name: {}, Deathdate: {}".format(yoyo[3], yoyo[1]))
+                        print("Name: {}, Deathdate: {}".format(yoyo[3], date_str))
                     if yoyo[0] == "Marriage":
-                        print("Family ID: {}, Marriage Date: {}".format(yoyo[2], yoyo[1]))
+                        print("Family ID: {}, Marriage Date: {}".format(yoyo[2], date_str))
                     if yoyo[0] == "Divorce":
-                        print("Family ID: {}, Divorce Date: {}".format(yoyo[2], yoyo[1]))
+                        print("Family ID: {}, Divorce Date: {}".format(yoyo[2], date_str))
             else: print("\nUS01 - There are no current users with dates that are after the current date")
             
 

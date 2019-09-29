@@ -32,7 +32,9 @@ class TestSuite(unittest.TestCase):
     def test_us01(self):
         parser = GedcomParse()
         parser.parseFile("US_01.txt")
-        parser.us_01()
+        today_str = "29 SEP 2019"
+        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
+        parser.us_01(today)
         self.assertEqual(parser.us01_list, [['Birth', datetime.date(2099, 7, 13), 'US01-I01', 'Han /Solo/'], ['Birth', datetime.date(3140, 10, 21), 'US01-I02', 'Leia /Skywalker/'], ['Death', datetime.date(3490, 12, 27), 'US01-I02', 'Leia /Skywalker/'], ['Death', datetime.date(2022, 10, 21), 'US01-I04', 'Padme /Amidala/'], ['Divorce', datetime.date(2990, 4, 8), 'US01-F01'], ['Marriage', datetime.date(2980, 5, 9), 'US01-F01']])
 
     #User Sotry - 22
