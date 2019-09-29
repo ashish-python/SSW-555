@@ -16,9 +16,9 @@
 1 SEX M
 1 BIRT
 2 DATE 9 MAY 1960
-1 FAMC F01
-1 FAMS F02
-1 FAMS F03
+1 FAMC US38-F01
+1 FAMS US38-F02
+1 FAMS US38-F03
 0 NOTE define Jill Harris - Birthday after 30 days
 0 US38-I04 INDI
 1 NAME Jill /Harris/
@@ -31,4 +31,10 @@
 1 SEX F
 1 BIRT
 2 DATE 18 OCT 1962
-1 FAMS F03
+1 FAMS US38-F03
+0 NOTE define Jimmy Fuller - Born in the future. This should show up in the birthday's in the next 30 days
+0 US38-I06 INDI
+1 NAME Jimmy /Fuller/
+1 SEX M
+1 BIRT
+2 DATE 18 OCT 2020
