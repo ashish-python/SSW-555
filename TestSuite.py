@@ -25,5 +25,23 @@ class TestSuite(unittest.TestCase):
         self.assertEqual(TimeUtils.legitimate_date("2019"), False)
         self.assertNotEqual(TimeUtils.legitimate_date("29 FEB 2020"), False) #Leap year
 
+     #User Story - 04
+     #Marriage date before divorce date
+
+    def test_us04(self):
+        parser = GedcomParse()
+        parser.parseFile("US_04.txt")
+        parser.us_04()
+        self.assertEqual(parser.us04_list,[
+        [datetime.date(2010, 7, 8), datetime.date(2020, 7, 8), 'F06']])
+
+    #User Story - 05
+    #Marriage date before death date
+    def test_us05(self):
+        parser = GedcomParse()
+        parser.parseFile("US_05.txt")
+        parser.us_05()
+        self.assertEqual(parser.us05_list,[['F05', 'US05-I10', 'Randi /Gold/', '10 Oct 1985', '10 Jun 1984']])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
