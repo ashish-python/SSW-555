@@ -37,12 +37,29 @@ class TestSuite(unittest.TestCase):
         parser.us_01(today)
         self.assertEqual(parser.us01_list, [['Birth', datetime.date(2099, 7, 13), 'US01-I01', 'Han /Solo/'], ['Birth', datetime.date(3140, 10, 21), 'US01-I02', 'Leia /Skywalker/'], ['Death', datetime.date(3490, 12, 27), 'US01-I02', 'Leia /Skywalker/'], ['Death', datetime.date(2022, 10, 21), 'US01-I04', 'Padme /Amidala/'], ['Divorce', datetime.date(2990, 4, 8), 'US01-F01'], ['Marriage', datetime.date(2980, 5, 9), 'US01-F01']])
 
-    #User Sotry - 22
+    #User Story - 22
     #Finds any repeated IDs 
     def test_us22(self):
         parser = GedcomParse()
         parser.parseFile("US_22.txt")
         self.assertEqual(parser.us22_list, [['INDI', 'US22-I01'], ['INDI', 'US22-I02'], ['FAM', 'US22-F01']])
+
+    #User Story - 04
+    #Marriage date before divorce date
+    def test_us04(self):
+        parser = GedcomParse()
+        parser.parseFile("US_04.txt")
+        parser.us_04()
+        self.assertEqual(parser.us04_list,[
+        [datetime.date(2010, 7, 8), datetime.date(2020, 7, 8), 'F06']])
+
+    #User Story - 05
+    #Marriage date before death date
+    def test_us05(self):
+        parser = GedcomParse()
+        parser.parseFile("US_05.txt")
+        parser.us_05()
+        self.assertEqual(parser.us05_list,[['F05', 'US05-I10', 'Randi /Gold/', '10 Oct 1985', '10 Jun 1984']])
 
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
