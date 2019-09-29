@@ -18,6 +18,7 @@ class GedcomParse():
         self.current_record = dict()
         self.us42_errors_list = list()
         self.us38_list = list()
+        self.us22_list = list()
         
     def parseFile(self, file_name):
         """
@@ -51,6 +52,7 @@ class GedcomParse():
                             if args not in self.repository[tag]:
                                 self.repository[tag][args] = dict()
                             else:
+                                self.us22_list.append([tag,args])
                                 self.repository[tag][args].clear()
                         else:
                             self.repository[tag] = dict()
@@ -170,6 +172,8 @@ class GedcomParse():
                 days_timedelta = birthday_date - today
                 if days_timedelta.days >=0 and days_timedelta.days <=30:
                     self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
+
+     
     
 if __name__ == "__main__":   
     parser = GedcomParse()
@@ -198,6 +202,17 @@ if __name__ == "__main__":
                         print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
             else:
                 print("No Birthday's in the next 30 days")
+
+            #--------US22--------------#
+            #This prints all of the IDs that are being repeated
+            if len(parser.us22_list) !=0:
+                print("\nUS22 - WARNING: The following IDs are being repeated")
+                for i in parser.us22_list:
+                    if i[0] == 'INDI':
+                        print("Individual IDs {}".format(i[1]))
+                    elif i[0] == 'FAM':
+                        print("Family IDs {}".format(i[1]))
+            else: print ("\nUS22 - All unique IDs")
         except FileNotFoundError as e:
             print(e)
         else:
