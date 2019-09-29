@@ -32,3 +32,9 @@
 1 BIRT
 2 DATE 18 OCT 1962
 1 FAMS US38-F03
+0 NOTE define Jimmy Fuller - Born in the future. This should show up in the birthday's in the next 30 days
+0 US38-I06 INDI
+1 NAME Jimmy /Fuller/
+1 SEX M
+1 BIRT
+2 DATE 18 OCT 2020

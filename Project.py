@@ -112,7 +112,12 @@ class GedcomParse():
                 age = datetime.date.today().year - birthday_datetime.year if birthday_datetime is not 'NA' else 'NA'
                 death_datetime = individual['DEAT'] if ('DEAT' in individual and individual['DEAT'] is not 'NA') else 'NA'
                 death = datetime.datetime.strftime(death_datetime, "%Y-%m-%d") if death_datetime is not 'NA' else 'NA'
-                alive = True if ('DEAT' not in individual or individual['DEAT'] is 'NA') else False
+                if "DEAT" in individual and individual["DEAT"] is not "NA":
+                    alive = False
+                elif ("BIRT" in individual and individual["BIRT"] is not "NA"):
+                    alive = True
+                else:
+                    alive = "NA"
                 child = individual['FAMC'] if 'FAMC' in individual else 'NA'
                 spouse = individual['FAMS'] if 'FAMS' in individual else 'NA'
                 pt_individuals.add_row([id, name, gender, birthday, age, alive, death, child, spouse])
@@ -148,7 +153,7 @@ class GedcomParse():
         if len(self.us42_errors_list) != 0:
             print("\n\nUS42 - Illegitimate dates: ")
             for item in self.us42_errors_list:
-                print ("Error: Illegitimate date on line {} : {}".format(item[0], item[1][2]))
+                print ("ERROR: Illegitimate date on line {} : {}".format(item[0], item[1][2]))
         else:
             print("\n\nUS42 - No illegitimate dates")
         

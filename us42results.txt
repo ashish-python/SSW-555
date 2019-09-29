@@ -1,0 +1,25 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+|    ID    |      Name      | Gender |  Birthday  | Age | Alive | Death |    Child     |          Spouse          |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+| US42-I01 |  James /Cook/  |   M    | 1985-09-24 |  34 |  True |   NA  |      NA      |            NA            |
+| US42-I02 | Jessica /Cook/ |   NA   |     NA     |  NA |   NA  |   NA  |      NA      |            NA            |
+| US42-I03 |  Ben /Stokes/  |   M    |     NA     |  NA |   NA  |   NA  | {'US42-F01'} | {'US42-F03', 'US42-F02'} |
+| US42-I04 | Jill /Harris/  |   F    |     NA     |  NA |   NA  |   NA  |      NA      |            NA            |
+| US42-I05 | Rita /Fuller/  |   F    |     NA     |  NA |   NA  |   NA  |      NA      |       {'US42-F03'}       |
+| US42-I06 | Jimmy /Fuller/ |   M    |     NA     |  NA |   NA  |   NA  |      NA      |            NA            |
+| US42-I07 | Jimmy /Fuller/ |   M    |     NA     |  NA |   NA  |   NA  |      NA      |            NA            |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+
+
+US42 - Illegitimate dates: 
+ERROR: Illegitimate date on line 12 : 0 SEP 1990
+ERROR: Illegitimate date on line 18 : 9 MAYO 1960
+ERROR: Illegitimate date on line 27 : 18 DEC -1964
+ERROR: Illegitimate date on line 33 : OCT 1962
+ERROR: Illegitimate date on line 40 : 18 2020
+ERROR: Illegitimate date on line 46 : 18
+
+US38 - Birthday's in the next 30 days
+No Birthday's in the next 30 days

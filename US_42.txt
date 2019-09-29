@@ -1,0 +1,46 @@
+0 NOTE User Story-42 Illegitimate dates
+0 NOTE define James Cook - Birth date is valid
+0 US42-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 24 SEP 1985
+0 NOTE define Jessica Cook - Birth date has invalid day value
+0 US42-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 0 SEP 1990
+0 NOTE define Ben Stokes - Death date has invalid month value
+0 US42-I03 INDI
+1 NAME Ben /Stokes/
+1 SEX M
+1 DEAT
+2 DATE 9 MAYO 1960
+1 FAMC US42-F01
+1 FAMS US42-F02
+1 FAMS US42-F03
+0 NOTE define Jill Harris - Birth date has invalid year value
+0 US42-I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE 18 DEC -1964
+0 NOTE define Rita Fuller - Birth date has missing day
+0 US42-I05 INDI
+1 NAME Rita /Fuller/
+1 SEX F
+1 BIRT
+2 DATE OCT 1962
+1 FAMS US42-F03
+0 NOTE define Jimmy Fuller - Death date has missing month
+0 US42-I06 INDI
+1 NAME Jimmy /Fuller/
+1 SEX M
+1 DEAT
+2 DATE 18 2020
+0 NOTE define Charlie Fuller - Death date has missing year
+0 US42-I07 INDI
+1 NAME Charlie /Fuller/
+1 SEX M
+1 DEAT
+2 DATE 18
