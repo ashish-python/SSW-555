@@ -307,7 +307,7 @@ if __name__ == "__main__":
                 for item in parser.us05_list:
                     print("family_id: {}, individual_id: {}, Name: {}, Death: {}, Marriage: {}".format(item[0], item[1], item[2], item[3], item[4]))
             else:
-                print("No Birthday's in the next 30 days")
+                print("No Death before Marriage")
         except FileNotFoundError as e:
             print(e)
         else:
