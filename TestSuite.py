@@ -4,7 +4,6 @@ from Project import GedcomParse
 import datetime
 
 class TestSuite(unittest.TestCase):
-    
     #User Story - 38
     #List upcoming birthdays
     #The file has birthdays that are today, in exactly 30 days, within the 30 day range, after 30 days, and birthday's that have passed

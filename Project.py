@@ -158,7 +158,7 @@ class GedcomParse():
     def us_38(self, today = None):
         for id in self.repository["INDI"]:
             individual = self.repository["INDI"][id]
-            if "BIRT" in individual  and individual["BIRT"] is not 'NA':
+            if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].year < datetime.datetime.today().year:
                 birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
                 birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
                 birthday_date = birthday_current_year.date()
@@ -180,7 +180,6 @@ class GedcomParse():
                         self.us04_list.append([datetime.datetime.strftime(family["DIV"], "%d %b %Y"), datetime.datetime.strftime(family["MARR"], "%d %b %Y"), id])
 
     #----- US05-Death before Marriage ---------#
-    
     def us_05(self):
         for family_id in self.repository['FAM']:
             family = self.repository['FAM'][family_id]
@@ -197,8 +196,7 @@ class GedcomParse():
                         if self.repository["INDI"][wife_id]["DEAT"] < family["MARR"]:
                             wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
                             self.us05_list.append([family_id, wife_id, wife_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][wife_id]["DEAT"], "%d %b %Y")])
- 
-     
+
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -216,9 +214,9 @@ if __name__ == "__main__":
             #-------US38---------#
             #This creates a list birthdays within the next 30 days
             parser.us_38()
+            print("\nUS38 - Birthday's in the next 30 days")
             #This prints the birthday list
             if len(parser.us38_list) != 0:
-                print("\nUS38 - Birthday's in the next 30 days")
                 for item in parser.us38_list:
                     if item[2] == 'NA':
                         print("id: {}, Birthday: {}".format(item[1], item[3]))
@@ -243,7 +241,6 @@ if __name__ == "__main__":
                     print("family_id: {}, individual_id: {}, Name: {}, Death: {}, Marriage: {}".format(item[0], item[1], item[2], item[3], item[4]))
             else:
                 print("No deaths before marriage")
-            
         except FileNotFoundError as e:
             print(e)
         else:
