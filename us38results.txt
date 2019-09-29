@@ -1,0 +1,18 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+|    ID    |      Name      | Gender |  Birthday  | Age | Alive | Death |    Child     |          Spouse          |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+| US38-I01 |  James /Cook/  |   M    | 1985-09-24 |  34 |  True |   NA  |      NA      |            NA            |
+| US38-I02 | Jessica /Cook/ |   NA   | 1990-09-18 |  29 |  True |   NA  |      NA      |            NA            |
+| US38-I03 |  Ben /Stokes/  |   M    | 1960-05-09 |  59 |  True |   NA  | {'US38-F01'} | {'US38-F02', 'US38-F03'} |
+| US38-I04 | Jill /Harris/  |   F    | 1964-12-18 |  55 |  True |   NA  |      NA      |            NA            |
+| US38-I05 | Rita /Fuller/  |   F    | 1962-10-18 |  57 |  True |   NA  |      NA      |       {'US38-F03'}       |
+| US38-I06 | Jimmy /Fuller/ |   M    | 2020-10-18 |  -1 |  True |   NA  |      NA      |            NA            |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+Name: Rita /Fuller/, id: US38-I05, Birthday 18 OCT
