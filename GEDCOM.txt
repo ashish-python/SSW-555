@@ -1,4 +1,13 @@
 0 NOTE Repository URL - https://github.com/ashish-python/SSW555tmAaronAshishJulia2019Fall/
+0 NOTE define Jake Stokes - Duplicate ID
+0 I01 INDI
+1 NAME Jake /Stokes/
+1 SEX M
+1 BIRT
+2 DATE 26 OCT 1919
+1 DEAT
+2 DATE 25 SEP 1959
+1 FAMS F01
 0 NOTE define Roger Stokes
 0 I01 INDI
 1 NAME Roger /Stokes/
@@ -22,7 +31,7 @@
 1 NAME Ben /Stokes/
 1 SEX M
 1 BIRT
-2 DATE 9 MAY 1960
+2 DATE 9 MAY 2029
 1 FAMC F01
 1 FAMS F02
 1 FAMS F03
@@ -74,7 +83,7 @@
 0 NOTE -----------------Families------------------
 0 F01 FAM
 1 MARR
-2 DATE 8 AUG 1958
+2 DATE 8 AUG 1960
 1 HUSB I01
 1 WIFE I02
 1 CHIL I03
@@ -97,5 +106,5 @@
 1 HUSB I08
 1 WIFE I06
 1 DIV
-2 DATE 10 SEP 2019
+2 DATE 10 SEP 2018
 0 NOTE This is the end
