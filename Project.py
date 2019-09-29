@@ -174,25 +174,30 @@ class GedcomParse():
             family = self.repository['FAM'][id]
             if "DIV" in family and family['DIV'] is not 'NA':
                 divorceDate = family['DIV'].date()
-                if family['MARR'] is not 'NA' :
+                if 'MARR' in family and family['MARR'] is not 'NA' :
                     marriageDate = family['MARR'].date()
                     if (marriageDate > divorceDate):
-                        self.us04_list.append([divorceDate, marriageDate, id])
+                        self.us04_list.append([datetime.datetime.strftime(family["DIV"], "%d %b %Y"), datetime.datetime.strftime(family["MARR"], "%d %b %Y"), id])
 
-    #------US05-Marriage before Death------------#
+    #----- US05-Death before Marriage ---------#
     
     def us_05(self):
-        for id in self.repository['FAM']:
-            family= self.repository['FAM'][id]
-            if family['MARR'] is not 'NA' :
-                    marriageDate = family['MARR'].date()
-        for id in self.repository['INDI']:
-            individual = self.repository['INDI'][id]
-            if "DEAT" in individual and individual['DEAT'] is not 'NA' :
-                    deathDate = individual['DEAT'].date()
-                    if (deathDate < marriageDate):
-                       self.us05_list.append([deathDate, marriageDate, id])
-                        
+        for family_id in self.repository['FAM']:
+            family = self.repository['FAM'][family_id]
+            if "MARR" in family and family["MARR"] is not "NA":
+                if "HUSB" in family:
+                    husband_id = family["HUSB"]
+                    if husband_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["DEAT"] is not "NA":
+                        if self.repository["INDI"][husband_id]["DEAT"] < family["MARR"]:
+                            husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
+                            self.us05_list.append([family_id, husband_id, husband_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][husband_id]["DEAT"], "%d %b %Y")])
+                if "WIFE" in family:
+                    wife_id = family["WIFE"]
+                    if wife_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["DEAT"] is not "NA":
+                        if self.repository["INDI"][wife_id]["DEAT"] < family["MARR"]:
+                            wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
+                            self.us05_list.append([family_id, wife_id, wife_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][wife_id]["DEAT"], "%d %b %Y")])
+ 
      
 if __name__ == "__main__":   
     parser = GedcomParse()
@@ -216,30 +221,29 @@ if __name__ == "__main__":
                 print("\nUS38 - Birthday's in the next 30 days")
                 for item in parser.us38_list:
                     if item[2] == 'NA':
-                        print("id: {}, Birthday: {}".format(item[1],item[3]))
+                        print("id: {}, Birthday: {}".format(item[1], item[3]))
                     else:
-                        print("Name: {}, id: {}, Birthday {}".format(item[2], item[1],item[3]))
+                        print("Name: {}, id: {}, Birthday {}".format(item[2], item[1], item[3]))
             else:
                 print("\nUS38 - No Birthday's in the next 30 days")
                 
-            #----------US04------------#
+            #----------Print results---US04-Marriage before divorce-----------#
             parser.us_04()
             if len(parser.us04_list) !=0:
                 print("\nUS04- Marriage before Divorce")
                 for marrdiv in parser.us04_list:
-                    print("Family ID {}, Divorce Date {}, Marriage Date {}".format(marrdiv[2], marrdiv[0], marrdiv[1]))
+                    print("Family-ID: {}, Divorce date: {}, Marriage date: {}".format(marrdiv[2], marrdiv[0], marrdiv[1]))
             else: print("\nUS04-There are no divorce dates before marriage dates")
-            print(parser.us04_list)
-
-            #---------US05------------#
+        
+            #-------Print results---US05-Death before marriage----#
             parser.us_05()
-            if len(parser.us05_list) !=0:
-                print("\nUS05- Marriage before Death")
-                for marrdeat in parser.us05_list:
-                    print("Individual ID {}, Marriage Date {}, Death Date{}".format(marrdeat[2], marrdeat[1], marrdeat[0]))
-            else: print("\nUS05- There are no death dates before marriage dates")
-            print(parser.us05_list)
-
+            print("\nERROR: US05 - Death before Marriage")
+            if len(parser.us05_list) != 0:
+                for item in parser.us05_list:
+                    print("family_id: {}, individual_id: {}, Name: {}, Death: {}, Marriage: {}".format(item[0], item[1], item[2], item[3], item[4]))
+            else:
+                print("No deaths before marriage")
+            
         except FileNotFoundError as e:
             print(e)
         else:
