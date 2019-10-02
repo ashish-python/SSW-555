@@ -1,0 +1,37 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+|    ID    |      Name      | Gender |  Birthday  | Age | Alive | Death |    Child     |          Spouse          |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+| US35-I01 |  James /Cook/  |   M    | 2019-09-25 |  0  |  True |   NA  |      NA      |            NA            |
+| US35-I02 | Jessica /Cook/ |   NA   | 2019-10-02 |  0  |  True |   NA  |      NA      |            NA            |
+| US35-I03 |  Ben /Stokes/  |   M    | 2018-05-09 |  1  |  True |   NA  | {'US35-F01'} | {'US35-F02', 'US35-F03'} |
+| US35-I04 | Jill /Harris/  |   F    |     NA     |  NA |   NA  |   NA  |      NA      |            NA            |
+| US35-I05 | Rita /Fuller/  |   F    | 2019-09-02 |  0  |  True |   NA  |      NA      |       {'US35-F03'}       |
++----------+----------------+--------+------------+-----+-------+-------+--------------+--------------------------+
+
+
+US42 - Illegitimate dates: 
+ERROR: Illegitimate date on line 27 :  20 DEC 2019
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+ERROR: US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+Name: James /Cook/, id: US35-I01, Birth date 25 Sep 2019
+Name: Jessica /Cook/, id: US35-I02, Birth date 02 Oct 2019
+Name: Rita /Fuller/, id: US35-I05, Birth date 02 Sep 2019

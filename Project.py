@@ -22,6 +22,8 @@ class GedcomParse():
         self.us22_list = list()
         self.us04_list = list()
         self.us05_list = list()
+        self.us36_list = list()
+        self.us35_list = list()
     
     def parseFile(self, file_name):
         """
@@ -165,17 +167,18 @@ class GedcomParse():
         
     #-------US38-List upcoming birthdays----------#
     def us_38(self, today = None):
-        for id in self.repository["INDI"]:
-            individual = self.repository["INDI"][id]
-            if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].year < datetime.datetime.today().year:
-                birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
-                birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
-                birthday_date = birthday_current_year.date()
-                if today is None:
+        if "INDI" in self.repository:
+            if today is None:
                     today = datetime.date.today()
-                days_timedelta = birthday_date - today
-                if days_timedelta.days >=0 and days_timedelta.days <=30:
-                    self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
+            for id in self.repository["INDI"]:
+                individual = self.repository["INDI"][id]
+                if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].year < datetime.datetime.today().year:
+                    birthday_date_month = individual["BIRT"].strftime("%d %b").upper()
+                    birthday_current_year = datetime.datetime.strptime(birthday_date_month + " " + str(datetime.date.today().year), "%d %b %Y")
+                    birthday_date = birthday_current_year.date()
+                    days_timedelta = birthday_date - today
+                    if days_timedelta.days >=0 and days_timedelta.days <=30:
+                        self.us38_list.append([days_timedelta.days, id, individual['NAME'], birthday_date_month])
 
     #-------------US01-Dates before current Date------------------#
     def us_01(self, today = None):
@@ -207,33 +210,61 @@ class GedcomParse():
           
     #------US04-Marriage before Divorce----------#
     def us_04(self):
-        for id in self.repository['FAM']:
-            family = self.repository['FAM'][id]
-            if "DIV" in family and family['DIV'] is not 'NA':
-                divorceDate = family['DIV'].date()
-                if 'MARR' in family and family['MARR'] is not 'NA' :
-                    marriageDate = family['MARR'].date()
-                    if (marriageDate > divorceDate):
-                        self.us04_list.append([datetime.datetime.strftime(family["DIV"], "%d %b %Y"), datetime.datetime.strftime(family["MARR"], "%d %b %Y"), id])
+        if 'FAM' in self.repository:
+            for id in self.repository['FAM']:
+                family = self.repository['FAM'][id]
+                if "DIV" in family and family['DIV'] is not 'NA':
+                    divorceDate = family['DIV'].date()
+                    if 'MARR' in family and family['MARR'] is not 'NA' :
+                        marriageDate = family['MARR'].date()
+                        if (marriageDate > divorceDate):
+                            self.us04_list.append([datetime.datetime.strftime(family["DIV"], "%d %b %Y"), datetime.datetime.strftime(family["MARR"], "%d %b %Y"), id])
 
     #----- US05-Death before Marriage ---------#
     def us_05(self):
-        for family_id in self.repository['FAM']:
-            family = self.repository['FAM'][family_id]
-            if "MARR" in family and family["MARR"] is not "NA":
-                if "HUSB" in family:
-                    husband_id = family["HUSB"]
-                    if husband_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["DEAT"] is not "NA":
-                        if self.repository["INDI"][husband_id]["DEAT"] < family["MARR"]:
-                            husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
-                            self.us05_list.append([family_id, husband_id, husband_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][husband_id]["DEAT"], "%d %b %Y")])
-                if "WIFE" in family:
-                    wife_id = family["WIFE"]
-                    if wife_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["DEAT"] is not "NA":
-                        if self.repository["INDI"][wife_id]["DEAT"] < family["MARR"]:
-                            wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
-                            self.us05_list.append([family_id, wife_id, wife_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][wife_id]["DEAT"], "%d %b %Y")])
+        if 'FAM' in self.repository:
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if "MARR" in family and family["MARR"] is not "NA":
+                    if "HUSB" in family:
+                        husband_id = family["HUSB"]
+                        if husband_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["DEAT"] is not "NA":
+                            if self.repository["INDI"][husband_id]["DEAT"] < family["MARR"]:
+                                husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
+                                self.us05_list.append([family_id, husband_id, husband_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][husband_id]["DEAT"], "%d %b %Y")])
+                    if "WIFE" in family:
+                        wife_id = family["WIFE"]
+                        if wife_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["DEAT"] is not "NA":
+                            if self.repository["INDI"][wife_id]["DEAT"] < family["MARR"]:
+                                wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
+                                self.us05_list.append([family_id, wife_id, wife_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][wife_id]["DEAT"], "%d %b %Y")])
 
+    #-------US36-Recent deaths----------#
+    def us_36(self, today = None):
+        if today is None:
+            today = datetime.date.today()
+        if "INDI" in self.repository:
+            for id in self.repository["INDI"]:
+                individual = self.repository["INDI"][id]
+                if "DEAT" in individual  and individual["DEAT"] is not 'NA' and individual["DEAT"].date() <= today:
+                    death_datetime = individual['DEAT']
+                    days_delta = death_datetime.date() - today
+                    if days_delta.days <=0 and days_delta.days >= -30:
+                        self.us36_list.append([days_delta.days, id, individual['NAME'], datetime.datetime.strftime(death_datetime, "%d %b %Y")])
+    
+    #-------US35-Recent births----------#
+    def us_35(self, today = None):
+        if today is None:
+            today = datetime.date.today()
+        if "INDI" in self.repository:
+            for id in self.repository["INDI"]:
+                individual = self.repository["INDI"][id]
+                if "BIRT" in individual  and individual["BIRT"] is not 'NA' and individual["BIRT"].date() <= today:
+                    birth_datetime = individual['BIRT']
+                    days_delta = birth_datetime.date() - today
+                    if days_delta.days <=0 and days_delta.days >= -30:
+                        self.us35_list.append([days_delta.days, id, individual['NAME'], datetime.datetime.strftime(birth_datetime, "%d %b %Y")])
+    
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -308,6 +339,25 @@ if __name__ == "__main__":
                     print("family_id: {}, individual_id: {}, Name: {}, Death: {}, Marriage: {}".format(item[0], item[1], item[2], item[3], item[4]))
             else:
                 print("No Death before Marriage")
+
+            #---------Print results---US36-List recent deaths----#
+            parser.us_36()
+            print("\nUS36 - Deaths in the last 30 days")
+            if len(parser.us36_list) != 0:
+                for item in parser.us36_list:
+                    print("Name: {}, id: {}, Death date {}".format(item[2], item[1], item[3]))
+            else:
+                print("\nNo Deaths in the last 30 days")
+
+            #---------Print results---US35-List recent births----#
+            parser.us_35()
+            print("\nUS35 - Births in the last 30 days")
+            if len(parser.us35_list) != 0:
+                for item in parser.us35_list:
+                    print("Name: {}, id: {}, Birth date {}".format(item[2], item[1], item[3]))
+            else:
+                print("No Births in the last 30 days")
+
         except FileNotFoundError as e:
             print(e)
         else:

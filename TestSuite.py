@@ -50,8 +50,7 @@ class TestSuite(unittest.TestCase):
         parser = GedcomParse()
         parser.parseFile("US_04.txt")
         parser.us_04()
-        self.assertEqual(parser.us04_list,[
-        [datetime.date(2010, 7, 8), datetime.date(2020, 7, 8), 'F06']])
+        self.assertEqual(parser.us04_list,[['08 Jul 2010', '08 Jul 2020', 'F06']])
 
     #User Story - 05
     #Marriage date before death date
@@ -60,6 +59,28 @@ class TestSuite(unittest.TestCase):
         parser.parseFile("US_05.txt")
         parser.us_05()
         self.assertEqual(parser.us05_list,[['F05', 'US05-I10', 'Randi /Gold/', '10 Oct 1985', '10 Jun 1984']])
+    
+    #User Story - 36
+    #List recent deaths
+    #The test file has deaths that are today, exactly 30 days ago, within the last 30 days, before the last 30 days, and date in the future
+    def test_us36(self):
+        parser = GedcomParse()
+        parser.parseFile("US_36.txt")
+        today_str = "02 OCT 2019"
+        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
+        parser.us_36(today)
+        self.assertEqual(parser.us36_list,[[-7, 'US36-I01', 'James /Cook/', '25 Sep 2019'], [0, 'US36-I02', 'Jessica /Cook/', '02 Oct 2019'], [-30, 'US36-I05', 'Rita /Fuller/', '02 Sep 2019']])
 
+    #User Story - 35
+    #List recent births
+    #The test file has births that are today, exactly 30 days ago, within the last 30 days, before the last 30 days, and a date in the future
+    def test_us35(self):
+        parser = GedcomParse()
+        parser.parseFile("US_35.txt")
+        today_str = "02 OCT 2019"
+        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
+        parser.us_35(today)
+        self.assertEqual(parser.us35_list, [[-7, 'US35-I01', 'James /Cook/', '25 Sep 2019'], [0, 'US35-I02', 'Jessica /Cook/', '02 Oct 2019'], [-30, 'US35-I05', 'Rita /Fuller/', '02 Sep 2019']])
+    
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
