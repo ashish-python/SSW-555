@@ -22,7 +22,9 @@ class GedcomParse():
         self.us22_list = list()
         self.us04_list = list()
         self.us05_list = list()
-    
+        self.us08_list = list()
+        self.us16_list = list()
+
     def parseFile(self, file_name):
         """
         This method parses the GEDCOM file
@@ -234,6 +236,45 @@ class GedcomParse():
                             wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
                             self.us05_list.append([family_id, wife_id, wife_name, datetime.datetime.strftime(family["MARR"], "%d %b %Y"), datetime.datetime.strftime(self.repository["INDI"][wife_id]["DEAT"], "%d %b %Y")])
 
+   #----- US08-Birth before Marriage ---------#
+    def us_08(self):
+        for family_id in self.repository['FAM']:
+            family = self.repository['FAM'][family_id]
+            if "MARR" in family and family["MARR"] is not "NA":
+                marriageDate = family["MARR"].date()
+                if "CHIL" in family:
+                    child_id = family["CHIL"]
+                    for s in child_id:
+                        if s in self.repository['INDI'] and "BIRT" in self.repository['INDI'][s] and self.repository["INDI"][s]['BIRT'] is not 'NA':
+                            childs_birthday = self.repository['INDI'][s]['BIRT'].date()
+                            childs_name = self.repository['INDI'][s]['NAME']
+                            if childs_birthday < marriageDate:
+                                self.us08_list.append(["Marriage", childs_name, s, datetime.datetime.strftime(childs_birthday, "%d %b %Y"), datetime.datetime.strftime(marriageDate, "%d %b %Y")])
+            if "DIV" in family and family ["MARR"] is not "NA":
+                divorceDate = family["DIV"].date()
+                if childs_birthday > (divorceDate+datetime.timedelta(9*365/12)):
+                    self.us08_list.append(["Divorce", childs_name, s, datetime.datetime.strftime(childs_birthday, "%d %b %Y"), datetime.datetime.strftime(divorceDate, "%d %b %Y")])
+    
+    #------ US16-Male Last Name -----------#
+    def us_16(self):
+        name = list()
+        for family_id in self.repository['FAM']:
+            family = self.repository['FAM'][family_id]
+            if 'HUSB' in family:
+                husband_id = family["HUSB"]
+                if husband_id in self.repository["INDI"] :
+                    name = self.repository['INDI'][husband_id]['NAME'].split('/')
+                    husbandLastName = name[1]
+                    if 'CHIL' in family:
+                        child_id = family['CHIL']
+                        for s in child_id:
+                            if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is 'M':
+                                name = self.repository['INDI'][s]['NAME'].split('/')
+                                childLastName = name[1]
+                                if childLastName != husbandLastName:
+                                    self.us16_list.append([self.repository['INDI'][s]['NAME'], self.repository['INDI'][husband_id]['NAME']])
+
+
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -308,6 +349,32 @@ if __name__ == "__main__":
                     print("family_id: {}, individual_id: {}, Name: {}, Death: {}, Marriage: {}".format(item[0], item[1], item[2], item[3], item[4]))
             else:
                 print("No Death before Marriage")
+
+
+            #------US08-Birth before marriage-------#
+            # This will print out all of the births that are before marriage or any births that are after 9 months of a divorce 
+            parser.us_08()
+            
+            if len(parser.us08_list) !=0:
+                print ("\nERROR: US08 - Birth after marriage or Birth after 9 months divorce")
+                for item in parser.us08_list:
+                    if (item[0] == "Marriage"):
+                        print("Child ID: {}, Child Name: {}, Child Birthday: {}, Parents Marriage Date: {}".format(item[2], item[1], item[3], item[4]))
+                    if (item[0] == "Divorce"):
+                        print("Child ID: {}, Child Name: {}, Child Birthday: {}, Parents Divorce Date: {}".format(item[2], item[1], item[3], item[4]))
+            else: 
+                print("\nUS08 - There are no births after marriage or births after 9 months of divorce")
+
+
+            #------US16 - Male Last Name-------#
+            # This will print out any males in the family that don't have the same last name
+            parser.us_16()
+            if len(parser.us16_list) !=0:
+                print ("\nERROR: US16 - Males without the same last name")
+                for item in parser.us16_list:
+                    print("Child's Name: {}, Father's Name: {}".format(item[0], item[1]))
+            else: 
+                print("\nUS16 - All males in the family has the same last name")
         except FileNotFoundError as e:
             print(e)
         else:
