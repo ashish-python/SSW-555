@@ -61,5 +61,28 @@ class TestSuite(unittest.TestCase):
         parser.us_05()
         self.assertEqual(parser.us05_list,[['F05', 'US05-I10', 'Randi /Gold/', '10 Oct 1985', '10 Jun 1984']])
 
+    #User Story - 08
+    #Birth before marraige and/or 9 months after divorce
+    def test_us08(self):
+        parser = GedcomParse()
+        parser.parseFile("US_08.txt")
+        parser.us_08()
+        self.assertEqual(parser.us08_list,[['Divorce', 'Benjamin /Solo/', 'US08-I5', '19 Nov 1991', '08 Apr 1990'], ['Marriage', 'Han /Solo/', 'US08-I1', '13 Jul 1942', '04 Aug 1950']])
+    
+    def test_us16(self):
+        parser = GedcomParse()
+        parser.parseFile("US_16.txt")
+        parser.us_16()
+        self.assertEqual(parser.us16_list,[['Benjamin /Ford/', 'Han /Solo/'], ['Jacen /Hamill/', 'Luke /Skywalker/']])
+
+    #User Story- 06
+    #Death before divorce
+    def test_us06(self):
+        parser = GedcomParse()
+        parser.parseFile("US_06.txt")
+        parser.us_06()
+        self.assertEqual(parser.us06_list,[['F06', 'US06-I12', 'Jill /Maisel/', '08 Jul 1990', '05 Nov 1980']])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
