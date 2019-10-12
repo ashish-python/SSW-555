@@ -4,7 +4,7 @@ python:
 
 before_install:
 - sudo apt-get update
-- sudo apt-get install prettytable -y
+- sudo apt-get install python-prettytable -y
 
 # command to run tests
 script:
