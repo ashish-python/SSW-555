@@ -1,0 +1,59 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+|    ID    |        Name        | Gender |  Birthday  | Age | Alive |   Death    |    Child    |    Spouse   |
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+| US08-I1  |     Han /Solo/     |   M    | 1942-07-13 |  77 |  True |     NA     | {'US08-F2'} | {'US08-F1'} |
+| US08-I10 |   Jonash /Solo/    |   M    | 1920-12-16 |  99 | False | 2010-07-28 |      NA     | {'US08-F2'} |
+| US08-I11 | Martha /Oraganda/  |   F    | 1920-01-27 |  99 | False | 2005-08-29 |      NA     | {'US08-F2'} |
+| US08-I2  |  Leia /Skywalker/  |   F    | 1956-10-21 |  63 | False | 2016-12-27 | {'US08-F3'} | {'US08-F1'} |
+| US08-I3  | Anakin /Skywalker/ |   M    | 1940-04-19 |  79 |  True |     NA     |      NA     | {'US08-F3'} |
+| US08-I4  |  Padme /Amidala/   |   F    | 1932-03-04 |  87 | False | 1956-10-21 |      NA     | {'US08-F3'} |
+| US08-I5  |  Benjamin /Solo/   |   M    | 1991-11-19 |  28 |  True |     NA     | {'US08-F1'} |      NA     |
+| US08-I6  |  Luke /Skywalker/  |   M    | 1956-10-21 |  63 |  True |     NA     | {'US08-F3'} | {'US08-F4'} |
+| US08-I7  |    Mara /Jade/     |   F    | 1960-06-04 |  59 |  True |     NA     |      NA     | {'US08-F4'} |
+| US08-I8  | Jaina /Skywalker/  |   F    | 2005-05-06 |  14 |  True |     NA     | {'US08-F4'} |      NA     |
+| US08-I9  | Jacen /Skywalker/  |   M    | 2003-02-04 |  16 |  True |     NA     | {'US08-F4'} |      NA     |
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+
+Families table:
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+|    ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID  |     Wife Name     |        Children        |
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+| US08-F1 | 1980-05-09 | 1990-04-08 |  US08-I1   |     Han /Solo/     | US08-I2  |  Leia /Skywalker/ |      {'US08-I5'}       |
+| US08-F2 | 1950-08-04 |     NA     |  US08-I10  |   Jonash /Solo/    | US08-I11 | Martha /Oraganda/ |      {'US08-I1'}       |
+| US08-F3 | 1950-08-04 |     NA     |  US08-I3   | Anakin /Skywalker/ | US08-I4  |  Padme /Amidala/  | {'US08-I6', 'US08-I2'} |
+| US08-F4 | 2001-10-05 |     NA     |  US08-I6   |  Luke /Skywalker/  | US08-I7  |    Mara /Jade/    | {'US08-I9', 'US08-I8'} |
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+Name: Leia /Skywalker/, id: US08-I2, Birthday 21 OCT
+Name: Luke /Skywalker/, id: US08-I6, Birthday 21 OCT
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+ERROR: US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - Birth after marriage or Birth after 9 months divorce
+ERROR: Child ID: US08-I5, Child Name: Benjamin /Solo/, Child Birthday: 19 Nov 1991, Parents Divorce Date: 08 Apr 1990
+ERROR: Child ID: US08-I1, Child Name: Han /Solo/, Child Birthday: 13 Jul 1942, Parents Marriage Date: 04 Aug 1950
+
+US16 - All males in the family have the same last name
+
+US07- Less than 150 years old
+No Births in the last 30 days

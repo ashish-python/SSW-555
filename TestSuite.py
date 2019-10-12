@@ -82,5 +82,39 @@ class TestSuite(unittest.TestCase):
         parser.us_35(today)
         self.assertEqual(parser.us35_list, [[-7, 'US35-I01', 'James /Cook/', '25 Sep 2019'], [0, 'US35-I02', 'Jessica /Cook/', '02 Oct 2019'], [-30, 'US35-I05', 'Rita /Fuller/', '02 Sep 2019']])
     
+    #User Story - 08
+    #Birth before marriage and/or 9 months after divorce
+    def test_us08(self):
+        parser = GedcomParse()
+        parser.parseFile("US_08.txt")
+        parser.us_08()
+        self.assertEqual(parser.us08_list,[['Divorce', 'Benjamin /Solo/', 'US08-I5', '19 Nov 1991', '08 Apr 1990'], ['Marriage', 'Han /Solo/', 'US08-I1', '13 Jul 1942', '04 Aug 1950']])
+    
+    #User Story - 16
+    #All male members of a family should have the same last name
+    def test_us16(self):
+        parser = GedcomParse()
+        parser.parseFile("US_16.txt")
+        parser.us_16()
+        self.assertEqual(parser.us16_list,[['Benjamin /Ford/', 'Han /Solo/', 'US16-F1'], ['Jacen /Hamill/', 'Luke /Skywalker/', 'US16-F4']])
+
+    #User Story - 06
+    #Death before divorce
+    def test_us06(self):
+        parser = GedcomParse()
+        parser.parseFile("US_06.txt")
+        parser.us_06()
+        self.assertEqual(parser.us06_list,[['F06', 'US06-I12', 'Jill /Maisel/', '08 Jul 1990', '05 Nov 1980']])
+
+    #User Story - 07
+    #Less than 150 years old
+    def test_us07(self):
+        parser = GedcomParse()
+        parser.parseFile("US_07.txt")
+        today_str = "09 OCT 2019"
+        today = datetime.datetime.strptime(today_str, "%d %b %Y")
+        parser.us_07(today)
+        self.assertEqual(parser.us07_list, [['death_after_150', 'US07-I99', 'William /Burr/', '05 Jun 1850', '19 Dec 2001'], ['alive_over_150', 'US07-I01', 'Julia /Cahn/', '16 Sep 1800', '09 Oct 2019']])
+    
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
