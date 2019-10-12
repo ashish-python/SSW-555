@@ -12,9 +12,9 @@ Individuals table:
 |  US07-I06 |   Renee /Fluxgold/  |   F    | 1937-03-13 |  82 | False | 2015-11-05 |      NA      |    {'F03'}     |
 |  US07-I07 |   Beatrice /Cohen/  |   M    | 1940-03-23 |  79 |  True |     NA     |      NA      |    {'F02'}     |
 |  US07-I08 |     David /Cahn/    |   M    | 1941-04-10 |  78 | False | 2015-11-18 |      NA      |    {'F02'}     |
-|  US07-I09 | Michael /Weinstein/ |   M    | 1967-03-05 |  52 |  True |     NA     |   {'F03'}    | {'F05', 'F04'} |
+|  US07-I09 | Michael /Weinstein/ |   M    | 1967-03-05 |  52 |  True |     NA     |   {'F03'}    | {'F04', 'F05'} |
 |  US07-I10 |     Randi /Gold/    |   F    | 1969-01-02 |  50 | False | 1984-06-10 |      NA      |    {'F05'}     |
-|  US07-I12 |    Jill /Maisel/    |   F    | 1970-10-05 |  49 |  True |     NA     |      NA      | {'F06', 'F04'} |
+|  US07-I12 |    Jill /Maisel/    |   F    | 1970-10-05 |  49 |  True |     NA     |      NA      | {'F04', 'F06'} |
 |  US07-I13 |    Bruce /Maisel/   |   M    | 2000-03-04 |  19 |  True |     NA     |   {'F04'}    |       NA       |
 |  US07-I14 |      John /Doe/     |   M    | 1960-06-19 |  59 |  True |     NA     |      NA      |    {'F06'}     |
 |  US07-I99 |    William /Burr/   |   M    | 1850-06-05 | 169 | False | 2001-12-19 | {'US07-F99'} |       NA       |
@@ -44,13 +44,12 @@ US01 - There are no current users with dates that are after the current date
 US22 - All unique IDs
 
 US04- Marriage before Divorce
-Family-ID: F06, Divorce date: 08 Jul 1990, Marriage date: 05 Sep 1992
+ERROR: Family ID: F06, Divorce date: 08 Jul 1990, Marriage date: 05 Sep 1992
 
-ERROR: US05 - Death before Marriage
-family_id: F05, individual_id: US07-I10, Name: Randi /Gold/, Death: 10 Oct 1985, Marriage: 10 Jun 1984
+US05 - Death before Marriage
+ERROR: Family ID: F05, individual_id: US07-I10, Name: Randi /Gold/, Death: 10 Oct 1985, Marriage: 10 Jun 1984
 
 US36 - Deaths in the last 30 days
-
 No Deaths in the last 30 days
 
 US35 - Births in the last 30 days
@@ -67,8 +66,7 @@ ERROR: Family ID: F04, Child's Name: Bruce /Maisel/, Father's Name: Michael /Wei
 
 US06 - Death before Divorce
 No Death before Divorce
-[['death_after_150', 'US07-I99', 'William /Burr/', '05 Jun 1850', '19 Dec 2001'], ['alive_over_150', 'US07-I01', 'Julia /Cahn/', '16 Sep 1800', '09 Oct 2019']]
 
 US07- Less than 150 years old
 ERROR: Older than 150 at the time of death - Individual ID: US07-I99, Name: William /Burr/, Birth date: 05 Jun 1850, Death date: 19 Dec 2001
-ERROR: Still alive and older than 150 - Individual ID: US07-I01, Name: Julia /Cahn/, Birth date: 16 Sep 1800, Today's date: 09 Oct 2019
+ERROR: Still alive and older than 150 - Individual ID: US07-I01, Name: Julia /Cahn/, Birth date: 16 Sep 1800, Today's date: 12 Oct 2019

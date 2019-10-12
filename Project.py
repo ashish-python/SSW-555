@@ -273,60 +273,63 @@ class GedcomParse():
     
     #----- US08-Birth before Marriage ---------#
     def us_08(self):
-        for family_id in self.repository['FAM']:
-            family = self.repository['FAM'][family_id]
-            if "MARR" in family and family["MARR"] is not "NA":
-                marriageDate = family["MARR"].date()
-                if "CHIL" in family:
-                    child_id = family["CHIL"]
-                    for s in child_id:
-                        if s in self.repository['INDI'] and "BIRT" in self.repository['INDI'][s] and self.repository["INDI"][s]['BIRT'] is not 'NA':
-                            childs_birthday = self.repository['INDI'][s]['BIRT'].date()
-                            childs_name = self.repository['INDI'][s]['NAME']
-                            if childs_birthday < marriageDate:
-                                self.us08_list.append(["Marriage", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(marriageDate)])
-            if "DIV" in family and family ["MARR"] is not "NA":
-                divorceDate = family["DIV"].date()
-                if childs_birthday > (divorceDate+datetime.timedelta(9*365/12)):
-                    self.us08_list.append(["Divorce", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(divorceDate)])
-    
+        if "FAM" in self.repository:
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if "MARR" in family and family["MARR"] is not "NA":
+                    marriageDate = family["MARR"].date()
+                    if "CHIL" in family:
+                        child_id = family["CHIL"]
+                        for s in child_id:
+                            if s in self.repository['INDI'] and "BIRT" in self.repository['INDI'][s] and self.repository["INDI"][s]['BIRT'] is not 'NA':
+                                childs_birthday = self.repository['INDI'][s]['BIRT'].date()
+                                childs_name = self.repository['INDI'][s]['NAME']
+                                if childs_birthday < marriageDate:
+                                    self.us08_list.append(["Marriage", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(marriageDate)])
+                if "DIV" in family and family ["MARR"] is not "NA":
+                    divorceDate = family["DIV"].date()
+                    if childs_birthday > (divorceDate+datetime.timedelta(9*365/12)):
+                        self.us08_list.append(["Divorce", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(divorceDate)])
+        
     #------ US16-Male Last Name -----------#
     def us_16(self):
-        name = list()
-        for family_id in self.repository['FAM']:
-            family = self.repository['FAM'][family_id]
-            if 'HUSB' in family:
-                husband_id = family["HUSB"]
-                if husband_id in self.repository["INDI"] :
-                    name = self.repository['INDI'][husband_id]['NAME'].split('/')
-                    husbandLastName = name[1]
-                    if 'CHIL' in family:
-                        child_id = family['CHIL']
-                        for s in child_id:
-                            if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is 'M':
-                                name = self.repository['INDI'][s]['NAME'].split('/')
-                                childLastName = name[1]
-                                if childLastName != husbandLastName:
-                                    self.us16_list.append([self.repository['INDI'][s]['NAME'], self.repository['INDI'][husband_id]['NAME'], family_id]) 
+        if "FAM" in self.repository:
+            name = list()
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if 'HUSB' in family:
+                    husband_id = family["HUSB"]
+                    if husband_id in self.repository["INDI"] :
+                        name = self.repository['INDI'][husband_id]['NAME'].split('/')
+                        husbandLastName = name[1]
+                        if 'CHIL' in family:
+                            child_id = family['CHIL']
+                            for s in child_id:
+                                if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is 'M':
+                                    name = self.repository['INDI'][s]['NAME'].split('/')
+                                    childLastName = name[1]
+                                    if childLastName != husbandLastName:
+                                        self.us16_list.append([self.repository['INDI'][s]['NAME'], self.repository['INDI'][husband_id]['NAME'], family_id]) 
 
     #--------US 06-Death before Divorce-------#
     def us_06(self):
-        for family_id in self.repository['FAM']:
-            family = self.repository['FAM'][family_id]
-            if "DIV" in family and family["DIV"] is not "NA":
-                if "HUSB" in family:
-                    husband_id = family["HUSB"]
-                    if husband_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["DEAT"] is not "NA":
-                        if self.repository["INDI"][husband_id]["DEAT"] < family["DIV"]:
-                            husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
-                            self.us06_list.append([family_id, husband_id, husband_name, datetime_to_string(family["DIV"]), datetime_to_string(self.repository["INDI"][husband_id]["DEAT"])])
-                if "WIFE" in family:
-                    wife_id = family["WIFE"]
-                    if wife_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["DEAT"] is not "NA":
-                        if self.repository["INDI"][wife_id]["DEAT"] < family["DIV"]:
-                            wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
-                            self.us06_list.append([family_id, wife_id, wife_name, datetime_to_string(family["DIV"]), datetime_to_string(self.repository["INDI"][wife_id]["DEAT"])])
-    
+        if "FAM" in self.repository:
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if "DIV" in family and family["DIV"] is not "NA":
+                    if "HUSB" in family:
+                        husband_id = family["HUSB"]
+                        if husband_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["DEAT"] is not "NA":
+                            if self.repository["INDI"][husband_id]["DEAT"] < family["DIV"]:
+                                husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
+                                self.us06_list.append([family_id, husband_id, husband_name, datetime_to_string(family["DIV"]), datetime_to_string(self.repository["INDI"][husband_id]["DEAT"])])
+                    if "WIFE" in family:
+                        wife_id = family["WIFE"]
+                        if wife_id in self.repository["INDI"] and "DEAT" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["DEAT"] is not "NA":
+                            if self.repository["INDI"][wife_id]["DEAT"] < family["DIV"]:
+                                wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
+                                self.us06_list.append([family_id, wife_id, wife_name, datetime_to_string(family["DIV"]), datetime_to_string(self.repository["INDI"][wife_id]["DEAT"])])
+        
     #------------US07-Death should be less than 150 years after birth for dead people, and current date should be less than 150 years after birth for all living people--#
     def us_07(self, today = None):
         if "INDI" in self.repository:
@@ -425,7 +428,7 @@ if __name__ == "__main__":
                 for item in parser.us36_list:
                     print("Name: {}, id: {}, Death date {}".format(item[2], item[1], item[3]))
             else:
-                print("\nNo Deaths in the last 30 days")
+                print("No Deaths in the last 30 days")
 
             #---------Print results---US35-List recent births----#
             parser.us_35()
