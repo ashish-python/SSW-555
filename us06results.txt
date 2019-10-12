@@ -1,0 +1,71 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++-----------+---------------------+--------+------------+-----+-------+------------+---------+----------------+
+|     ID    |         Name        | Gender |  Birthday  | Age | Alive |   Death    |  Child  |     Spouse     |
++-----------+---------------------+--------+------------+-----+-------+------------+---------+----------------+
+|  US06-I01 |     Julia /Cahn/    |   F    | 1997-09-16 |  22 |  True |     NA     | {'F01'} |       NA       |
+| US06-I011 |  Sophie /Weinstein/ |   F    | 2003-02-06 |  16 |  True |     NA     | {'F05'} |       NA       |
+|  US06-I02 |     Adam /Cahn/     |   M    | 1964-11-17 |  55 |  True |     NA     | {'F02'} |    {'F01'}     |
+|  US06-I03 |  Alisa /Weinstein/  |   F    | 1963-06-15 |  56 |  True |     NA     | {'F03'} |    {'F01'}     |
+|  US06-I04 |    Zachary /Cahn/   |   M    | 1993-04-10 |  26 |  True |     NA     | {'F01'} |       NA       |
+|  US06-I05 | Bernard /Weinstein/ |   M    | 1938-08-27 |  81 |  True |     NA     |    NA   |    {'F03'}     |
+|  US06-I06 |   Renee /Fluxgold/  |   F    | 1937-03-13 |  82 | False | 2015-11-05 |    NA   |    {'F03'}     |
+|  US06-I07 |   Beatrice /Cohen/  |   M    | 1940-03-23 |  79 |  True |     NA     |    NA   |    {'F02'}     |
+|  US06-I08 |     David /Cahn/    |   M    | 1941-04-10 |  78 | False | 2015-11-18 |    NA   |    {'F02'}     |
+|  US06-I09 | Michael /Weinstein/ |   M    | 1967-03-05 |  52 |  True |     NA     | {'F03'} | {'F04', 'F05'} |
+|  US06-I10 |     Randi /Gold/    |   F    | 1969-01-02 |  50 | False | 1984-06-10 |    NA   |    {'F05'}     |
+|  US06-I12 |    Jill /Maisel/    |   F    | 1970-10-05 |  49 | False | 1980-11-05 |    NA   | {'F06', 'F04'} |
+|  US06-I13 |    Bruce /Maisel/   |   M    | 2000-03-04 |  19 |  True |     NA     | {'F04'} |       NA       |
+|  US06-I14 |      John /Doe/     |   M    | 1960-06-19 |  59 |  True |     NA     |    NA   |    {'F06'}     |
++-----------+---------------------+--------+------------+-----+-------+------------+---------+----------------+
+
+Families table:
++-----+------------+------------+------------+---------------------+----------+-------------------+--------------------------+
+|  ID |  Married   |  Divorced  | Husband ID |     Husband Name    | Wife ID  |     Wife Name     |         Children         |
++-----+------------+------------+------------+---------------------+----------+-------------------+--------------------------+
+| F01 | 1990-09-01 |     NA     |  US06-I02  |     Adam /Cahn/     | US06-I03 | Alisa /Weinstein/ | {'US06-I04', 'US06-I01'} |
+| F02 | 1960-05-04 |     NA     |  US06-I07  |   Beatrice /Cohen/  | US06-I08 |    David /Cahn/   |       {'US06-I02'}       |
+| F03 |     NA     |     NA     |  US06-I05  | Bernard /Weinstein/ | US06-I06 |  Renee /Fluxgold/ | {'US06-I09', 'US06-I03'} |
+| F04 | 2009-08-07 |     NA     |  US06-I09  | Michael /Weinstein/ | US06-I12 |   Jill /Maisel/   |       {'US06-I13'}       |
+| F05 | 1985-10-10 |     NA     |  US06-I09  | Michael /Weinstein/ | US06-I10 |    Randi /Gold/   |       {'US06-I11'}       |
+| F06 | 1992-09-05 | 1990-07-08 |  US06-I14  |      John /Doe/     | US06-I12 |   Jill /Maisel/   |            NA            |
++-----+------------+------------+------------+---------------------+----------+-------------------+--------------------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04- Marriage before Divorce
+ERROR: Family ID: F06, Divorce date: 08 Jul 1990, Marriage date: 05 Sep 1992
+
+US05 - Death before Marriage
+ERROR: Family ID: F04, individual_id: US06-I12, Name: Jill /Maisel/, Death: 07 Aug 2009, Marriage: 05 Nov 1980
+ERROR: Family ID: F06, individual_id: US06-I12, Name: Jill /Maisel/, Death: 05 Sep 1992, Marriage: 05 Nov 1980
+ERROR: Family ID: F05, individual_id: US06-I10, Name: Randi /Gold/, Death: 10 Oct 1985, Marriage: 10 Jun 1984
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - Birth after marriage or Birth after 9 months divorce
+ERROR: Child ID: US06-I13, Child Name: Bruce /Maisel/, Child Birthday: 04 Mar 2000, Parents Marriage Date: 07 Aug 2009
+ERROR: Child ID: US06-I13, Child Name: Bruce /Maisel/, Child Birthday: 04 Mar 2000, Parents Divorce Date: 08 Jul 1990
+
+US16 - Males without the same last name
+ERROR: Family ID: F02, Child's Name: Adam /Cahn/, Father's Name: Beatrice /Cohen/
+ERROR: Family ID: F04, Child's Name: Bruce /Maisel/, Father's Name: Michael /Weinstein/
+
+US06 - Death before Divorce
+ERROR: Family ID: F06, Individual ID: US06-I12, Name: Jill /Maisel/, Death date: 08 Jul 1990, Divorce date: 05 Nov 1980
+
+US07- Less than 150 years old
+No one over 150 years old

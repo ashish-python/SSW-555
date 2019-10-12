@@ -1,0 +1,34 @@
+0 NOTE User Story-35 LIST RECENT BIRTHS
+0 NOTE define James Cook - Birth within the last 30 days
+0 US35-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 2019
+0 NOTE define Jessica Cook - Birth today
+0 US35-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 02 OCT 2019
+0 NOTE define Ben Stokes - Birth before the last 30 days
+0 US35-I03 INDI
+1 NAME Ben /Stokes/
+1 SEX M
+1 BIRT
+2 DATE 9 MAY 2018
+1 FAMC US35-F01
+1 FAMS US35-F02
+1 FAMS US35-F03
+0 NOTE define Jill Harris - BIRTH in the future. This date should not show up.
+0 US35-I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE  20 DEC 2019
+0 NOTE define Rita Fuller - Birth exactly 30 days ago
+0 US35-I05 INDI
+1 NAME Rita /Fuller/
+1 SEX F
+1 BIRT
+2 DATE 02 SEP 2019
+1 FAMS US35-F03

@@ -1,0 +1,45 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------+--------+----------+-----+-------+------------+--------------+--------------------------+
+|    ID    |      Name      | Gender | Birthday | Age | Alive |   Death    |    Child     |          Spouse          |
++----------+----------------+--------+----------+-----+-------+------------+--------------+--------------------------+
+| US36-I01 |  James /Cook/  |   M    |    NA    |  NA | False | 2019-09-25 |      NA      |            NA            |
+| US36-I02 | Jessica /Cook/ |   NA   |    NA    |  NA | False | 2019-10-02 |      NA      |            NA            |
+| US36-I03 |  Ben /Stokes/  |   M    |    NA    |  NA | False | 2018-05-09 | {'US36-F01'} | {'US36-F02', 'US36-F03'} |
+| US36-I04 | Jill /Harris/  |   F    |    NA    |  NA |   NA  |     NA     |      NA      |            NA            |
+| US36-I05 | Rita /Fuller/  |   F    |    NA    |  NA | False | 2019-09-02 |      NA      |       {'US36-F03'}       |
++----------+----------------+--------+----------+-----+-------+------------+--------------+--------------------------+
+
+
+US42 - Illegitimate dates: 
+ERROR: Illegitimate date on line 27 :  20 DEC 2019
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+Name: James /Cook/, id: US36-I01, Death date 25 Sep 2019
+Name: Jessica /Cook/, id: US36-I02, Death date 02 Oct 2019
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
