@@ -2,9 +2,13 @@ language: python
 python:
  - "2.7"
 
-install:
-- pip install python-prettytable
+before_install:
+- sudo apt-get update
+- sudo apt-get install -y python-prettytable
 
 # command to run tests
 script:
  - python -m unittest TestSuite
+
+virtualenv:
+system_site_packages: true
