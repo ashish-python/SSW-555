@@ -355,11 +355,13 @@ class GedcomParse():
                 family = self.repository["FAM"][family_id]
                 if "DIV" not in family or family["DIV"] is "NA":
                     if "HUSB" in family and family["HUSB"] in self.repository["INDI"] and ("DEAT" not in self.repository["INDI"][family["HUSB"]] or self.repository["INDI"][family["HUSB"]]["DEAT"] is "NA"):
-                        husband_name = self.repository["INDI"][family["HUSB"]]["NAME"] if "NAME" in self.repository["INDI"][family["HUSB"]] else "NA"
-                        self.us30_list.append(["Husband", family_id, family["HUSB"], husband_name])
-                    if "WIFE" in family and family["WIFE"] in self.repository["INDI"] and ("DEAT" not in self.repository["INDI"][family["WIFE"]] or self.repository["INDI"][family["WIFE"]]["DEAT"] is "NA"):
-                        wife_name = self.repository["INDI"][family["WIFE"]]["NAME"] if "NAME" in self.repository["INDI"][family["WIFE"]] else "NA"
-                        self.us30_list.append(["Wife", family_id, family["WIFE"], wife_name])
+                        if "WIFE" in family and family["WIFE"] in self.repository["INDI"] and ("DEAT" not in self.repository["INDI"][family["WIFE"]] or self.repository["INDI"][family["WIFE"]]["DEAT"] is "NA"):
+                            husband_name = self.repository["INDI"][family["HUSB"]]["NAME"] if "NAME" in self.repository["INDI"][family["HUSB"]] else "NA"
+                            self.us30_list.append(["Husband", family_id, family["HUSB"], husband_name])
+                            wife_name = self.repository["INDI"][family["WIFE"]]["NAME"] if "NAME" in self.repository["INDI"][family["WIFE"]] else "NA"
+                            self.us30_list.append(["Wife", family_id, family["WIFE"], wife_name])
+                    
+                        
                                 
 if __name__ == "__main__":   
     parser = GedcomParse()
