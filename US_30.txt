@@ -1,0 +1,54 @@
+0 NOTE User Story-30 List all living married people
+0 NOTE define James Cook - Living and married to Jessica Cook - Should show up
+0 US30-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 1989
+1 FAMS US30-F01
+1 FAMS US30-F02
+0 NOTE define Jessica Cook - Living and married to James Cook - Should only show up one time. Other marriage is divorced
+0 US30-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 02 OCT 1991
+1 FAMS US30-F01
+0 NOTE define Jill Hayes - Was married to James Cook but divorced now - Should not show up
+0 US30-I03 INDI
+1 NAME Jill /Hayes/
+1 SEX F
+1 BIRT
+2 DATE 9 MAY 1990
+1 FAMS US30-F02
+0 NOTE define Jill Harris - Was married to Robin Heath but he died - Should not show up
+0 US30-I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE 20 DEC 1980
+1 FAMS US30-F03
+0 NOTE define Robin Heath - Was married to Jill Harris but he's passed away - Should not show up
+0 US30-I05 INDI
+1 NAME Robin /Heath/
+1 SEX M
+1 DEAT
+2 DATE 02 SEP 1977
+1 FAMS US30-F03
+0 NOTE define families---------------------------
+0 US30-F01 FAM
+1 MARR
+2 DATE 6 FEB 2007
+1 HUSB US30-I01
+1 WIFE US30-I02
+0 US30-F02 FAM
+1 MARR
+2 DATE 19 SEP 2004
+1 DIV
+2 DATE 30 MAY 2006
+1 HUSB US30-I01
+1 WIFE US30-I03
+0 US30-F03 FAM
+1 HUSB US30-I05
+1 WIFE US30-I04
+1 MARR
+2 DATE 1 JAN 2000
