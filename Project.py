@@ -29,6 +29,8 @@ class GedcomParse():
         self.us16_list = list()
         self.us06_list = list()
         self.us07_list = list()
+        self.us30_list = list()
+        self.us31_list = list()
     
     def parseFile(self, file_name):
         """
@@ -276,20 +278,24 @@ class GedcomParse():
         if "FAM" in self.repository:
             for family_id in self.repository['FAM']:
                 family = self.repository['FAM'][family_id]
-                if "MARR" in family and family["MARR"] is not "NA":
-                    marriageDate = family["MARR"].date()
-                    if "CHIL" in family:
-                        child_id = family["CHIL"]
-                        for s in child_id:
+                if "CHIL" in family:
+                    child_ids = family["CHIL"]
+                    if "MARR" in family and family["MARR"] is not "NA":
+                        marriageDate = family["MARR"].date()
+                        for s in child_ids:
                             if s in self.repository['INDI'] and "BIRT" in self.repository['INDI'][s] and self.repository["INDI"][s]['BIRT'] is not 'NA':
                                 childs_birthday = self.repository['INDI'][s]['BIRT'].date()
                                 childs_name = self.repository['INDI'][s]['NAME']
                                 if childs_birthday < marriageDate:
                                     self.us08_list.append(["Marriage", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(marriageDate)])
-                if "DIV" in family and family ["MARR"] is not "NA":
-                    divorceDate = family["DIV"].date()
-                    if childs_birthday > (divorceDate+datetime.timedelta(9*365/12)):
-                        self.us08_list.append(["Divorce", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(divorceDate)])
+                    if "DIV" in family and family ["MARR"] is not "NA":
+                        divorceDate = family["DIV"].date()
+                        for s in child_ids:
+                            if s in self.repository['INDI'] and "BIRT" in self.repository['INDI'][s] and self.repository["INDI"][s]['BIRT'] is not 'NA':
+                                childs_birthday = self.repository['INDI'][s]['BIRT'].date()
+                                childs_name = self.repository['INDI'][s]['NAME']
+                                if childs_birthday > (divorceDate+datetime.timedelta(9*365/12)):
+                                    self.us08_list.append(["Divorce", childs_name, s, datetime_to_string(childs_birthday), datetime_to_string(divorceDate)])
         
     #------ US16-Male Last Name -----------#
     def us_16(self):
@@ -346,6 +352,31 @@ class GedcomParse():
                     if individual["BIRT"] + datetime.timedelta(days = 365.25 * 150) < today:
                         individual_name = individual["NAME"] if "NAME" in individual else "NA"
                         self.us07_list.append(["alive_over_150", id, individual_name, datetime_to_string(individual["BIRT"]), datetime_to_string(today)])
+    
+    #-------US30-List all living married people----------#
+    def us_30(self):
+        if "INDI" in self.repository and "FAM" in self.repository:
+            for family_id in self.repository["FAM"]:
+                family = self.repository["FAM"][family_id]
+                if "DIV" not in family or family["DIV"] is "NA":
+                    if "HUSB" in family and family["HUSB"] in self.repository["INDI"] and ("DEAT" not in self.repository["INDI"][family["HUSB"]] or self.repository["INDI"][family["HUSB"]]["DEAT"] is "NA"):
+                        if "WIFE" in family and family["WIFE"] in self.repository["INDI"] and ("DEAT" not in self.repository["INDI"][family["WIFE"]] or self.repository["INDI"][family["WIFE"]]["DEAT"] is "NA"):
+                            husband_name = self.repository["INDI"][family["HUSB"]]["NAME"] if "NAME" in self.repository["INDI"][family["HUSB"]] else "NA"
+                            self.us30_list.append(["Husband", family_id, family["HUSB"], husband_name])
+                            wife_name = self.repository["INDI"][family["WIFE"]]["NAME"] if "NAME" in self.repository["INDI"][family["WIFE"]] else "NA"
+                            self.us30_list.append(["Wife", family_id, family["WIFE"], wife_name])
+                    
+    #-------US31-Living people over 30 who have never been married----#
+    def us_31(self, today = None):
+        if "INDI" in self.repository:
+            if today is None:
+                today = datetime.date.today()
+            for individual_id in self.repository["INDI"]:
+                individual = self.repository["INDI"][individual_id]
+                if "FAMS" not in individual and ("DEAT" not in individual or individual["DEAT"] is 'NA') and "BIRT" in individual and individual["BIRT"] is not "NA":
+                    if individual["BIRT"].date() + datetime.timedelta(days = 365.25 * 30) < today:
+                        individual_name = individual["NAME"] if "NAME" in individual else "NA"
+                        self.us31_list.append([individual_id, individual_name, datetime_to_string(individual["BIRT"]), today.year - individual["BIRT"].year])                                           
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -484,6 +515,24 @@ if __name__ == "__main__":
                         print("ERROR: {} - Individual ID: {}, Name: {}, Birth date: {}, Today's date: {}".format("Still alive and older than 150", item[1], item[2], item[3], item[4]))
             else:
                 print("No one over 150 years old")
+
+            #--------Print results---US30--List living married-----#
+            parser.us_30()
+            print("\nUS30 - List all living married people")
+            if len(parser.us30_list) != 0:
+                for item in parser.us30_list:
+                    print("Family ID: {}, {}, Individual ID: {}, Name: {}".format(item[1], item[0] ,item[2], item[3]))
+            else:
+                print("No living married people")
+
+            #--------Print results---US31--List all living people over 30 who have never been married-----#
+            parser.us_31()
+            print("\nUS31 - List all living people over 30 who have never been married")
+            if len(parser.us31_list) != 0:
+                for item in parser.us31_list:
+                    print("Individual ID: {}, Name: {}, Birth date: {}".format(item[0], item[1] ,item[2]))
+            else:
+                print("No living people over 30 who have never been married")
         except FileNotFoundError as e:
             print(e)
         else:
