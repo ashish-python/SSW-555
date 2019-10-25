@@ -1,0 +1,63 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+-------------------+--------+------------+-----+-------+-------+-------+--------------------------+
+|    ID    |        Name       | Gender |  Birthday  | Age | Alive | Death | Child |          Spouse          |
++----------+-------------------+--------+------------+-----+-------+-------+-------+--------------------------+
+| US31-I01 |    James /Cook/   |   M    | 1989-09-25 |  30 |  True |   NA  |   NA  | {'US31-F01', 'US31-F02'} |
+| US31-I02 |   Jessica /Cook/  |   NA   | 1991-10-02 |  28 |  True |   NA  |   NA  |       {'US31-F01'}       |
+| US31-I03 |  Samantha /Hayes/ |   F    | 1977-05-09 |  42 |  True |   NA  |   NA  |            NA            |
+| US31-I04 |   Jill /Harris/   |   F    | 2000-12-20 |  19 |  True |   NA  |   NA  |            NA            |
+| US31-I05 | Robbie /Williams/ |   M    | 1989-10-13 |  30 |  True |   NA  |   NA  |            NA            |
+| US31-I06 |  Charlie /Sheen/  |   M    | 1989-10-15 |  30 |  True |   NA  |   NA  |            NA            |
++----------+-------------------+--------+------------+-----+-------+-------+-------+--------------------------+
+
+Families table:
++----------+------------+------------+------------+-------------------+----------+------------------+----------+
+|    ID    |  Married   |  Divorced  | Husband ID |    Husband Name   | Wife ID  |    Wife Name     | Children |
++----------+------------+------------+------------+-------------------+----------+------------------+----------+
+| US31-F01 | 2007-02-06 |     NA     |  US31-I01  |    James /Cook/   | US31-I02 |  Jessica /Cook/  |    NA    |
+| US31-F02 | 2004-09-19 | 2006-05-30 |  US31-I01  |    James /Cook/   | US31-I03 | Samantha /Hayes/ |    NA    |
+| US31-F03 | 2000-01-01 |     NA     |  US31-I05  | Robbie /Williams/ | US31-I04 |  Jill /Harris/   |    NA    |
++----------+------------+------------+------------+-------------------+----------+------------------+----------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+Name: Charlie /Sheen/, id: US31-I06, Birthday 15 OCT
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - WARNING: The following IDs are being repeated
+Individual IDs US31-I05
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US31-F01, Husband, Individual ID: US31-I01, Name: James /Cook/
+Family ID: US31-F01, Wife, Individual ID: US31-I02, Name: Jessica /Cook/
+Family ID: US31-F03, Husband, Individual ID: US31-I05, Name: Robbie /Williams/
+Family ID: US31-F03, Wife, Individual ID: US31-I04, Name: Jill /Harris/
+
+US31 - List all living people over 30 who have never been married
+Individual ID: US31-I03, Name: Samantha /Hayes/, Birth date: 09 May 1977
+Individual ID: US31-I05, Name: Robbie /Williams/, Birth date: 13 Oct 1989
