@@ -1,0 +1,86 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+-------------------+--------+------------+-----+-------+------------+-------+--------------------------------------+
+|    ID    |        Name       | Gender |  Birthday  | Age | Alive |   Death    | Child |                Spouse                |
++----------+-------------------+--------+------------+-----+-------+------------+-------+--------------------------------------+
+| US11-I01 |    James /Cook/   |   M    | 1989-09-25 |  30 |  True |     NA     |   NA  | {'US11-F02', 'US11-F01', 'US11-F99'} |
+| US11-I02 |   Jessica /Cook/  |   NA   | 1991-10-02 |  28 |  True |     NA     |   NA  |             {'US11-F01'}             |
+| US11-I03 |    Jill /Hayes/   |   F    | 1990-05-09 |  29 |  True |     NA     |   NA  |             {'US11-F02'}             |
+| US11-I04 | Charlie /Chaplin/ |   M    | 1900-09-25 | 119 |  True |     NA     |   NA  |       {'US11-F03', 'US11-F04'}       |
+| US11-I05 |   DEF /Chaplin/   |   NA   | 1901-10-02 | 118 |  True |     NA     |   NA  |             {'US11-F03'}             |
+| US11-I06 |   ABC /Chaplin/   |   F    | 1902-05-09 | 117 |  True |     NA     |   NA  |             {'US11-F04'}             |
+| US11-I40 |   Sanjay /Shaw/   |   M    | 1979-09-25 |  40 |  True |     NA     |   NA  |       {'US11-F42', 'US11-F41'}       |
+| US11-I41 |   Tara /Sharma/   |   F    | 1980-10-02 |  39 |  True |     NA     |   NA  |             {'US11-F42'}             |
+| US11-I42 |    Maya /Singh/   |   F    | 1979-05-09 |  40 | False | 2007-06-06 |   NA  |             {'US11-F41'}             |
++----------+-------------------+--------+------------+-----+-------+------------+-------+--------------------------------------+
+
+Families table:
++----------+------------+------------+------------+-------------------+----------+----------------+----------+
+|    ID    |  Married   |  Divorced  | Husband ID |    Husband Name   | Wife ID  |   Wife Name    | Children |
++----------+------------+------------+------------+-------------------+----------+----------------+----------+
+| US11-F01 | 2007-02-06 | 2015-12-10 |  US11-I01  |    James /Cook/   | US11-I02 | Jessica /Cook/ |    NA    |
+| US11-F02 | 2010-09-19 |     NA     |  US11-I01  |    James /Cook/   | US11-I03 |  Jill /Hayes/  |    NA    |
+| US11-F03 | 1925-02-06 | 1927-12-10 |  US11-I04  | Charlie /Chaplin/ | US11-I05 | DEF /Chaplin/  |    NA    |
+| US11-F04 | 1930-09-19 |     NA     |  US11-I04  | Charlie /Chaplin/ | US11-I06 | ABC /Chaplin/  |    NA    |
+| US11-F41 | 2000-02-06 |     NA     |  US11-I40  |   Sanjay /Shaw/   | US11-I42 |  Maya /Singh/  |    NA    |
+| US11-F42 | 2005-09-19 |     NA     |  US11-I40  |   Sanjay /Shaw/   | US11-I41 | Tara /Sharma/  |    NA    |
+| US11-F99 | 2007-02-06 | 2006-01-20 |  US11-I01  |    James /Cook/   | US11-I99 |       NA       |    NA    |
++----------+------------+------------+------------+-------------------+----------+----------------+----------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04- Marriage before Divorce
+ERROR: Family ID: US11-F99, Divorce date: 20 Jan 2006, Marriage date: 06 Feb 2007
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US11-F02, Husband, Individual ID: US11-I01, Name: James /Cook/
+Family ID: US11-F02, Wife, Individual ID: US11-I03, Name: Jill /Hayes/
+Family ID: US11-F04, Husband, Individual ID: US11-I04, Name: Charlie /Chaplin/
+Family ID: US11-F04, Wife, Individual ID: US11-I06, Name: ABC /Chaplin/
+Family ID: US11-F42, Husband, Individual ID: US11-I40, Name: Sanjay /Shaw/
+Family ID: US11-F42, Wife, Individual ID: US11-I41, Name: Tara /Sharma/
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+ERROR: Second marriage before divorce - Individual ID: US11-I01, Individual name: James /Cook/, Family ID-1: US11-F01, Family ID-2: US11-F02, First marriage date: 06 Feb 2007, Second marriage date: 19 Sep 2010, First marriage divorce date: 10 Dec 2015 
+ERROR: Both marriages on the same date - Individual ID: US11-I01, Individual name: James /Cook/, Family ID 1: US11-F01, Family ID 2: US11-F99, Marriage date: 06 Feb 2007
+ERROR: Married again before death of spouse - Individual ID: US11-I40, Individual name: Sanjay /Shaw/, Family ID-1: US11-F41, Family ID-2: US11-F42, First marriage date: 06 Feb 2000, Second marriage date: 19 Sep 2005, Death of spouse in first marriage: 06 Jun 2007 
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US11-F99, Family ID 2: US11-F01, Name: James /Cook/, Marriage date: 06 Feb 2007

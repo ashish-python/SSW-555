@@ -1,0 +1,63 @@
+0 NOTE User Story-31 Living people over 30 who have never been married
+0 NOTE define James Cook - Living and married to Jessica Cook - SHOULD NOT SHOW UP
+0 US31-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 1989
+1 FAMS US31-F01
+1 FAMS US31-F02
+0 NOTE define Jessica Cook - Living and married to James Cook - SHOULD NOT SHOW UP
+0 US31-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 02 OCT 1991
+1 FAMS US31-F01
+0 NOTE define Samantha Hayes - Never married but over 30 - SHOULD SHOW UP
+0 US31-I03 INDI
+1 NAME Samantha /Hayes/
+1 SEX F
+1 BIRT
+2 DATE 9 MAY 1977
+0 NOTE define Jill Harris - Never married and under 30 - SHOULD NOT SHOW UP
+0 US31-I04 INDI
+1 NAME Jill /Harris/
+1 SEX F
+1 BIRT
+2 DATE 20 DEC 2000
+0 NOTE define Robin Heath - Turned 30 today - SHOULD NOT SHOW UP
+0 US31-I05 INDI
+1 NAME Robin /Heath/
+1 SEX M
+1 BIRT
+2 DATE 14 OCT 1989
+0 NOTE define Charlie Sheen - Turning 30 tomorrow - SHOULD NOT SHOW UP
+0 US31-I06 INDI
+1 NAME Charlie /Sheen/
+1 SEX M
+1 BIRT
+2 DATE 15 OCT 1989
+0 NOTE define Robbie Williams - Turned 30 yesterday - SHOULD SHOW UP
+0 US31-I05 INDI
+1 NAME Robbie /Williams/
+1 SEX M
+1 BIRT
+2 DATE 13 OCT 1989
+0 NOTE define families---------------------------
+0 US31-F01 FAM
+1 MARR
+2 DATE 6 FEB 2007
+1 HUSB US31-I01
+1 WIFE US31-I02
+0 US31-F02 FAM
+1 MARR
+2 DATE 19 SEP 2004
+1 DIV
+2 DATE 30 MAY 2006
+1 HUSB US31-I01
+1 WIFE US31-I03
+0 US31-F03 FAM
+1 HUSB US31-I05
+1 WIFE US31-I04
+1 MARR
+2 DATE 1 JAN 2000
