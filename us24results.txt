@@ -1,0 +1,77 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+|    ID    |        Name        | Gender |  Birthday  | Age | Alive |   Death    |    Child    |    Spouse   |
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+| US24-I1  |     Han /Solo/     |   M    | 1942-07-13 |  77 |  True |     NA     | {'US24-F2'} | {'US24-F1'} |
+| US24-I10 |   Jonash /Solo/    |   M    | 1920-12-16 |  99 | False | 2010-07-28 |      NA     | {'US24-F2'} |
+| US24-I11 |  Padme /Amidala/   |   F    | 1920-01-27 |  99 | False | 2005-08-29 |      NA     | {'US24-F2'} |
+| US24-I2  |  Leia /Skywalker/  |   F    | 1956-10-21 |  63 | False | 2016-12-27 | {'US24-F3'} | {'US24-F1'} |
+| US24-I3  | Anakin /Skywalker/ |   M    | 1940-04-19 |  79 |  True |     NA     |      NA     | {'US24-F3'} |
+| US24-I4  |  Padme /Amidala/   |   F    | 1932-03-04 |  87 | False | 1956-10-21 |      NA     | {'US24-F3'} |
+| US24-I5  |  Benjamin /Solo/   |   M    | 1981-11-19 |  38 |  True |     NA     | {'US24-F1'} |      NA     |
+| US24-I6  |  Luke /Skywalker/  |   M    | 1956-10-21 |  63 |  True |     NA     | {'US24-F3'} | {'US24-F4'} |
+| US24-I7  |    Mara /Jade/     |   F    | 1960-06-04 |  59 |  True |     NA     |      NA     | {'US24-F4'} |
+| US24-I8  | Jaina /Skywalker/  |   F    | 2005-05-06 |  14 |  True |     NA     | {'US24-F4'} |      NA     |
+| US24-I9  |   Jacen /Hamill/   |   M    | 2003-02-04 |  16 |  True |     NA     | {'US24-F4'} |      NA     |
++----------+--------------------+--------+------------+-----+-------+------------+-------------+-------------+
+
+Families table:
++---------+------------+------------+------------+--------------------+----------+------------------+------------------------+
+|    ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID  |    Wife Name     |        Children        |
++---------+------------+------------+------------+--------------------+----------+------------------+------------------------+
+| US24-F1 | 1980-05-09 | 1990-04-08 |  US24-I1   |     Han /Solo/     | US24-I2  | Leia /Skywalker/ |      {'US24-I5'}       |
+| US24-F2 | 1940-08-04 |     NA     |  US24-I10  |   Jonash /Solo/    | US24-I11 | Padme /Amidala/  |      {'US24-I1'}       |
+| US24-F3 | 1940-08-04 |     NA     |  US24-I3   | Anakin /Skywalker/ | US24-I4  | Padme /Amidala/  | {'US24-I6', 'US24-I2'} |
+| US24-F4 | 2001-10-05 |     NA     |  US24-I6   |  Luke /Skywalker/  | US24-I7  |   Mara /Jade/    | {'US24-I8', 'US24-I9'} |
++---------+------------+------------+------------+--------------------+----------+------------------+------------------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+Name: Benjamin /Solo/, id: US24-I5, Birthday 19 NOV
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - Males without the same last name
+ERROR: Family ID: US24-F4, Child's Name: Jacen /Hamill/, Father's Name: Luke /Skywalker/
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US24-F4, Husband, Individual ID: US24-I6, Name: Luke /Skywalker/
+Family ID: US24-F4, Wife, Individual ID: US24-I7, Name: Mara /Jade/
+
+US31 - List all living people over 30 who have never been married
+Individual ID: US24-I5, Name: Benjamin /Solo/, Birth date: 19 Nov 1981
+
+US09 - Birth before death of parents
+No births before death of parents
+[]
+
+US23 - Unique names and birthdays
+ERROR SAME BIRTHDAY: ID: US24-I6, Name: Luke /Skywalker/, Birthday: 21 Oct 1956
+ERROR SAME NAME: ID: US24-I11, Name: Padme /Amidala/
+
+US24 - Unique spouses and marriage dates
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US24-F3, Family ID 2: US24-F2, Name: Padme /Amidala/, Marriage date: 04 Aug 1940

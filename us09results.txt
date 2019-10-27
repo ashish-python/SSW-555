@@ -1,0 +1,68 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+---------------------+--------+------------+------+-------+------------+---------+---------+
+|    ID    |         Name        | Gender |  Birthday  | Age  | Alive |   Death    |  Child  |  Spouse |
++----------+---------------------+--------+------------+------+-------+------------+---------+---------+
+| US09-I09 | Michael /Weinstein/ |   M    | 1800-03-05 | 219  | False | 1900-06-10 |    NA   | {'F05'} |
+| US09-I10 |     Randi /Gold/    |   F    | 1800-01-02 | 219  | False | 1900-06-10 |    NA   | {'F05'} |
+| US09-I11 |  Sophie /Weinstein/ |   F    | 3000-02-06 | -981 |  True |     NA     | {'F05'} |    NA   |
++----------+---------------------+--------+------------+------+-------+------------+---------+---------+
+
+Families table:
++-----+------------+----------+------------+---------------------+----------+--------------+--------------+
+|  ID |  Married   | Divorced | Husband ID |     Husband Name    | Wife ID  |  Wife Name   |   Children   |
++-----+------------+----------+------------+---------------------+----------+--------------+--------------+
+| F05 | 1850-10-10 |    NA    |  US09-I09  | Michael /Weinstein/ | US09-I10 | Randi /Gold/ | {'US09-I11'} |
++-----+------------+----------+------------+---------------------+----------+--------------+--------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - Dates that are after the current date
+Name: Sophie /Weinstein/, Birthdate: 06 Feb 3000
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+No living married people
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+Child ID: US09-I11, Parent ID: US09-I09, Child death date: 06 Feb 3000, Parent death date: 10 Jun 1900
+Child ID: US09-I11, Parent ID: US09-I10, Child death date: 06 Feb 3000, Parent death date: 10 Jun 1900
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+[]
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
