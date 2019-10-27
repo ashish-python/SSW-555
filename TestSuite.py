@@ -116,24 +116,25 @@ class TestSuite(unittest.TestCase):
         parser.us_07(today)
         self.assertEqual(parser.us07_list, [['death_after_150', 'US07-I99', 'William /Burr/', '05 Jun 1850', '19 Dec 2001'], ['alive_over_150', 'US07-I01', 'Julia /Cahn/', '16 Sep 1800', '09 Oct 2019']])
     
-    #User Story - 30
-    #Living married people
-    def test_us30(self):
+    #User Story - 23
+    #Unique names
+    def test_us23(self):
         parser = GedcomParse()
-        parser.parseFile("US_30.txt")
-        parser.us_30()
-        self.assertEqual(parser.us30_list,[['Husband', 'US30-F01', 'US30-I01', 'James /Cook/'], ['Wife', 'US30-F01', 'US30-I02', 'Jessica /Cook/']])
+        parser.parseFile("US_23.txt")
+        parser.us_23()
+        self.assertEqual(parser.us23_list, [
+            ['Birthday', 'Luke /Skywalker/', 'US16-I6', '21 Oct 1956'], 
+            ['Birthday', 'Mara /Jade/', 'US16-I7', '21 Oct 1956'], 
+            ['Name', 'Luke /Skywalker/', 'US16-I8']])
 
+    #User Story - 24
+    #Unique spouses and marriage dates
+    def tes_us24(self):
+        parser = GedcomParse() 
+        parser.parseFile("US_24.txt")
+        parser.us_24()
+        self.assertEqual(parser.us24_list, [['WIFE', '04 Aug 1940', 'Padme /Amidala/', 'US16-F3', 'US16-F2']])
 
-    #User Story - 31
-    #Under 30 and never been married
-    def test_us31(self):
-        parser = GedcomParse()
-        parser.parseFile("US_31.txt")
-        today_str = "14 OCT 2019"
-        today = datetime.datetime.strptime(today_str, "%d %b %Y").date()
-        parser.us_31(today)
-        self.assertEqual(parser.us31_list,[['US31-I03', 'Samantha /Hayes/', '09 May 1977', 42], ['US31-I05', 'Robbie /Williams/', '13 Oct 1989', 30]])
-
+    
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
