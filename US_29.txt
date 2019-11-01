@@ -1,0 +1,33 @@
+0 NOTE User Story-29 List all deceased -- valid death date - WILL SHOW
+0 NOTE define James Cook
+0 US29-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 1949
+1 DEAT
+2 DATE 30 JUN 2019
+1 FAMS US29-F01
+1 FAMS US29-F02
+0 NOTE define Jessica Cook ----No death date -- will not show
+0 US29-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 25 SEP 1952
+1 FAMS US29-F01
+0 NOTE Charlie Brown - Death after today's date - will not show
+0 US29-I03 INDI
+1 NAME Charlie /Brown/
+1 DEAT
+2 DATE 02 NOV 2019
+0 NOTE James Dean - Invalid death date - will not show
+0 US29-I04 INDI
+1 NAME James /Dean/
+1 DEAT
+2 DATE 0 JAN 1989
+0 NOTE define families---------------------------
+0 US29-F01 FAM
+1 MARR
+2 DATE 25 SEP 1989
+1 HUSB US29-I01
+1 WIFE US29-I02
