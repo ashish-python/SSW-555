@@ -1,0 +1,21 @@
+0 NOTE User Story-34 List all living married people
+0 NOTE define James Cook - Living and married to Jessica Cook - Should show up
+0 US34-I01 INDI
+1 NAME James /Cook/
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 1949
+1 FAMS US34-F01
+1 FAMS US34-F02
+0 NOTE define Jessica Cook
+0 US34-I02 INDI
+1 NAME Jessica /Cook/
+1 BIRT
+2 DATE 25 SEP 1969
+1 FAMS US34-F01
+0 NOTE define families---------------------------
+0 US34-F01 FAM
+1 MARR
+2 DATE 25 SEP 1989
+1 HUSB US34-I01
+1 WIFE US34-I02
