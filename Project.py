@@ -35,6 +35,8 @@ class GedcomParse():
         self.us11_list = list()
         self.us23_list = list()
         self.us24_list = list()
+        self.us15_list = list()
+        self.us21_list = list()
     
     def parseFile(self, file_name):
         """
@@ -383,10 +385,6 @@ class GedcomParse():
                         self.us31_list.append([individual_id, individual_name, datetime_to_string(individual["BIRT"]), today.year - individual["BIRT"].year])
     
     #--------US 09-Birth before Death of parents-------#
-    #check birth date
-    #check if parents are dead
-    #check parents death dates
-    #check birth < death
     def us_09(self):
         if "FAM" in self.repository and "INDI" in self.repository:
             for family_id in self.repository['FAM']:
@@ -498,7 +496,42 @@ class GedcomParse():
                 if final_list [i][0] == final_list[j][0]:
                     if final_list[i][5] == final_list[j][5]:
                         self.us24_list.append(["HUSBAND", datetime_to_string(final_list[i][0]), final_list[i][5], final_list[j][3], final_list[i][3]])
-                    
+
+     #-----US15-Fewer than 15 siblings-------------------------#
+     #look at family
+     #put children into a list
+     #if the number of children in list is >16, add family ID to list
+    def us_15(self):
+        sibling_list = list()
+        if "FAM" in self.repository:
+                for family_id in self.repository['FAM']:
+                    family = self.repository['FAM'][family_id]
+                    if 'CHIL' in family:
+                        child_id = family['CHIL']
+                        if child_id in self.repository['INDI']:
+                            child_list = self.repository['INDI'][child_id]
+                            sibling_list.append([child_id])
+                for i in range(len(sibling_list)):
+                    if len(i) > 15 + 2:
+                        self.us15_list.append([family_id])
+
+    #------US21-Correct role for sex-------------------------#
+    def us_21(self):
+        if "FAM" in self.repository:
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if 'HUSB' in family:
+                    husband_id = family["HUSB"]
+                    for s in husband_id:
+                        if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is not 'M':
+                            self.us21_list.append([self.repository['INDI'][s]['NAME'], self.repository['INDI'][husband_id]['NAME'], family_id]) 
+                if 'WIFE' in family:
+                    wife_id = family["WIFE"]
+                    for s in wife_id:
+                        if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is not 'F':
+                            self.us21_list.append([self.repository['INDI'][s]['NAME'], self.repository['INDI'][wife_id]['NAME'], family_id]) 
+
+                                             
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -604,7 +637,46 @@ if __name__ == "__main__":
             else: 
                 print("\nUS08 - There are no births after marriage or births after 9 months of divorce")
 
-            #------US16 - Male Last Name-------#
+            #-------Print results---US06-Death before divorce----#
+            parser.us_06()
+            print("\nUS06 - Death before Divorce")
+            if len(parser.us06_list) != 0:
+                for item in parser.us06_list:
+                    print("ERROR: Family ID: {}, Individual ID: {}, Name: {}, Death date: {}, Divorce date: {}".format(item[0], item[1], item[2], item[3], item[4]))
+            else:
+                print("No Death before Divorce")
+
+            #-----Print results---US07---Age above 150----------#
+            parser.us_07()
+            print("\nUS07- Less than 150 years old")
+            if len(parser.us07_list) != 0:
+                for item in parser.us07_list:
+                    if item[0] == "death_after_150":
+                        print("ERROR: {} - Individual ID: {}, Name: {}, Birth date: {}, Death date: {}".format("Older than 150 at the time of death", item[1], item[2], item[3], item[4]))
+                    else:
+                        print("ERROR: {} - Individual ID: {}, Name: {}, Birth date: {}, Today's date: {}".format("Still alive and older than 150", item[1], item[2], item[3], item[4]))
+            else:
+                print("No one over 150 years old")
+
+            #--------Print results---US30--List living married-----#
+            parser.us_30()
+            print("\nUS30 - List all living married people")
+            if len(parser.us30_list) != 0:
+                for item in parser.us30_list:
+                    print("Family ID: {}, {}, Individual ID: {}, Name: {}".format(item[1], item[0] ,item[2], item[3]))
+            else:
+                print("No living married people")
+
+            #--------Print results---US31--List all living people over 30 who have never been married-----#
+            parser.us_31()
+            print("\nUS31 - List all living people over 30 who have never been married")
+            if len(parser.us31_list) != 0:
+                for item in parser.us31_list:
+                    print("Individual ID: {}, Name: {}, Birth date: {}".format(item[0], item[1] ,item[2]))
+            else:
+                print("No living people over 30 who have never been married")
+           
+ #------US16 - Male Last Name-------#
             # This will print out any males in the family that don't have the same last name
             parser.us_16()
             if len(parser.us16_list) !=0:
@@ -697,6 +769,24 @@ if __name__ == "__main__":
                         print("ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : {}, Family ID 2: {}, Name: {}, Marriage date: {}".format(item[3], item[4], item[2], item[1]))
             else :    
                 print("All spouses and marriage dates are unique")
+                
+            #-----Print results--US15----Fewer than 15 siblings------------------#
+            parser.us_15()
+            print ("\nUS15 - Fewer than 15 siblings")
+            if len(parser.us15_list) !=0:
+                for item in parser.us15_list:
+                    print("ERROR FAMILY TOO LARGE: Family ID: {}".format(item[0]))
+            else:
+                print("All families are appropriately sized")
+
+            #----Print results--US21----Correct role for sex---------------------#
+            parser.us_21()
+            print("\nUS21 - Correct role for sex")
+            if len(parser.us21_list) != 0:
+                for item in parser.us21_list:
+                    print("Name: {}, Individual ID: {}, Family ID: {}".format(item[0], item[1], item[2]))
+            else:
+                print("All roles correspond with correct sex of individuals")
            
         except FileNotFoundError as e:
             print(e)
