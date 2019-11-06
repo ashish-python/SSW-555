@@ -515,6 +515,15 @@ class GedcomParse():
                     if len(i) > 15 + 2:
                         self.us15_list.append([family_id])
 
+   # def us_15(self):
+    #    sibling_list = list ()
+     #   if 'FAM' in self.repository:
+      #      if 'CHIL' in self.repository:
+       #         sibling_list.append([child_id])
+        #if len(sibling_list) > 16:
+         #   self.us15_list.append([family_id]}
+                    
+
     #------US21-Correct role for sex-------------------------#
     def us_21(self):
         if "FAM" in self.repository:
