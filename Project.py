@@ -35,6 +35,8 @@ class GedcomParse():
         self.us11_list = list()
         self.us23_list = list()
         self.us24_list = list()
+        self.us17_list = list()
+        
     
     def parseFile(self, file_name):
         """
@@ -474,22 +476,21 @@ class GedcomParse():
         check_list_names = list()
         marriageDate = list()
         if "FAM" in self.repository:
-                for family_id in self.repository['FAM']:
-                    family = self.repository['FAM'][family_id]
-                    if 'HUSB' in family:
-                        husband_id = family['HUSB']
-                        if husband_id in self.repository['INDI']:
-                            husband_name = self.repository['INDI'][husband_id]["NAME"]
-                    if 'WIFE' in family:
-                        wife_id = family['WIFE']
-                        if wife_id in self.repository['INDI']:
-                            wife_name = self.repository['INDI'][wife_id]["NAME"]
-                    if 'MARR' in family:
-                        marriageDate = family["MARR"]
-                    
-                    final_list.append([marriageDate,wife_name,wife_id,family_id,husband_id,husband_name])
+            for family_id in self.repository['FAM']:
+                family = self.repository['FAM'][family_id]
+                if 'HUSB' in family:
+                    husband_id = family['HUSB']
+                    if husband_id in self.repository['INDI']:
+                        husband_name = self.repository['INDI'][husband_id]["NAME"]
+                if 'WIFE' in family:
+                    wife_id = family['WIFE']
+                    if wife_id in self.repository['INDI']:
+                        wife_name = self.repository['INDI'][wife_id]["NAME"]
+                if 'MARR' in family:
+                    marriageDate = family["MARR"]
+                
+                final_list.append([marriageDate,wife_name,wife_id,family_id,husband_id,husband_name])
         i = 0
-        j = i+1
         for i in range(len(final_list)):
             for j in range(i+1, len(final_list)):
                 if final_list[i][0] == final_list[j][0]:
@@ -498,7 +499,61 @@ class GedcomParse():
                 if final_list [i][0] == final_list[j][0]:
                     if final_list[i][5] == final_list[j][5]:
                         self.us24_list.append(["HUSBAND", datetime_to_string(final_list[i][0]), final_list[i][5], final_list[j][3], final_list[i][3]])
-                    
+    
+    #----------------- US17 - Parents should not marry their kids------------#
+    def us_17(self):
+        final_list = list()
+        if "FAM" in self.repository:
+            for family_id in self.repository["FAM"]:
+                family = self.repository['FAM'][family_id]
+                if 'CHIL' in family:
+                    child_id = family['CHIL']
+                if 'WIFE' in family:
+                    mother_id = family['WIFE']
+                    if mother_id in self.repository["INDI"]:
+                        mothers_name = self.repository['INDI'][mother_id]['NAME']
+                if 'HUSB' in family:
+                    father_id = family['HUSB']
+                    if father_id in self.repository["INDI"]:
+                        fathers_name = self.repository['INDI'][father_id]['NAME']                    
+
+                final_list.append([father_id,child_id,mother_id,mothers_name,fathers_name])
+        for i in range(len(final_list)):
+            daddy = final_list[i][0]
+            mommy = final_list[i][2]
+            for j  in final_list[i][1]:
+                if j == daddy:
+                    self.us17_list.append(["DAD",final_list[i][0], final_list[i][4], final_list[i][2], final_list[i][3]])
+                if j == mommy: 
+                    self.us17_list.append(["MOM",final_list[i][2], final_list[i][3], final_list[i][0], final_list[i][4]])
+
+    def us_18(self):
+        final_list = list()
+        if "FAM" in self.repository:
+            for family_id in self.repository["FAM"]:
+                family = self.repository['FAM'][family_id]
+                if 'CHIL' in family:
+                    child_id = family['CHIL']
+                if 'WIFE' in family:
+                    mother_id = family['WIFE']
+                    if mother_id in self.repository["INDI"]:
+                        mothers_name = self.repository['INDI'][mother_id]['NAME']
+                if 'HUSB' in family:
+                    father_id = family['HUSB']
+                    if father_id in self.repository["INDI"]:
+                        fathers_name = self.repository['INDI'][father_id]['NAME']                    
+
+                final_list.append([father_id,child_id,mother_id])
+                
+        for i in range(len(final_list)):
+            daddy = final_list[i][0]
+            mommy = final_list[i][2]
+            if len(final_list[i][1]) >= 2:
+                for j in final_list[i][1]:
+                    if j == mommy and j+1 == daddy:
+                        print ("yes")
+        print (final_list)
+
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -698,6 +753,22 @@ if __name__ == "__main__":
             else :    
                 print("All spouses and marriage dates are unique")
            
+
+            #-----Print results---US17---Parents should not marry that their kids----------#
+            parser.us_17()
+            print ("\nUS17 - Parents cannot marry their kids")
+            if len(parser.us17_list) != 0:
+                for item in parser.us17_list:
+                    if item[0] == "DAD":
+                        print("ERROR - Mother married her son: Son ID: {}, Son Name: {}, Mom ID: {}, Mom name: {}".format(item[1],item[2],item[3],item[4]))
+                    if item[0] == "MOM":
+                        print("ERROR - Father married his daughter: Son ID: {}, Son Name: {}, Mom ID: {}, Mom name: {}".format(item[1],item[2],item[3],item[4]))
+            
+            else: 
+                print("No parents married their kids")
+
+
+            parser.us_18()
         except FileNotFoundError as e:
             print(e)
         else:
