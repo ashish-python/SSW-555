@@ -36,6 +36,7 @@ class GedcomParse():
         self.us23_list = list()
         self.us24_list = list()
         self.us17_list = list()
+        self.us18_list = list()
         
     
     def parseFile(self, file_name):
@@ -529,6 +530,7 @@ class GedcomParse():
 
     def us_18(self):
         final_list = list()
+        child_list = list()
         if "FAM" in self.repository:
             for family_id in self.repository["FAM"]:
                 family = self.repository['FAM'][family_id]
@@ -543,17 +545,38 @@ class GedcomParse():
                     if father_id in self.repository["INDI"]:
                         fathers_name = self.repository['INDI'][father_id]['NAME']                    
 
-                final_list.append([father_id,child_id,mother_id])
+                final_list.append([father_id,child_id,mother_id, family_id])
                 
         for i in range(len(final_list)):
             daddy = final_list[i][0]
             mommy = final_list[i][2]
             if len(final_list[i][1]) >= 2:
                 for j in final_list[i][1]:
-                    if j == mommy and j+1 == daddy:
-                        print ("yes")
-        print (final_list)
+                    child_list.append(j)
+                    for k in range(len(child_list)):
+                        if child_list[k] == daddy: 
+                            try:
+                                if child_list[k + 1] == mommy:
+                                    self.us18_list.append([final_list[i][0],final_list[i][2]])         
+                            except (IndexError):
+                                    child_list.clear()
+                                    break
+                        elif child_list[k] == mommy:
+                            try:
+                                if child_list[k + 1] == daddy:
+                                    self.us18_list.append([final_list[i][0],final_list[i][2]])
+                            except (IndexError):
+                                    child_list.clear()
+                                    break
 
+        for i in range(len(self.us18_list)):
+            for j in range(i+1, len(self.us18_list)):
+                if self.us18_list[i][0] == self.us18_list[j][0]:
+                    self.us18_list.remove(self.us18_list[j])
+
+
+
+ 
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -767,8 +790,15 @@ if __name__ == "__main__":
             else: 
                 print("No parents married their kids")
 
-
             parser.us_18()
+            print ("\nUS18 - Siblings cannot marry each other")
+            if len(parser.us18_list) != 0:
+                for item in parser.us18_list:
+                    print ("ERROR - Siblings {} and {} married each other.".format(item[0],item[1]))
+            else: 
+                print("No siblings married each other")
+
+
         except FileNotFoundError as e:
             print(e)
         else:

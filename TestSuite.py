@@ -171,5 +171,22 @@ class TestSuite(unittest.TestCase):
         parser.parseFile("US_11.txt")
         parser.us_11()
         self.assertEqual(parser.us11_list, [['marriage before divorce', 'US11-I01', 'James /Cook/', 'US11-F01', 'US11-F02', '06 Feb 2007', '19 Sep 2010', '10 Dec 2015'], ['same date marriage', 'US11-I01', 'James /Cook/', 'US11-F01', 'US11-F99', '06 Feb 2007'], ['marriage before death', 'US11-I40', 'Sanjay /Shaw/', 'US11-F41', 'US11-F42', '06 Feb 2000', '19 Sep 2005', '06 Jun 2007']])
+
+    
+    #User Story 18
+    # Siblings cant marry each other
+    def test_us18(self):
+        parser = GedcomParse()
+        parser.parseFile("US_18.txt")
+        parser.us_18()
+        self.assertEqual(parser.us18_list, [['US18-I9', 'US18-I8']])
+    
+    #User Story 17
+    # Parents cant marry their children
+    def test_us17(self):
+        parser = GedcomParse()
+        parser.parseFile("US_17.txt")
+        parser.us_17()
+        self.assertEqual(parser.us17_list, [['DAD', 'US17-I5', 'Benjamin /Solo/', 'US17-I2', 'Leia /Skywalker/']])
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
