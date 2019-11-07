@@ -1,0 +1,98 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++-----+------------------+--------+----------+-----+-------+-------+--------+--------+
+|  ID |       Name       | Gender | Birthday | Age | Alive | Death | Child  | Spouse |
++-----+------------------+--------+----------+-----+-------+-------+--------+--------+
+| I01 |   Julia /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I02 |   Adam /Cahn/    |   M    |    NA    |  NA |   NA  |   NA  |   NA   | {'F1'} |
+| I03 |   Alisa /Cahn/   |   F    |    NA    |  NA |   NA  |   NA  |   NA   | {'F1'} |
+| I04 |    One /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I05 |    Two /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I06 |   Three /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I07 |   Four /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I08 |   Five /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I09 |    Six /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I10 |   Seven /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I11 |   Eight /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I12 |   Nine /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I13 |    Ten /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I14 |  Eleven /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I15 |  Twelve /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I16 | Thirteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I17 | Fourteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I18 |  Fifteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I19 |  Sixteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I20 | Seventeen /Cahn/ |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
+| I21 | Eighteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'F1'} |   NA   |
++-----+------------------+--------+----------+-----+-------+-------+--------+--------+
+
+Families table:
++----+---------+----------+------------+--------------+---------+--------------+---------------------------------------------------------------------------------------------------------------------------------------+
+| ID | Married | Divorced | Husband ID | Husband Name | Wife ID |  Wife Name   |                                                                Children                                                               |
++----+---------+----------+------------+--------------+---------+--------------+---------------------------------------------------------------------------------------------------------------------------------------+
+| F1 |    NA   |    NA    |    I02     | Adam /Cahn/  |   I03   | Alisa /Cahn/ | {'I13', 'I12', 'I08', 'I06', 'I04', 'I18', 'I07', 'I20', 'I11', 'I05', 'I01', 'I17', 'I16', 'I10', 'I21', 'I15', 'I14', 'I19', 'I09'} |
++----+---------+----------+------------+--------------+---------+--------------+---------------------------------------------------------------------------------------------------------------------------------------+
+{'F1': {'HUSB': 'I02', 'WIFE': 'I03', 'CHIL': {'I13', 'I12', 'I08', 'I06', 'I04', 'I18', 'I07', 'I20', 'I11', 'I05', 'I01', 'I17', 'I16', 'I10', 'I21', 'I15', 'I14', 'I19', 'I09'}}}
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: F1, Husband, Individual ID: I02, Name: Adam /Cahn/
+Family ID: F1, Wife, Individual ID: I03, Name: Alisa /Cahn/
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
+
+US29 - List all deceased
+No deceased in the list
+
+US34-Large age differences
+No couples who were married when the older spouse was more than twice as old as the younger spouse
+
+US15 - Number of siblings less than 15
+[['F1', 19, {'I13', 'I12', 'I08', 'I06', 'I04', 'I18', 'I07', 'I20', 'I11', 'I05', 'I01', 'I17', 'I16', 'I10', 'I21', 'I15', 'I14', 'I19', 'I09'}]]
+ERROR: Family ID F1 has 19 siblings
+
+US21 - Correct role for sex
+Only correct roles for sex
