@@ -37,6 +37,8 @@ class GedcomParse():
         self.us24_list = list()
         self.us29_list = list()
         self.us34_list = list()
+        self.us15_list = list()
+        self.us21_list = list()
     
     def parseFile(self, file_name):
         """
@@ -317,7 +319,7 @@ class GedcomParse():
                         if 'CHIL' in family:
                             child_id = family['CHIL']
                             for s in child_id:
-                                if s in self.repository['INDI'] and self.repository['INDI'][s]['SEX'] is 'M':
+                                if s in self.repository['INDI'] and 'SEX' in self.repository['INDI'][s] and self.repository['INDI'][s]['SEX'] is 'M':
                                     name = self.repository['INDI'][s]['NAME'].split('/')
                                     childLastName = name[1]
                                     if childLastName != husbandLastName:
@@ -533,6 +535,30 @@ class GedcomParse():
                                 husband_name = husband["NAME"] if "NAME" in husband else "NA"
                                 wife_name = wife["NAME"] if "NAME" in wife else "NA"
                                 self.us34_list.append([family_id, TimeUtils.datetime_to_string(marriage_datetime), family["WIFE"], wife_name, TimeUtils.datetime_to_string(wife["BIRT"]), int((marriage_datetime - wife["BIRT"]).days/365.25), family["HUSB"], husband_name, TimeUtils.datetime_to_string(husband["BIRT"]), int((marriage_datetime - husband["BIRT"]).days/365.25) ])
+    #-----US15-Fewer than 15 siblings-------------------------#
+    def us_15(self):
+        if "FAM" in self.repository:
+            for family_id in self.repository["FAM"]:
+                family = self.repository["FAM"][family_id]
+                if "CHIL" in family and len(family["CHIL"]) > 15:
+                    self.us15_list.append([family_id, len(family["CHIL"]), family["CHIL"]])
+    
+    #------US21-Correct role for sex-------------------------#
+    def us_21(self):
+        if "FAM" in self.repository and "INDI" in self.repository:
+            for family_id in self.repository["FAM"]:
+                family = self.repository["FAM"][family_id]
+                if "HUSB" in family:
+                    husband_id = family["HUSB"]
+                    if family["HUSB"] in self.repository["INDI"] and "SEX" in self.repository["INDI"][husband_id] and self.repository["INDI"][husband_id]["SEX"] is not "M":
+                        husband_name = self.repository["INDI"][husband_id]["NAME"] if "NAME" in self.repository["INDI"][husband_id] else "NA"
+                        self.us21_list.append([family_id, husband_id, husband_name, "Husband",self.repository["INDI"][husband_id]["SEX"]])
+                if "WIFE" in family:
+                    wife_id = family["WIFE"]
+                    if family["WIFE"] in self.repository["INDI"] and "SEX" in self.repository["INDI"][wife_id] and self.repository["INDI"][wife_id]["SEX"] is not "F":
+                        wife_name = self.repository["INDI"][wife_id]["NAME"] if "NAME" in self.repository["INDI"][wife_id] else "NA"
+                        self.us21_list.append([family_id, wife_id, wife_name, "Wife", self.repository["INDI"][wife_id]["SEX"]])
+
 if __name__ == "__main__":   
     parser = GedcomParse()
     loop = True
@@ -542,6 +568,7 @@ if __name__ == "__main__":
             parser.parseFile(file_name)
             #prints individual and families tables
             parser.printResults()
+            print(parser.repository["FAM"])
 
             #------US42----------#
             #prints illegitimate dates list with line number
@@ -749,6 +776,26 @@ if __name__ == "__main__":
                     print("Family ID: {}, Marriage date: {}, Wife ID: {}, Wife name: {}, Wife DOB: {}, Wife age at marr: {}, Husband ID: {}, Husband name: {}, Husband DOB: {}, Husband age at marr: {}".format(item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8], item[9]))
             else:
                 print("No couples who were married when the older spouse was more than twice as old as the younger spouse")
+
+            #----Print results----US15---Number of siblings less than 15--------#
+            parser.us_15()
+            print("\nUS15 - Number of siblings less than 15")
+            if len(parser.us15_list) != 0:
+                print(parser.us15_list)
+                for item in parser.us15_list:
+                    print("ERROR: Family ID {} has {} siblings".format(item[0], item[1]))
+            else:
+                print("No family has more than 15 siblings")
+            
+            #----Print results----US21---Correct role for sex--------#
+            parser.us_21()
+            print("\nUS21 - Correct role for sex")
+            if len(parser.us21_list) != 0:
+                for item in parser.us21_list:
+                    print("ERROR: Family ID: {}, Individual ID: {}, Name: {}, Role: {}, Gender given: {}".format(item[0], item[1], item[2], item[3], item[4]))
+            else:
+                print("Only correct roles for sex")
+      
         except FileNotFoundError as e:
             print(e)
         else:

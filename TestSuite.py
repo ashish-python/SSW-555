@@ -188,5 +188,18 @@ class TestSuite(unittest.TestCase):
         parser.us_34()
         self.assertEqual(parser.us34_list, [['US34-F01', '25 Sep 1989', 'US34-I02', 'Jessica /Cook/', '25 Sep 1969', 20, 'US34-I01', 'James /Cook/', '25 Sep 1949', 40]])
 
+    #User Story 15 - Less than 15 siblings in a family
+    def test_us15(self):
+        parser = GedcomParse()
+        parser.parseFile("US_15.txt")
+        parser.us_15()
+        self.assertEqual(parser.us15_list,[['F1', 19, {'I18', 'I13', 'I05', 'I07', 'I14', 'I04', 'I09', 'I11', 'I20', 'I06', 'I08', 'I12', 'I15', 'I01', 'I21', 'I17', 'I19', 'I16', 'I10'}]])
+    
+    #User Story 21: Correct roles for sex. Husband should be male. Wife should be female.
+    def test_us21(self):
+        parser = GedcomParse()
+        parser.parseFile("US_21.txt")
+        parser.us_21()
+        self.assertEqual(parser.us21_list, [['F1', 'I02', 'Adam /Cahn/', 'Husband', 'F'], ['F1', 'I03', 'Alisa /Cahn/', 'Wife', 'M']])
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
