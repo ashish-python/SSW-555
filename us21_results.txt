@@ -1,0 +1,78 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++-----+--------------+--------+----------+-----+-------+-------+-------+--------+
+|  ID |     Name     | Gender | Birthday | Age | Alive | Death | Child | Spouse |
++-----+--------------+--------+----------+-----+-------+-------+-------+--------+
+| I02 | Adam /Cahn/  |   F    |    NA    |  NA |   NA  |   NA  |   NA  | {'F1'} |
+| I03 | Alisa /Cahn/ |   M    |    NA    |  NA |   NA  |   NA  |   NA  | {'F1'} |
++-----+--------------+--------+----------+-----+-------+-------+-------+--------+
+
+Families table:
++----+---------+----------+------------+--------------+---------+--------------+----------+
+| ID | Married | Divorced | Husband ID | Husband Name | Wife ID |  Wife Name   | Children |
++----+---------+----------+------------+--------------+---------+--------------+----------+
+| F1 |    NA   |    NA    |    I02     | Adam /Cahn/  |   I03   | Alisa /Cahn/ |    NA    |
++----+---------+----------+------------+--------------+---------+--------------+----------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: F1, Husband, Individual ID: I02, Name: Adam /Cahn/
+Family ID: F1, Wife, Individual ID: I03, Name: Alisa /Cahn/
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
+
+US29 - List all deceased
+No deceased in the list
+
+US34-Large age differences
+No couples who were married when the older spouse was more than twice as old as the younger spouse
+
+US15 - Number of siblings less than 15
+No family has more than 15 siblings
+
+US21 - Correct role for sex
+ERROR: Family ID: F1, Individual ID: I02, Name: Adam /Cahn/, Role: Husband, Gender given: F
+ERROR: Family ID: F1, Individual ID: I03, Name: Alisa /Cahn/, Role: Wife, Gender given: M

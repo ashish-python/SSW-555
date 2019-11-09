@@ -1,0 +1,71 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------+--------+------------+-----+-------+-------+-------+--------------------------+
+|    ID    |      Name      | Gender |  Birthday  | Age | Alive | Death | Child |          Spouse          |
++----------+----------------+--------+------------+-----+-------+-------+-------+--------------------------+
+| US34-I01 |  James /Cook/  |   M    | 1949-09-25 |  70 |  True |   NA  |   NA  | {'US34-F02', 'US34-F01'} |
+| US34-I02 | Jessica /Cook/ |   NA   | 1969-09-25 |  50 |  True |   NA  |   NA  |       {'US34-F01'}       |
++----------+----------------+--------+------------+-----+-------+-------+-------+--------------------------+
+
+Families table:
++----------+------------+----------+------------+--------------+----------+----------------+----------+
+|    ID    |  Married   | Divorced | Husband ID | Husband Name | Wife ID  |   Wife Name    | Children |
++----------+------------+----------+------------+--------------+----------+----------------+----------+
+| US34-F01 | 1989-09-25 |    NA    |  US34-I01  | James /Cook/ | US34-I02 | Jessica /Cook/ |    NA    |
++----------+------------+----------+------------+--------------+----------+----------------+----------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US34-F01, Husband, Individual ID: US34-I01, Name: James /Cook/
+Family ID: US34-F01, Wife, Individual ID: US34-I02, Name: Jessica /Cook/
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
+
+US29 - List all deceased
+No deceased in the list
+
+US34-Large age differences
+Family ID: US34-F01, Marriage date: 25 Sep 1989, Wife ID: US34-I02, Wife name: Jessica /Cook/, Wife DOB: 25 Sep 1969, Wife age at marr: 20, Husband ID: US34-I01, Husband name: James /Cook/, Husband DOB: 25 Sep 1949, Husband age at marr: 40

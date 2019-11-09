@@ -1,0 +1,102 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+------------------+--------+----------+-----+-------+-------+-------------+-------------+
+|    ID    |       Name       | Gender | Birthday | Age | Alive | Death |    Child    |    Spouse   |
++----------+------------------+--------+----------+-----+-------+-------+-------------+-------------+
+| US15-I01 |   Julia /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I02 |   Adam /Cahn/    |   M    |    NA    |  NA |   NA  |   NA  |      NA     | {'US15-F1'} |
+| US15-I03 |   Alisa /Cahn/   |   F    |    NA    |  NA |   NA  |   NA  |      NA     | {'US15-F1'} |
+| US15-I04 |    One /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I05 |    Two /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I06 |   Three /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I07 |   Four /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I08 |   Five /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I09 |    Six /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I10 |   Seven /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I11 |   Eight /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I12 |   Nine /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I13 |    Ten /Cahn/    |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I14 |  Eleven /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I15 |  Twelve /Cahn/   |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I16 | Thirteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I17 | Fourteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I18 |  Fifteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I19 |  Sixteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I20 | Seventeen /Cahn/ |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
+| US15-I21 | Eighteen /Cahn/  |   NA   |    NA    |  NA |   NA  |   NA  | {'US15-F1'} |      NA     |
++----------+------------------+--------+----------+-----+-------+-------+-------------+-------------+
+
+Families table:
++---------+---------+----------+------------+--------------+----------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|    ID   | Married | Divorced | Husband ID | Husband Name | Wife ID  |  Wife Name   |                                                                                                               Children                                                                                                               |
++---------+---------+----------+------------+--------------+----------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| US15-F1 |    NA   |    NA    |  US15-I02  | Adam /Cahn/  | US15-I03 | Alisa /Cahn/ | {'US15-I04', 'US15-I10', 'US15-I17', 'US15-I07', 'US15-I14', 'US15-I09', 'US15-I12', 'US15-I16', 'US15-I21', 'US15-I06', 'US15-I15', 'US15-I01', 'US15-I18', 'US15-I11', 'US15-I13', 'US15-I20', 'US15-I05', 'US15-I19', 'US15-I08'} |
++---------+---------+----------+------------+--------------+----------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+
+US38 - No Birthday's in the next 30 days
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - There are no births after marriage or births after 9 months of divorce
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US15-F1, Husband, Individual ID: US15-I02, Name: Adam /Cahn/
+Family ID: US15-F1, Wife, Individual ID: US15-I03, Name: Alisa /Cahn/
+
+US31 - List all living people over 30 who have never been married
+No living people over 30 who have never been married
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+
+US23 - Unique names and birthdays
+All names and birthdays are all unique
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
+
+US29 - List all deceased
+No deceased in the list
+
+US34-Large age differences
+No couples who were married when the older spouse was more than twice as old as the younger spouse
+
+US15 - Number of siblings less than 15
+ERROR: Family ID US15-F1 has 19 siblings
+
+US21 - Correct role for sex
+Only correct roles for sex
+
+US17 - Parents cannot marry their kids
+No parents married their kids
+
+US18 - Siblings cannot marry each other
+No siblings married each other

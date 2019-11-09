@@ -1,0 +1,112 @@
+Please enter the name of GEDCOM file to parse: 
+Individuals table:
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
+|    ID    |         Name         | Gender |  Birthday  | Age | Alive |   Death    |    Child    |         Spouse         |
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
+| US18-I1  |      Han /Solo/      |   M    | 1942-07-13 |  77 |  True |     NA     | {'US18-F2'} |      {'US18-F1'}       |
+| US18-I10 |    Jonash /Solo/     |   M    | 1920-12-16 |  99 | False | 2010-07-28 |      NA     |      {'US18-F2'}       |
+| US18-I11 |  Martha /Oraganda/   |   F    | 1920-01-27 |  99 | False | 2005-08-29 |      NA     |      {'US18-F2'}       |
+| US18-I12 |   Benjamin /Solo/    |   M    | 1973-11-19 |  46 |  True |     NA     |      NA     |      {'US18-F3'}       |
+| US18-I13 |  Jaina /Skywalker/   |   F    | 2005-05-06 |  14 |  True |     NA     |      NA     |      {'US18-F6'}       |
+| US18-I2  |   Leia /Skywalker/   |   F    | 1956-10-21 |  63 | False | 2016-12-27 | {'US18-F4'} | {'US18-F1', 'US18-F3'} |
+| US18-I3  |  Anakin /Skywalker/  |   M    | 1940-04-19 |  79 |  True |     NA     |      NA     |      {'US18-F4'}       |
+| US18-I4  |   Padme /Amidala/    |   F    | 1932-03-04 |  87 | False | 1956-10-21 |      NA     |      {'US18-F4'}       |
+| US18-I5  | Benjamin Solo /Solo/ |   M    | 1973-11-19 |  46 |  True |     NA     | {'US18-F1'} |           NA           |
+| US18-I6  |   Luke /Skywalker/   |   M    | 1956-10-21 |  63 |  True |     NA     | {'US18-F4'} |      {'US18-F5'}       |
+| US18-I7  |     Mara /Jade/      |   F    | 1960-06-04 |  59 |  True |     NA     |      NA     |      {'US18-F5'}       |
+| US18-I8  |  Jaina /Skywalker/   |   F    | 2005-05-06 |  14 |  True |     NA     | {'US18-F5'} |           NA           |
+| US18-I9  |  Jacen /Skywalker/   |   M    | 2003-02-04 |  16 |  True |     NA     | {'US18-F5'} |      {'US18-F6'}       |
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
+
+Families table:
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+|    ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID  |     Wife Name     |        Children        |
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+| US18-F1 | 1980-05-09 | 1990-04-08 |  US18-I1   |     Han /Solo/     | US18-I2  |  Leia /Skywalker/ |      {'US18-I5'}       |
+| US18-F2 | 1950-08-04 |     NA     |  US18-I10  |   Jonash /Solo/    | US18-I11 | Martha /Oraganda/ |      {'US18-I1'}       |
+| US18-F3 | 1985-06-07 | 1986-02-27 |  US18-I12  |  Benjamin /Solo/   | US18-I2  |  Leia /Skywalker/ |           NA           |
+| US18-F4 | 1950-08-04 |     NA     |  US18-I3   | Anakin /Skywalker/ | US18-I4  |  Padme /Amidala/  | {'US18-I2', 'US18-I6'} |
+| US18-F5 | 2001-10-05 |     NA     |  US18-I6   |  Luke /Skywalker/  | US18-I7  |    Mara /Jade/    | {'US18-I9', 'US18-I8'} |
+| US18-F6 | 2015-10-10 |     NA     |  US18-I9   | Jacen /Skywalker/  | US18-I8  | Jaina /Skywalker/ |           NA           |
++---------+------------+------------+------------+--------------------+----------+-------------------+------------------------+
+{'US18-F1': {'HUSB': 'US18-I1', 'WIFE': 'US18-I2', 'CHIL': {'US18-I5'}, 'MARR': datetime.datetime(1980, 5, 9, 0, 0), 'DIV': datetime.datetime(1990, 4, 8, 0, 0)}, 'US18-F3': {'HUSB': 'US18-I12', 'WIFE': 'US18-I2', 'MARR': datetime.datetime(1985, 6, 7, 0, 0), 'DIV': datetime.datetime(1986, 2, 27, 0, 0)}, 'US18-F2': {'HUSB': 'US18-I10', 'WIFE': 'US18-I11', 'CHIL': {'US18-I1'}, 'MARR': datetime.datetime(1950, 8, 4, 0, 0)}, 'US18-F4': {'HUSB': 'US18-I3', 'WIFE': 'US18-I4', 'CHIL': {'US18-I2', 'US18-I6'}, 'MARR': datetime.datetime(1950, 8, 4, 0, 0)}, 'US18-F5': {'HUSB': 'US18-I6', 'WIFE': 'US18-I7', 'CHIL': {'US18-I9', 'US18-I8'}, 'MARR': datetime.datetime(2001, 10, 5, 0, 0)}, 'US18-F6': {'HUSB': 'US18-I9', 'WIFE': 'US18-I8', 'MARR': datetime.datetime(2015, 10, 10, 0, 0)}}
+
+
+US42 - No illegitimate dates
+
+US38 - Birthday's in the next 30 days
+Name: Benjamin Solo /Solo/, id: US18-I5, Birthday 19 NOV
+Name: Benjamin /Solo/, id: US18-I12, Birthday 19 NOV
+
+US01 - There are no current users with dates that are after the current date
+
+US22 - All unique IDs
+
+US04-There are no divorce dates before marriage dates
+
+US05 - Death before Marriage
+No Death before Marriage
+
+US36 - Deaths in the last 30 days
+No Deaths in the last 30 days
+
+US35 - Births in the last 30 days
+No Births in the last 30 days
+
+US08 - Birth after marriage or Birth after 9 months divorce
+ERROR: Child ID: US18-I5, Child Name: Benjamin Solo /Solo/, Child Birthday: 19 Nov 1973, Parents Marriage Date: 09 May 1980
+ERROR: Child ID: US18-I1, Child Name: Han /Solo/, Child Birthday: 13 Jul 1942, Parents Marriage Date: 04 Aug 1950
+
+US16 - All males in the family have the same last name
+
+US06 - Death before Divorce
+No Death before Divorce
+
+US07- Less than 150 years old
+No one over 150 years old
+
+US30 - List all living married people
+Family ID: US18-F5, Husband, Individual ID: US18-I6, Name: Luke /Skywalker/
+Family ID: US18-F5, Wife, Individual ID: US18-I7, Name: Mara /Jade/
+Family ID: US18-F6, Husband, Individual ID: US18-I9, Name: Jacen /Skywalker/
+Family ID: US18-F6, Wife, Individual ID: US18-I8, Name: Jaina /Skywalker/
+
+US31 - List all living people over 30 who have never been married
+Individual ID: US18-I5, Name: Benjamin Solo /Solo/, Birth date: 19 Nov 1973
+
+US09 - Birth before death of parents
+No births before death of parents
+
+US11 - No Bigamy - Marriage should not occur during marriage to another spouse
+ERROR: Second marriage before divorce - Individual ID: US18-I2, Individual name: Leia /Skywalker/, Family ID-1: US18-F1, Family ID-2: US18-F3, First marriage date: 09 May 1980, Second marriage date: 07 Jun 1985, First marriage divorce date: 08 Apr 1990 
+
+US23 - Unique names and birthdays
+ERROR SAME BIRTHDAY: ID: US18-I6, Name: Luke /Skywalker/, Birthday: 21 Oct 1956
+ERROR SAME BIRTHDAY: ID: US18-I12, Name: Benjamin /Solo/, Birthday: 19 Nov 1973
+ERROR SAME NAME: ID: US18-I13, Name: Jaina /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I13, Name: Jaina /Skywalker/, Birthday: 06 May 2005
+
+US24 - Unique spouses and marriage dates
+All spouses and marriage dates are unique
+
+US29 - List all deceased
+ID: US18-I2, Name: Leia /Skywalker/, Death date: 27 Dec 2016
+ID: US18-I4, Name: Padme /Amidala/, Death date: 21 Oct 1956
+ID: US18-I10, Name: Jonash /Solo/, Death date: 28 Jul 2010
+ID: US18-I11, Name: Martha /Oraganda/, Death date: 29 Aug 2005
+
+US34-Large age differences
+Family ID: US18-F3, Marriage date: 07 Jun 1985, Wife ID: US18-I2, Wife name: Leia /Skywalker/, Wife DOB: 21 Oct 1956, Wife age at marr: 28, Husband ID: US18-I12, Husband name: Benjamin /Solo/, Husband DOB: 19 Nov 1973, Husband age at marr: 11
+
+US15 - Number of siblings less than 15
+No family has more than 15 siblings
+
+US21 - Correct role for sex
+Only correct roles for sex
+
+US17 - Parents cannot marry their kids
+ERROR - Mother married her son: Son ID: US18-I9, Son Name: Jacen /Skywalker/, Mom ID: US18-I8, Mom name: Jaina /Skywalker/
+ERROR - Father married his daughter: Son ID: US18-I8, Son Name: Jaina /Skywalker/, Mom ID: US18-I9, Mom name: Jacen /Skywalker/
+
+US18 - Siblings cannot marry each other
+ERROR - Siblings US18-I9 and US18-I8 married each other.
