@@ -201,5 +201,21 @@ class TestSuite(unittest.TestCase):
         parser.parseFile("US_21.txt")
         parser.us_21()
         self.assertEqual(parser.us21_list, [['F1', 'I02', 'Adam /Cahn/', 'Husband', 'F'], ['F1', 'I03', 'Alisa /Cahn/', 'Wife', 'M']])
+    
+    #User Story 18
+    # Siblings cant marry each other
+    def test_us18(self):
+        parser = GedcomParse()
+        parser.parseFile("US_18.txt")
+        parser.us_18()
+        self.assertEqual(parser.us18_list, [['US18-I9', 'US18-I8']])
+    
+    #User Story 17
+    # Parents cant marry their children
+    def test_us17(self):
+        parser = GedcomParse()
+        parser.parseFile("US_17.txt")
+        parser.us_17()
+        self.assertEqual(parser.us17_list, [['DAD', 'US17-I5', 'Benjamin /Solo/', 'US17-I2', 'Leia /Skywalker/']])
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
