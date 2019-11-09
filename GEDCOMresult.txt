@@ -1,30 +1,87 @@
 Please enter the name of GEDCOM file to parse: 
 Individuals table:
-+-----+------------------+--------+------------+-----+-------+------------+---------+----------------+
-|  ID |       Name       | Gender |  Birthday  | Age | Alive |   Death    |  Child  |     Spouse     |
-+-----+------------------+--------+------------+-----+-------+------------+---------+----------------+
-| I01 |  Roger /Stokes/  |   M    | 1600-10-26 | 419 | False | 2019-09-25 |    NA   | {'F99', 'F01'} |
-| I02 | Jessica /Stokes/ |   F    |     NA     |  NA | False | 1959-05-16 |    NA   |    {'F01'}     |
-| I03 |  Ben /Stokess/   |   M    | 1529-05-09 | 490 |  True |     NA     | {'F01'} | {'F03', 'F02'} |
-| I04 |   Jill /Hayes/   |   F    | 1964-08-18 |  55 | False | 1994-12-09 |    NA   |    {'F02'}     |
-| I05 |   Jill /Hayes/   |   F    | 1964-08-18 |  55 |  True |     NA     |    NA   |    {'F03'}     |
-| I06 |  Jane /Stokes/   |   F    | 1995-03-17 |  24 |  True |     NA     | {'F02'} |    {'F04'}     |
-| I07 | Marina /Stokes/  |   F    | 1996-11-10 |  23 |  True |     NA     | {'F03'} |       NA       |
-| I08 | Martin /Fowler/  |   M    | 1989-01-02 |  30 |  True |     NA     |    NA   |    {'F04'}     |
-| I09 | Debbie /Stokes/  |   F    | 1989-03-17 |  30 |  True |     NA     | {'F02'} |       NA       |
-| I10 | Amanda /Fowler/  |   F    | 2019-10-10 |  0  |  True |     NA     | {'F04'} |       NA       |
-+-----+------------------+--------+------------+-----+-------+------------+---------+----------------+
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
+|    ID    |         Name         | Gender |  Birthday  | Age | Alive |   Death    |    Child    |         Spouse         |
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
+|   I01    |    Roger /Stokes/    |   F    | 1600-10-26 | 419 | False | 2019-09-25 |      NA     |     {'F99', 'F01'}     |
+|   I02    |   Jessica /Stokes/   |   M    |     NA     |  NA | False | 1959-05-16 |      NA     |        {'F01'}         |
+|   I03    |    Ben /Stokess/     |   M    | 1529-05-09 | 490 |  True |     NA     |   {'F01'}   |     {'F03', 'F02'}     |
+|   I04    |     Jill /Hayes/     |   F    | 1964-08-18 |  55 | False | 1994-12-09 |      NA     |        {'F02'}         |
+|   I05    |     Jill /Hayes/     |   F    | 1964-08-18 |  55 |  True |     NA     |      NA     |        {'F03'}         |
+|   I06    |    Jane /Stokes/     |   F    | 1995-03-17 |  24 |  True |     NA     |   {'F02'}   |        {'F04'}         |
+|   I07    |   Marina /Stokes/    |   F    | 1996-11-10 |  23 |  True |     NA     |   {'F03'}   |           NA           |
+|   I08    |   Martin /Fowler/    |   M    | 1989-01-02 |  30 |  True |     NA     |      NA     |        {'F04'}         |
+|   I09    |   Debbie /Stokes/    |   F    | 1989-03-17 |  30 |  True |     NA     |   {'F02'}   |           NA           |
+|   I10    |   Amanda /Fowler/    |   F    | 2019-10-10 |  0  |  True |     NA     |   {'F04'}   |           NA           |
+| US15-I01 |     Julia /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I02 |     Adam /Cahn/      |   M    |     NA     |  NA |   NA  |     NA     |      NA     |      {'US15-F1'}       |
+| US15-I03 |     Alisa /Cahn/     |   F    |     NA     |  NA |   NA  |     NA     |      NA     |      {'US15-F1'}       |
+| US15-I04 |      One /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I05 |      Two /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I06 |     Three /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I07 |     Four /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I08 |     Five /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I09 |      Six /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I10 |     Seven /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I11 |     Eight /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I12 |     Nine /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I13 |      Ten /Cahn/      |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I14 |    Eleven /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I15 |    Twelve /Cahn/     |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I16 |   Thirteen /Cahn/    |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I17 |   Fourteen /Cahn/    |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I18 |    Fifteen /Cahn/    |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I19 |    Sixteen /Cahn/    |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I20 |   Seventeen /Cahn/   |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US15-I21 |   Eighteen /Cahn/    |   NA   |     NA     |  NA |   NA  |     NA     | {'US15-F1'} |           NA           |
+| US17-I1  |      Han /Solo/      |   M    | 1942-07-13 |  77 |  True |     NA     | {'US17-F2'} |      {'US17-F1'}       |
+| US17-I10 |    Jonash /Solo/     |   M    | 1920-12-16 |  99 | False | 2010-07-28 |      NA     |      {'US17-F2'}       |
+| US17-I11 |  Martha /Oraganda/   |   F    | 1920-01-27 |  99 | False | 2005-08-29 |      NA     |      {'US17-F2'}       |
+| US17-I2  |   Leia /Skywalker/   |   F    | 1956-10-21 |  63 | False | 2016-12-27 | {'US17-F4'} | {'US17-F1', 'US17-F3'} |
+| US17-I3  |  Anakin /Skywalker/  |   M    | 1940-04-19 |  79 |  True |     NA     |      NA     |      {'US17-F4'}       |
+| US17-I4  |   Padme /Amidala/    |   F    | 1932-03-04 |  87 | False | 1956-10-21 |      NA     |      {'US17-F4'}       |
+| US17-I5  |   Benjamin /Solo/    |   M    | 1973-11-19 |  46 |  True |     NA     |      NA     |      {'US17-F3'}       |
+| US17-I6  |   Luke /Skywalker/   |   M    | 1956-10-21 |  63 |  True |     NA     | {'US17-F4'} |      {'US17-F5'}       |
+| US17-I7  |     Mara /Jade/      |   F    | 1960-06-04 |  59 |  True |     NA     |      NA     |      {'US17-F5'}       |
+| US17-I8  |  Jaina /Skywalker/   |   F    | 2005-05-06 |  14 |  True |     NA     | {'US17-F5'} |           NA           |
+| US17-I9  |  Jacen /Skywalker/   |   M    | 2003-02-04 |  16 |  True |     NA     | {'US17-F5'} |           NA           |
+| US18-I1  |      Han /Solo/      |   M    | 1942-07-13 |  77 |  True |     NA     | {'US18-F2'} |      {'US18-F1'}       |
+| US18-I10 |    Jonash /Solo/     |   M    | 1920-12-16 |  99 | False | 2010-07-28 |      NA     |      {'US18-F2'}       |
+| US18-I11 |  Martha /Oraganda/   |   F    | 1920-01-27 |  99 | False | 2005-08-29 |      NA     |      {'US18-F2'}       |
+| US18-I12 |   Benjamin /Solo/    |   M    | 1973-11-19 |  46 |  True |     NA     |      NA     |      {'US18-F3'}       |
+| US18-I13 |  Jaina /Skywalker/   |   F    | 2005-05-06 |  14 |  True |     NA     |      NA     |      {'US18-F6'}       |
+| US18-I2  |   Leia /Skywalker/   |   F    | 1956-10-21 |  63 | False | 2016-12-27 | {'US18-F4'} | {'US18-F1', 'US18-F3'} |
+| US18-I3  |  Anakin /Skywalker/  |   M    | 1940-04-19 |  79 |  True |     NA     |      NA     |      {'US18-F4'}       |
+| US18-I4  |   Padme /Amidala/    |   F    | 1932-03-04 |  87 | False | 1956-10-21 |      NA     |      {'US18-F4'}       |
+| US18-I5  | Benjamin Solo /Solo/ |   M    | 1973-11-19 |  46 |  True |     NA     | {'US18-F1'} |           NA           |
+| US18-I6  |   Luke /Skywalker/   |   M    | 1956-10-21 |  63 |  True |     NA     | {'US18-F4'} |      {'US18-F5'}       |
+| US18-I7  |     Mara /Jade/      |   F    | 1960-06-04 |  59 |  True |     NA     |      NA     |      {'US18-F5'}       |
+| US18-I8  |  Jaina /Skywalker/   |   F    | 2005-05-06 |  14 |  True |     NA     | {'US18-F5'} |           NA           |
+| US18-I9  |  Jacen /Skywalker/   |   M    | 2003-02-04 |  16 |  True |     NA     | {'US18-F5'} |      {'US18-F6'}       |
++----------+----------------------+--------+------------+-----+-------+------------+-------------+------------------------+
 
 Families table:
-+-----+------------+------------+------------+-----------------+---------+------------------+----------------+
-|  ID |  Married   |  Divorced  | Husband ID |   Husband Name  | Wife ID |    Wife Name     |    Children    |
-+-----+------------+------------+------------+-----------------+---------+------------------+----------------+
-| F01 | 1960-08-08 | 1960-08-07 |    I01     |  Roger /Stokes/ |   I02   | Jessica /Stokes/ |    {'I03'}     |
-| F02 | 1988-01-03 |     NA     |    I03     |  Ben /Stokess/  |   I04   |   Jill /Hayes/   | {'I06', 'I09'} |
-| F03 | 1996-01-05 |     NA     |    I03     |  Ben /Stokess/  |   I05   |   Jill /Hayes/   |    {'I07'}     |
-| F04 | 2019-08-09 | 2020-09-10 |    I08     | Martin /Fowler/ |   I06   |  Jane /Stokes/   |    {'I10'}     |
-| F99 | 1960-08-08 |     NA     |    I01     |  Roger /Stokes/ |   I99   |        NA        |       NA       |
-+-----+------------+------------+------------+-----------------+---------+------------------+----------------+
++---------+------------+------------+------------+--------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|    ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID  |     Wife Name     |                                                                                                               Children                                                                                                               |
++---------+------------+------------+------------+--------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   F01   | 1960-08-08 | 1960-08-07 |    I01     |   Roger /Stokes/   |   I02    |  Jessica /Stokes/ |                                                                                                               {'I03'}                                                                                                                |
+|   F02   | 1988-01-03 |     NA     |    I03     |   Ben /Stokess/    |   I04    |    Jill /Hayes/   |                                                                                                            {'I06', 'I09'}                                                                                                            |
+|   F03   | 1996-01-05 |     NA     |    I03     |   Ben /Stokess/    |   I05    |    Jill /Hayes/   |                                                                                                               {'I07'}                                                                                                                |
+|   F04   | 2019-08-09 | 2020-09-10 |    I08     |  Martin /Fowler/   |   I06    |   Jane /Stokes/   |                                                                                                               {'I10'}                                                                                                                |
+|   F99   | 1960-08-08 |     NA     |    I01     |   Roger /Stokes/   |   I99    |         NA        |                                                                                                                  NA                                                                                                                  |
+| US15-F1 |     NA     |     NA     |  US15-I02  |    Adam /Cahn/     | US15-I03 |    Alisa /Cahn/   | {'US15-I19', 'US15-I18', 'US15-I10', 'US15-I05', 'US15-I07', 'US15-I04', 'US15-I12', 'US15-I14', 'US15-I20', 'US15-I09', 'US15-I15', 'US15-I08', 'US15-I01', 'US15-I06', 'US15-I16', 'US15-I21', 'US15-I17', 'US15-I13', 'US15-I11'} |
+| US17-F1 | 1980-05-09 | 1990-04-08 |  US17-I1   |     Han /Solo/     | US17-I2  |  Leia /Skywalker/ |                                                                                                             {'US17-I5'}                                                                                                              |
+| US17-F2 | 1950-08-04 |     NA     |  US17-I10  |   Jonash /Solo/    | US17-I11 | Martha /Oraganda/ |                                                                                                             {'US17-I1'}                                                                                                              |
+| US17-F3 | 1985-06-07 | 1986-02-27 |  US17-I5   |  Benjamin /Solo/   | US17-I2  |  Leia /Skywalker/ |                                                                                                                  NA                                                                                                                  |
+| US17-F4 | 1950-08-04 |     NA     |  US17-I3   | Anakin /Skywalker/ | US17-I4  |  Padme /Amidala/  |                                                                                                        {'US17-I6', 'US17-I2'}                                                                                                        |
+| US17-F5 | 2001-10-05 |     NA     |  US17-I6   |  Luke /Skywalker/  | US17-I7  |    Mara /Jade/    |                                                                                                        {'US17-I8', 'US17-I9'}                                                                                                        |
+| US18-F1 | 1980-05-09 | 1990-04-08 |  US18-I1   |     Han /Solo/     | US18-I2  |  Leia /Skywalker/ |                                                                                                             {'US18-I5'}                                                                                                              |
+| US18-F2 | 1950-08-04 |     NA     |  US18-I10  |   Jonash /Solo/    | US18-I11 | Martha /Oraganda/ |                                                                                                             {'US18-I1'}                                                                                                              |
+| US18-F3 | 1985-06-07 | 1986-02-27 |  US18-I12  |  Benjamin /Solo/   | US18-I2  |  Leia /Skywalker/ |                                                                                                                  NA                                                                                                                  |
+| US18-F4 | 1950-08-04 |     NA     |  US18-I3   | Anakin /Skywalker/ | US18-I4  |  Padme /Amidala/  |                                                                                                        {'US18-I6', 'US18-I2'}                                                                                                        |
+| US18-F5 | 2001-10-05 |     NA     |  US18-I6   |  Luke /Skywalker/  | US18-I7  |    Mara /Jade/    |                                                                                                        {'US18-I8', 'US18-I9'}                                                                                                        |
+| US18-F6 | 2015-10-10 |     NA     |  US18-I9   | Jacen /Skywalker/  | US18-I8  | Jaina /Skywalker/ |                                                                                                                  NA                                                                                                                  |
++---------+------------+------------+------------+--------------------+----------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 US42 - Illegitimate dates: 
@@ -32,12 +89,16 @@ ERROR: Illegitimate date on line 26 : 0 FEB 1940
 
 US38 - Birthday's in the next 30 days
 Name: Marina /Stokes/, id: I07, Birthday 10 NOV
+Name: Benjamin /Solo/, id: US17-I5, Birthday 19 NOV
+Name: Benjamin Solo /Solo/, id: US18-I5, Birthday 19 NOV
+Name: Benjamin /Solo/, id: US18-I12, Birthday 19 NOV
 
 US01 - Dates that are after the current date
 Family ID: F04, Divorce Date: 10 Sep 2020
 
 US22 - WARNING: The following IDs are being repeated
 Individual IDs I01
+Individual IDs US17-I5
 
 US04- Marriage before Divorce
 ERROR: Family ID: F01, Divorce date: 07 Aug 1960, Marriage date: 08 Aug 1960
@@ -53,6 +114,10 @@ Name: Amanda /Fowler/, id: I10, Birth date 10 Oct 2019
 
 US08 - Birth after marriage or Birth after 9 months divorce
 ERROR: Child ID: I03, Child Name: Ben /Stokess/, Child Birthday: 09 May 1529, Parents Marriage Date: 08 Aug 1960
+ERROR: Child ID: US17-I5, Child Name: Benjamin /Solo/, Child Birthday: 19 Nov 1973, Parents Marriage Date: 09 May 1980
+ERROR: Child ID: US17-I1, Child Name: Han /Solo/, Child Birthday: 13 Jul 1942, Parents Marriage Date: 04 Aug 1950
+ERROR: Child ID: US18-I5, Child Name: Benjamin Solo /Solo/, Child Birthday: 19 Nov 1973, Parents Marriage Date: 09 May 1980
+ERROR: Child ID: US18-I1, Child Name: Han /Solo/, Child Birthday: 13 Jul 1942, Parents Marriage Date: 04 Aug 1950
 
 US16 - Males without the same last name
 ERROR: Family ID: F01, Child's Name: Ben /Stokess/, Father's Name: Roger /Stokes/
@@ -62,24 +127,106 @@ ERROR: Family ID: F01, Individual ID: I02, Name: Jessica /Stokes/, Death date: 0
 
 US07- Less than 150 years old
 ERROR: Older than 150 at the time of death - Individual ID: I01, Name: Roger /Stokes/, Birth date: 26 Oct 1600, Death date: 25 Sep 2019
-ERROR: Still alive and older than 150 - Individual ID: I03, Name: Ben /Stokess/, Birth date: 09 May 1529, Today's date: 27 Oct 2019
+ERROR: Still alive and older than 150 - Individual ID: I03, Name: Ben /Stokess/, Birth date: 09 May 1529, Today's date: 08 Nov 2019
 
 US30 - List all living married people
 Family ID: F03, Husband, Individual ID: I03, Name: Ben /Stokess/
 Family ID: F03, Wife, Individual ID: I05, Name: Jill /Hayes/
+Family ID: US17-F5, Husband, Individual ID: US17-I6, Name: Luke /Skywalker/
+Family ID: US17-F5, Wife, Individual ID: US17-I7, Name: Mara /Jade/
+Family ID: US18-F5, Husband, Individual ID: US18-I6, Name: Luke /Skywalker/
+Family ID: US18-F5, Wife, Individual ID: US18-I7, Name: Mara /Jade/
+Family ID: US18-F6, Husband, Individual ID: US18-I9, Name: Jacen /Skywalker/
+Family ID: US18-F6, Wife, Individual ID: US18-I8, Name: Jaina /Skywalker/
+Family ID: US15-F1, Husband, Individual ID: US15-I02, Name: Adam /Cahn/
+Family ID: US15-F1, Wife, Individual ID: US15-I03, Name: Alisa /Cahn/
 
 US31 - List all living people over 30 who have never been married
 Individual ID: I09, Name: Debbie /Stokes/, Birth date: 17 Mar 1989
+Individual ID: US18-I5, Name: Benjamin Solo /Solo/, Birth date: 19 Nov 1973
 
 US09 - Birth before death of parents
 Child ID: I06, Parent ID: I04, Child death date: 17 Mar 1995, Parent death date: 09 Dec 1994
 
 US11 - No Bigamy - Marriage should not occur during marriage to another spouse
 ERROR: Both marriages on the same date - Individual ID: I01, Individual name: Roger /Stokes/, Family ID 1: F01, Family ID 2: F99, Marriage date: 08 Aug 1960
+ERROR: Second marriage before divorce - Individual ID: US17-I2, Individual name: Leia /Skywalker/, Family ID-1: US17-F1, Family ID-2: US17-F3, First marriage date: 09 May 1980, Second marriage date: 07 Jun 1985, First marriage divorce date: 08 Apr 1990 
+ERROR: Second marriage before divorce - Individual ID: US18-I2, Individual name: Leia /Skywalker/, Family ID-1: US18-F1, Family ID-2: US18-F3, First marriage date: 09 May 1980, Second marriage date: 07 Jun 1985, First marriage divorce date: 08 Apr 1990 
 
 US23 - Unique names and birthdays
 ERROR SAME NAME: ID: I05, Name: Jill /Hayes/
 ERROR SAME BIRTHDAY: ID: I05, Name: Jill /Hayes/, Birthday: 18 Aug 1964
+ERROR SAME BIRTHDAY: ID: US17-I6, Name: Luke /Skywalker/, Birthday: 21 Oct 1956
+ERROR SAME NAME: ID: US18-I1, Name: Han /Solo/
+ERROR SAME BIRTHDAY: ID: US18-I1, Name: Han /Solo/, Birthday: 13 Jul 1942
+ERROR SAME NAME: ID: US18-I2, Name: Leia /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I2, Name: Leia /Skywalker/, Birthday: 21 Oct 1956
+ERROR SAME NAME: ID: US18-I3, Name: Anakin /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I3, Name: Anakin /Skywalker/, Birthday: 19 Apr 1940
+ERROR SAME NAME: ID: US18-I4, Name: Padme /Amidala/
+ERROR SAME BIRTHDAY: ID: US18-I4, Name: Padme /Amidala/, Birthday: 04 Mar 1932
+ERROR SAME BIRTHDAY: ID: US18-I5, Name: Benjamin Solo /Solo/, Birthday: 19 Nov 1973
+ERROR SAME NAME: ID: US18-I6, Name: Luke /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I6, Name: Luke /Skywalker/, Birthday: 21 Oct 1956
+ERROR SAME NAME: ID: US18-I7, Name: Mara /Jade/
+ERROR SAME BIRTHDAY: ID: US18-I7, Name: Mara /Jade/, Birthday: 04 Jun 1960
+ERROR SAME NAME: ID: US18-I8, Name: Jaina /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I8, Name: Jaina /Skywalker/, Birthday: 06 May 2005
+ERROR SAME NAME: ID: US18-I9, Name: Jacen /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I9, Name: Jacen /Skywalker/, Birthday: 04 Feb 2003
+ERROR SAME NAME: ID: US18-I10, Name: Jonash /Solo/
+ERROR SAME BIRTHDAY: ID: US18-I10, Name: Jonash /Solo/, Birthday: 16 Dec 1920
+ERROR SAME NAME: ID: US18-I11, Name: Martha /Oraganda/
+ERROR SAME BIRTHDAY: ID: US18-I11, Name: Martha /Oraganda/, Birthday: 27 Jan 1920
+ERROR SAME NAME: ID: US18-I12, Name: Benjamin /Solo/
+ERROR SAME BIRTHDAY: ID: US18-I12, Name: Benjamin /Solo/, Birthday: 19 Nov 1973
+ERROR SAME NAME: ID: US18-I13, Name: Jaina /Skywalker/
+ERROR SAME BIRTHDAY: ID: US18-I13, Name: Jaina /Skywalker/, Birthday: 06 May 2005
 
 US24 - Unique spouses and marriage dates
 ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : F99, Family ID 2: F01, Name: Roger /Stokes/, Marriage date: 08 Aug 1960
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F1, Family ID 2: US17-F1, Name: Leia /Skywalker/, Marriage date: 09 May 1980
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F1, Family ID 2: US17-F1, Name: Han /Solo/, Marriage date: 09 May 1980
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F3, Family ID 2: US17-F3, Name: Leia /Skywalker/, Marriage date: 07 Jun 1985
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F3, Family ID 2: US17-F3, Name: Benjamin /Solo/, Marriage date: 07 Jun 1985
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F2, Family ID 2: US17-F2, Name: Martha /Oraganda/, Marriage date: 04 Aug 1950
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F2, Family ID 2: US17-F2, Name: Jonash /Solo/, Marriage date: 04 Aug 1950
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F4, Family ID 2: US17-F4, Name: Padme /Amidala/, Marriage date: 04 Aug 1950
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F4, Family ID 2: US17-F4, Name: Anakin /Skywalker/, Marriage date: 04 Aug 1950
+ERROR SAME WIFE ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F5, Family ID 2: US17-F5, Name: Mara /Jade/, Marriage date: 05 Oct 2001
+ERROR SAME HUSBAND ON THE SAME MARRIAGE DATE: Family ID 1 : US18-F5, Family ID 2: US17-F5, Name: Luke /Skywalker/, Marriage date: 05 Oct 2001
+
+US29 - List all deceased
+ID: I01, Name: Roger /Stokes/, Death date: 25 Sep 2019
+ID: I02, Name: Jessica /Stokes/, Death date: 16 May 1959
+ID: I04, Name: Jill /Hayes/, Death date: 09 Dec 1994
+ID: US17-I2, Name: Leia /Skywalker/, Death date: 27 Dec 2016
+ID: US17-I4, Name: Padme /Amidala/, Death date: 21 Oct 1956
+ID: US17-I10, Name: Jonash /Solo/, Death date: 28 Jul 2010
+ID: US17-I11, Name: Martha /Oraganda/, Death date: 29 Aug 2005
+ID: US18-I2, Name: Leia /Skywalker/, Death date: 27 Dec 2016
+ID: US18-I4, Name: Padme /Amidala/, Death date: 21 Oct 1956
+ID: US18-I10, Name: Jonash /Solo/, Death date: 28 Jul 2010
+ID: US18-I11, Name: Martha /Oraganda/, Death date: 29 Aug 2005
+
+US34-Large age differences
+Family ID: F02, Marriage date: 03 Jan 1988, Wife ID: I04, Wife name: Jill /Hayes/, Wife DOB: 18 Aug 1964, Wife age at marr: 23, Husband ID: I03, Husband name: Ben /Stokess/, Husband DOB: 09 May 1529, Husband age at marr: 458
+Family ID: F03, Marriage date: 05 Jan 1996, Wife ID: I05, Wife name: Jill /Hayes/, Wife DOB: 18 Aug 1964, Wife age at marr: 31, Husband ID: I03, Husband name: Ben /Stokess/, Husband DOB: 09 May 1529, Husband age at marr: 466
+Family ID: US17-F3, Marriage date: 07 Jun 1985, Wife ID: US17-I2, Wife name: Leia /Skywalker/, Wife DOB: 21 Oct 1956, Wife age at marr: 28, Husband ID: US17-I5, Husband name: Benjamin /Solo/, Husband DOB: 19 Nov 1973, Husband age at marr: 11
+Family ID: US18-F3, Marriage date: 07 Jun 1985, Wife ID: US18-I2, Wife name: Leia /Skywalker/, Wife DOB: 21 Oct 1956, Wife age at marr: 28, Husband ID: US18-I12, Husband name: Benjamin /Solo/, Husband DOB: 19 Nov 1973, Husband age at marr: 11
+
+US15 - Number of siblings less than 15
+ERROR: Family ID US15-F1 has 19 siblings
+
+US21 - Correct role for sex
+ERROR: Family ID: F01, Individual ID: I01, Name: Roger /Stokes/, Role: Husband, Gender given: F
+ERROR: Family ID: F01, Individual ID: I02, Name: Jessica /Stokes/, Role: Wife, Gender given: M
+ERROR: Family ID: F99, Individual ID: I01, Name: Roger /Stokes/, Role: Husband, Gender given: F
+
+US17 - Parents cannot marry their kids
+ERROR - Mother married her son: Son ID: US17-I5, Son Name: Benjamin /Solo/, Mom ID: US17-I2, Mom name: Leia /Skywalker/
+ERROR - Father married his daughter: Daughter ID: US18-I8, Daughter Name: Jaina /Skywalker/, Father ID: US18-I9, Father name: Jacen /Skywalker/
+ERROR - Mother married her son: Son ID: US18-I9, Son Name: Jacen /Skywalker/, Mom ID: US18-I8, Mom name: Jaina /Skywalker/
+
+US18 - Siblings cannot marry each other
+ERROR - Siblings US18-I9 and US18-I8 married each other.

@@ -193,7 +193,7 @@ class TestSuite(unittest.TestCase):
         parser = GedcomParse()
         parser.parseFile("US_15.txt")
         parser.us_15()
-        self.assertEqual(parser.us15_list,[['F1', 19, {'I18', 'I13', 'I05', 'I07', 'I14', 'I04', 'I09', 'I11', 'I20', 'I06', 'I08', 'I12', 'I15', 'I01', 'I21', 'I17', 'I19', 'I16', 'I10'}]])
+        self.assertEqual(parser.us15_list,[['US15-F1', 19, {'US15-I18', 'US15-I13', 'US15-I05', 'US15-I07', 'US15-I14', 'US15-I04', 'US15-I09', 'US15-I11', 'US15-I20', 'US15-I06', 'US15-I08', 'US15-I12', 'US15-I15', 'US15-I01', 'US15-I21', 'US15-I17', 'US15-I19', 'US15-I16', 'US15-I10'}]])
     
     #User Story 21: Correct roles for sex. Husband should be male. Wife should be female.
     def test_us21(self):
@@ -201,5 +201,21 @@ class TestSuite(unittest.TestCase):
         parser.parseFile("US_21.txt")
         parser.us_21()
         self.assertEqual(parser.us21_list, [['F1', 'I02', 'Adam /Cahn/', 'Husband', 'F'], ['F1', 'I03', 'Alisa /Cahn/', 'Wife', 'M']])
+    
+    #User Story 18
+    # Siblings cant marry each other
+    def test_us18(self):
+        parser = GedcomParse()
+        parser.parseFile("US_18.txt")
+        parser.us_18()
+        self.assertEqual(parser.us18_list, [['US18-I9', 'US18-I8']])
+    
+    #User Story 17
+    # Parents cant marry their children
+    def test_us17(self):
+        parser = GedcomParse()
+        parser.parseFile("US_17.txt")
+        parser.us_17()
+        self.assertEqual(parser.us17_list, [['DAD', 'US17-I5', 'Benjamin /Solo/', 'US17-I2', 'Leia /Skywalker/']])
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)
